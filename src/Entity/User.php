@@ -25,6 +25,9 @@ class User
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $nickname = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -245,6 +248,18 @@ class User
     public function removeWantedGame(Game $wantedGame): static
     {
         $this->wantedGames->removeElement($wantedGame);
+
+        return $this;
+    }
+
+    public function getNickname(): ?string
+    {
+        return $this->nickname;
+    }
+
+    public function setNickname(string $nickname): static
+    {
+        $this->nickname = $nickname;
 
         return $this;
     }
