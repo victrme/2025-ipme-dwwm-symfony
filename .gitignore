@@ -1,4 +1,6 @@
 
+.idea
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -9,3 +11,20 @@
 /vendor/
 .php-version
 ###< symfony/framework-bundle ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.phpunit.cache/
+###< phpunit/phpunit ###
+
+###> symfony/asset-mapper ###
+/public/assets/
+/assets/vendor/
+###< symfony/asset-mapper ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
