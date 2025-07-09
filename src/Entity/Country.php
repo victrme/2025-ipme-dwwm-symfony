@@ -42,10 +42,17 @@ class Country
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'country')]
     private Collection $users;
 
+    /**
+     * @var Collection<int, Game>
+     */
+    #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'countries')]
+    private Collection $games;
+
     public function __construct()
     {
         $this->publishers = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->games = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -168,6 +175,33 @@ class Country
             if ($user->getCountry() === $this) {
                 $user->setCountry(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Game>
+     */
+    public function getGames(): Collection
+    {
+        return $this->games;
+    }
+
+    public function addGame(Game $game): static
+    {
+        if (!$this->games->contains($game)) {
+            $this->games->add($game);
+            $game->addCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGame(Game $game): static
+    {
+        if ($this->games->removeElement($game)) {
+            $game->removeCountry($this);
         }
 
         return $this;

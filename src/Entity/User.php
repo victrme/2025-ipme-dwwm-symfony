@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -48,6 +50,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Country $country = null;
+
+    /**
+     * @var Collection<int, Game>
+     */
+    #[ORM\ManyToMany(targetEntity: Game::class)]
+    #[ORM\JoinTable(name: 'wishlist')]
+    private Collection $wantedGames;
+
+    /**
+     * @var Collection<int, UserOwnGame>
+     */
+    #[ORM\OneToMany(targetEntity: UserOwnGame::class, mappedBy: 'user')]
+    private Collection $ownedGames;
+
+    /**
+     * @var Collection<int, Review>
+     */
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'user')]
+    private Collection $reviews;
+
+    public function __construct()
+    {
+        $this->wantedGames = new ArrayCollection();
+        $this->ownedGames = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -198,6 +226,90 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCountry(?Country $country): static
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Game>
+     */
+    public function getWantedGames(): Collection
+    {
+        return $this->wantedGames;
+    }
+
+    public function addWantedGame(Game $wantedGame): static
+    {
+        if (!$this->wantedGames->contains($wantedGame)) {
+            $this->wantedGames->add($wantedGame);
+        }
+
+        return $this;
+    }
+
+    public function removeWantedGame(Game $wantedGame): static
+    {
+        $this->wantedGames->removeElement($wantedGame);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserOwnGame>
+     */
+    public function getOwnedGames(): Collection
+    {
+        return $this->ownedGames;
+    }
+
+    public function addOwnedGame(UserOwnGame $ownedGame): static
+    {
+        if (!$this->ownedGames->contains($ownedGame)) {
+            $this->ownedGames->add($ownedGame);
+            $ownedGame->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOwnedGame(UserOwnGame $ownedGame): static
+    {
+        if ($this->ownedGames->removeElement($ownedGame)) {
+            // set the owning side to null (unless already changed)
+            if ($ownedGame->getUser() === $this) {
+                $ownedGame->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): static
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews->add($review);
+            $review->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): static
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getUser() === $this) {
+                $review->setUser(null);
+            }
+        }
 
         return $this;
     }
