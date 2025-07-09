@@ -1,32 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}SteamIsh V3{% endblock %}
 
 {% block body %}
 
     <div class="container">
         <h1 class="text-center">SteamIsh V3</h1>
 
-        <h2>Les dernières sorties</h2>
-        <div class="row">
-            {% for game in lastGames %}
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
-                    <div class="container-img">
-                        <img src="{{ game.thumbnailCover }}"
-                             alt="{{ game.name }}">
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <h3>
-                            {{ game.name }}
-                        </h3>
-                        <h3>
-                            {{ game.price }}€
-                        </h3>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+        {% include 'partials/_game_loop.html.twig' with {
+            'title': 'Les dernières sorties',
+            'games': lastGames
+        } %}
 
+        {% include 'partials/_game_loop.html.twig' with {
+            'title': 'Les meilleures offres',
+            'games': expensiveGames
+        } %}
+
+        {% include 'partials/_game_loop.html.twig' with {
+            'title': 'Les tendances actuelles',
+            'games': bestSellers
+        } %}
     </div>
 
 {% endblock %}

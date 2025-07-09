@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Country;
-use App\Repository\CountryRepository;
 use App\Repository\GameRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,16 +23,12 @@ final class HomeController extends AbstractController
             ['price' => 'DESC'],
             9
         );
-        $alphaGames = $gameRepository->findBy(
-            [],
-            ['name' => 'ASC'],
-            9
-        );
+        $bestSellers = $gameRepository->findByBestSeller(9);
 
         return $this->render('home/index.html.twig', [
             'lastGames' => $lastGames,
             'expensiveGames' => $expensiveGames,
-            'alphaGames' => $alphaGames,
+            'bestSellers' => $bestSellers,
         ]);
     }
 
