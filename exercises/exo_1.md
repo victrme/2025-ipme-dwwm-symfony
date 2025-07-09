@@ -19,3 +19,7 @@
     - Les 4 derniers commentaires
     - Les 4 commentaires les mieux notés
 
+## 4. Utiliser les repository avancé
+
+- Sur la page "home" ajouter un bloc de contenu pour :
+    - Les 9 "Category" les plus jouées
