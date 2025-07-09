@@ -13,33 +13,28 @@ final class HomeController extends AbstractController
 {
 
     #[Route(name: 'app_home')]
-    public function index(
-        CountryRepository   $countryRepository,
-        GameRepository      $gameRepository
-    ): Response
+    public function index(GameRepository $gameRepository): Response
     {
-        /** @var Country $country */
-        // SELECT * FROM country WHERE code = 'fr';
-        $country = $countryRepository->findOneBy(
-            ['code' => 'fr']
+        $lastGames = $gameRepository->findBy(
+            [],
+            ['publishedAt' => 'DESC'],
+            9
+        );
+        $expensiveGames = $gameRepository->findBy(
+            [],
+            ['price' => 'DESC'],
+            9
+        );
+        $alphaGames = $gameRepository->findBy(
+            [],
+            ['name' => 'ASC'],
+            9
         );
 
-        if (null !== $country) {
-            $games = $gameRepository->findBy(
-                [],
-                ['name' => 'ASC', 'publishedAt' => 'DESC']
-            );
-            dump($games);
-        }
-//        $games =
-//        foreach ($countries as $country) {
-//            foreach ($country->getGames() as $game) {
-//                dump($country->getName(), $game->getName());
-//            }
-//        }
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-            'message' => 'Super message de bienvenue !',
+            'lastGames' => $lastGames,
+            'expensiveGames' => $expensiveGames,
+            'alphaGames' => $alphaGames,
         ]);
     }
 
