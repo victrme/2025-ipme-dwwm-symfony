@@ -2,29 +2,24 @@
 
 namespace App\Controller;
 
-use App\Entity\Country;
-use App\Repository\CountryRepository;
+use App\Repository\GameRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
 {
-
     #[Route(name: 'app_home')]
-    public function index(CountryRepository $countryRepository): Response
+    public function index(GameRepository $gameRepository): Response
     {
-        /** @var Country[] $countries */
-        // SELECT * FROM country;
-        //        $countries = $countryRepository->findAll();
-        //        foreach ($countries as $country) {
-        //            foreach ($country->getGames() as $game) {
-        //                dump($country->getName(), $game->getName());
-        //            }
-        //        }
+        $allGames = $gameRepository->findBy([], ["name" => "ASC"], 9);
+        $latestGames = $gameRepository->findBy([], ["publishedAt" => "DESC"], 9);
+        $mostExpensive = $gameRepository->findBy([], ["price" => "DESC"], 9);
+
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-            'message' => 'Super message de bienvenue !',
+            "all" => $allGames,
+            "latest" => $latestGames,
+            "expensive" =>  $mostExpensive,
         ]);
     }
 }
