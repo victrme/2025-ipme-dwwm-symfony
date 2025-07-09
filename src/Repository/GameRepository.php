@@ -36,4 +36,19 @@ class GameRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function getMostPlayedGames(int $limit = null): array
+    {
+        $qb = $this->createQueryBuilder('g')
+            ->join('g.ownedByUser', 'oBu')
+            ->groupBy('g.name')
+            ->orderBy('SUM(oBu.gameTime)', 'DESC');
+
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

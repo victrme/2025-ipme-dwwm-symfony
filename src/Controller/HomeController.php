@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
 use App\Repository\GameRepository;
+use App\Repository\ReviewRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -11,7 +13,11 @@ final class HomeController extends AbstractController
 {
 
     #[Route(name: 'app_home')]
-    public function index(GameRepository $gameRepository): Response
+    public function index(
+        GameRepository     $gameRepository,
+        ReviewRepository   $reviewRepository,
+        CategoryRepository $categoryRepository
+    ): Response
     {
         $lastGames = $gameRepository->findBy(
             [],
@@ -24,11 +30,20 @@ final class HomeController extends AbstractController
             9
         );
         $bestSellers = $gameRepository->findByBestSeller(9);
+        $mostPlayedGames = $gameRepository->getMostPlayedGames(9);
+
+        $lastReviews = $reviewRepository->findBy(
+            [],
+            ['createdAt' => 'DESC'],
+            4
+        );
 
         return $this->render('home/index.html.twig', [
             'lastGames' => $lastGames,
             'expensiveGames' => $expensiveGames,
             'bestSellers' => $bestSellers,
+            'mostPlayedGames' => $mostPlayedGames,
+            'lastReviews' => $lastReviews,
         ]);
     }
 
