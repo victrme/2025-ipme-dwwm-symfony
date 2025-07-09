@@ -4,16 +4,18 @@
 
 {% block body %}
 
-    <div class="container">
-        <h1>Hello {{ controller_name }} !</h1>
-        <a href="{{ path('app_home') }}">
-            Home
-        </a>
-        <p>
-            {% if message is defined %}
-                {{ message }}
-            {% endif %}
-        </p>
-    </div>
+<div class="container">
+	<h1>Hello {{ controller_name }} !</h1>
+
+	<a href={{ path(name, parameters=[]) }}>
+		Home
+	</a>
+
+	<p>
+		{% if message is defined %}
+		{{ message }}
+		{% endif %}
+	</p>
+</div>
 
 {% endblock %}
