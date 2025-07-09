@@ -19,19 +19,19 @@ class UserOwnGame
     #[ORM\Column]
     private ?int $gameTime = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $lastUsedAt = null;
 
     #[ORM\Column]
     private ?bool $isInstalled = null;
 
-    #[ORM\ManyToOne(inversedBy: 'userOwnGames')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
-
-    #[ORM\ManyToOne(inversedBy: 'userOwnGames')]
+    #[ORM\ManyToOne(inversedBy: 'ownedByUser')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Game $game = null;
+
+    #[ORM\ManyToOne(inversedBy: 'ownedGames')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -67,7 +67,7 @@ class UserOwnGame
         return $this->lastUsedAt;
     }
 
-    public function setLastUsedAt(\DateTimeImmutable $lastUsedAt): static
+    public function setLastUsedAt(?\DateTimeImmutable $lastUsedAt): static
     {
         $this->lastUsedAt = $lastUsedAt;
 
@@ -86,18 +86,6 @@ class UserOwnGame
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getGame(): ?Game
     {
         return $this->game;
@@ -106,6 +94,18 @@ class UserOwnGame
     public function setGame(?Game $game): static
     {
         $this->game = $game;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -15,7 +15,7 @@ class Country
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 2)]
     private ?string $code = null;
 
     #[ORM\Column(length: 255)]
@@ -37,22 +37,22 @@ class Country
     private Collection $publishers;
 
     /**
-     * @var Collection<int, Game>
-     */
-    #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'countries')]
-    private Collection $games;
-
-    /**
      * @var Collection<int, User>
      */
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'country')]
     private Collection $users;
 
+    /**
+     * @var Collection<int, Game>
+     */
+    #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'countries')]
+    private Collection $games;
+
     public function __construct()
     {
         $this->publishers = new ArrayCollection();
-        $this->games = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->games = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -151,33 +151,6 @@ class Country
     }
 
     /**
-     * @return Collection<int, Game>
-     */
-    public function getGames(): Collection
-    {
-        return $this->games;
-    }
-
-    public function addGame(Game $game): static
-    {
-        if (!$this->games->contains($game)) {
-            $this->games->add($game);
-            $game->addCountry($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGame(Game $game): static
-    {
-        if ($this->games->removeElement($game)) {
-            $game->removeCountry($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, User>
      */
     public function getUsers(): Collection
@@ -202,6 +175,33 @@ class Country
             if ($user->getCountry() === $this) {
                 $user->setCountry(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Game>
+     */
+    public function getGames(): Collection
+    {
+        return $this->games;
+    }
+
+    public function addGame(Game $game): static
+    {
+        if (!$this->games->contains($game)) {
+            $this->games->add($game);
+            $game->addCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGame(Game $game): static
+    {
+        if ($this->games->removeElement($game)) {
+            $game->removeCountry($this);
         }
 
         return $this;

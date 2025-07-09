@@ -19,15 +19,16 @@ class Publisher
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
     private ?string $website = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
-
     #[ORM\ManyToOne(inversedBy: 'publishers')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Country $country = null;
 
     /**
@@ -58,6 +59,18 @@ class Publisher
         return $this;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -78,18 +91,6 @@ class Publisher
     public function setWebsite(string $website): static
     {
         $this->website = $website;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
 
         return $this;
     }

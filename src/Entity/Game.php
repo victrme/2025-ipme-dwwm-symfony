@@ -35,7 +35,6 @@ class Game
     private ?string $slug = null;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Publisher $publisher = null;
 
     /**
@@ -51,30 +50,23 @@ class Game
     private Collection $countries;
 
     /**
+     * @var Collection<int, UserOwnGame>
+     */
+    #[ORM\OneToMany(targetEntity: UserOwnGame::class, mappedBy: 'game')]
+    private Collection $ownedByUser;
+
+    /**
      * @var Collection<int, Review>
      */
     #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'game')]
     private Collection $reviews;
 
-    /**
-     * @var Collection<int, UserOwnGame>
-     */
-    #[ORM\OneToMany(targetEntity: UserOwnGame::class, mappedBy: 'game')]
-    private Collection $userOwnGames;
-
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'wantedGames')]
-    private Collection $users;
-
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->countries = new ArrayCollection();
+        $this->ownedByUser = new ArrayCollection();
         $this->reviews = new ArrayCollection();
-        $this->userOwnGames = new ArrayCollection();
-        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -215,6 +207,36 @@ class Game
     }
 
     /**
+     * @return Collection<int, UserOwnGame>
+     */
+    public function getOwnedByUser(): Collection
+    {
+        return $this->ownedByUser;
+    }
+
+    public function addOwnedByUser(UserOwnGame $ownedByUser): static
+    {
+        if (!$this->ownedByUser->contains($ownedByUser)) {
+            $this->ownedByUser->add($ownedByUser);
+            $ownedByUser->setGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOwnedByUser(UserOwnGame $ownedByUser): static
+    {
+        if ($this->ownedByUser->removeElement($ownedByUser)) {
+            // set the owning side to null (unless already changed)
+            if ($ownedByUser->getGame() === $this) {
+                $ownedByUser->setGame(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Review>
      */
     public function getReviews(): Collection
@@ -239,63 +261,6 @@ class Game
             if ($review->getGame() === $this) {
                 $review->setGame(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, UserOwnGame>
-     */
-    public function getUserOwnGames(): Collection
-    {
-        return $this->userOwnGames;
-    }
-
-    public function addUserOwnGame(UserOwnGame $userOwnGame): static
-    {
-        if (!$this->userOwnGames->contains($userOwnGame)) {
-            $this->userOwnGames->add($userOwnGame);
-            $userOwnGame->setGame($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUserOwnGame(UserOwnGame $userOwnGame): static
-    {
-        if ($this->userOwnGames->removeElement($userOwnGame)) {
-            // set the owning side to null (unless already changed)
-            if ($userOwnGame->getGame() === $this) {
-                $userOwnGame->setGame(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addWantedGame($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeWantedGame($this);
         }
 
         return $this;

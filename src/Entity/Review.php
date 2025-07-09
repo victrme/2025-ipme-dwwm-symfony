@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReviewRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
@@ -13,20 +14,20 @@ class Review
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?int $downVote = null;
+    private ?int $downVote = 0;
 
     #[ORM\Column]
-    private ?int $upVote = null;
+    private ?int $upVote = 0;
 
     #[ORM\Column]
-    private ?int $rating = null;
+    private ?float $rating = null;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
@@ -92,12 +93,12 @@ class Review
         return $this;
     }
 
-    public function getRating(): ?int
+    public function getRating(): ?float
     {
         return $this->rating;
     }
 
-    public function setRating(int $rating): static
+    public function setRating(float $rating): static
     {
         $this->rating = $rating;
 
