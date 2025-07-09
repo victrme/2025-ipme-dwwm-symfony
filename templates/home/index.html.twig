@@ -4,45 +4,29 @@
 
 {% block body %}
 
+<a href="/" target="_blank" rel="noopener noreferrer"></a>
+
 <div class="container">
     <h1 class="text-center">Steamish v3</h1>
 
+    <h2 class="text-center">Plus vendus</h2>
+    {% include "partial/_gamecard.twig" with { "games": bestSellers, thumbnail: true } %}
+
     <h2 class="text-center">Les derniers jeux</h2>
-    <ul class="row gap-2">
-        {% for game in latest %}
-        <div class="card col-3">
-            <img src="{{ game.thumbnailCover }}" class="card-img-top" alt="">
-            <div class="card-body">
-                <h5 class="card-title">{{ game.name }}</h5>
-                <p class="card-text">{{ game.publishedAt|date("m/d/Y") }}</p>
-            </div>
-        </div>
-        {% endfor %}
-    </ul>
+    {% include "partial/_gamecard.twig" with { "games": latestGames } %}
 
-    <h2>Les jeux les plus chers</h2>
-    <ul class="row">
-        {% for game in expensive %}
-        <div class="card col-4">
-            <div class="card-body">
-                <h5 class="card-title">{{ game.name }}</h5>
-                <p class="card-text">{{ game.price }}€</p>
-            </div>
-        </div>
-        {% endfor %}
-    </ul>
+    <h2 class="text-center">Les jeux les plus chers</h2>
+    {% include "partial/_gamecard.twig" with { "games": mostExpensiveGames } %}
 
-    <h2>Tout les jeux</h2>
-    <ul class="row">
-        {% for game in all %}
-        <li>
-            {{ game.name }}
-        </li>
-        {% endfor %}
-        <li>
-            Voir plus...
-        </li>
-    </ul>
+    <h2 class="text-center"> Tout les jeux</h2>
+    {% include "partial/_gamecard.twig" with { "games": allGames } %}
+
+    <h2 class="text-center">Derniers commentaires</h2>
+    {% for review in lastReviews %}
+    <p>
+        {{ review.content }}
+    </p>
+    {% endfor %}
 </div>
 
 {% endblock %}
