@@ -39,7 +39,6 @@ final class HomeController extends AbstractController
         );
 
         $categories = $categoryRepository->findByMostPlayed(9);
-        dd($categories);
 
         return $this->render('home/index.html.twig', [
             'lastGames' => $lastGames,
@@ -47,6 +46,7 @@ final class HomeController extends AbstractController
             'bestSellers' => $bestSellers,
             'mostPlayedGames' => $mostPlayedGames,
             'lastReviews' => $lastReviews,
+            'categories' => $categories,
         ]);
     }
 

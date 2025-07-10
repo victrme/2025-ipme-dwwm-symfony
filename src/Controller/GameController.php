@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
 use App\Repository\GameRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,20 @@ final class GameController extends AbstractController
 
         return $this->render('game/show.html.twig', [
             'game' => $game,
+        ]);
+    }
+
+    #[Route('/categorie/{slug}', name: 'app_game_category')]
+    public function gameCategory(string $slug, CategoryRepository $categoryRepository): Response
+    {
+        $category = $categoryRepository->findOneBy(['slug' => $slug]);
+        if ($category === null) {
+            $this->addFlash('danger', 'Cette catégorie n\'existe pas !');
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('game/games_by_category.html.twig', [
+            'category' => $category,
         ]);
     }
 

@@ -20,6 +20,8 @@ class CategoryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('c')
             ->join('c.games', 'g')
+            ->join('g.ownedByUser', 'uog')
+            ->orderBy('SUM(uog.gameTime)', 'DESC')
             ->groupBy('c.id');
 
         if ($limit !== null) {
