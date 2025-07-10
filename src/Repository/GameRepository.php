@@ -31,6 +31,20 @@ class GameRepository extends ServiceEntityRepository
 	}
 
 	/**
+	 * @param string $slug
+	 * @return ?Game[]
+	 */
+	public function findAllByCountry($slug)
+	{
+		$qb = $this->createQueryBuilder("g")
+			->join("g.countries", "c")
+			->andWhere('c.slug = :slug')
+			->setParameter('slug', $slug);
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
 	 * @return Game[]
 	 */
 	public function findByBestSellers(int $amount)

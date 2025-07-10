@@ -19,7 +19,7 @@ final class HomeController extends AbstractController
 	): Response {
 
 		$allGames = $gameRepository->findBy([], ["name" => "ASC"], 9);
-		$bestSellers = $gameRepository->findByBestSellers(10);
+		$bestSellers = $gameRepository->findByBestSellers(12);
 		$lastReviews = $reviewRepository->findByLastComments(4);
 		$latestGames = $gameRepository->findBy([], ["publishedAt" => "DESC"], 9);
 		$mostExpensiveGames = $gameRepository->findBy([], ["price" => "DESC"], 9);
