@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Game;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -43,6 +44,20 @@ class GameRepository extends ServiceEntityRepository
             ->join('g.ownedByUser', 'oBu')
             ->groupBy('g.name')
             ->orderBy('SUM(oBu.gameTime)', 'DESC');
+
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByCategory(Category $category, int $limit = null): array
+    {
+        $qb = $this->createQueryBuilder('g')
+            ->join('g.categories', 'c')
+            ->where('c = :categ')
+            ->setParameter('categ', $category);
 
         if ($limit !== null) {
             $qb->setMaxResults($limit);
