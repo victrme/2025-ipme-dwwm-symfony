@@ -7,14 +7,14 @@
     <div class="container">
         <h1 class="text-center">SteamIsh V3</h1>
 
-        <div class="row">
-            {% for review in lastReviews %}
-                <div class="col-lg-3">
-                    {{ review.createdAt|date('d/m/Y') }}
-                    {{ review.rating }}/5
-                </div>
-            {% endfor %}
-        </div>
+{#        <div class="row">#}
+{#            {% for review in lastReviews %}#}
+{#                <div class="col-lg-3">#}
+{#                    {{ review.createdAt|date('d/m/Y') }}#}
+{#                    {{ review.rating }}/5#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        </div>#}
 
         {% include 'partials/_game_loop.html.twig' with {
             'title': 'Les dernières sorties',

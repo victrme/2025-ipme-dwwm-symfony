@@ -29,9 +29,6 @@ class Review
     #[ORM\Column]
     private ?float $rating = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
-
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -101,18 +98,6 @@ class Review
     public function setRating(float $rating): static
     {
         $this->rating = $rating;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
 
         return $this;
     }
