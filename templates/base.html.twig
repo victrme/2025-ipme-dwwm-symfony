@@ -14,6 +14,15 @@
     </head>
     <body>
         {% block header %}{% endblock %}
+
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }}" role="alert">
+                    {{ message|raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
         {% block body %}{% endblock %}
         {% block footer %}{% endblock %}
     </body>

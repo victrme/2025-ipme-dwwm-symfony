@@ -3,7 +3,8 @@
 {% endif %}
 <div class="row">
     {% for game in games %}
-        <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
+        <a class="col-lg-4 col-md-6 col-sm-12 mb-2"
+           href="{{ path('app_show_game', {'slug': game.slug}) }}">
             <div class="container-img">
                 <img src="{{ game.thumbnailCover }}"
                      alt="{{ game.name }}">
@@ -16,6 +17,6 @@
                     {{ game.price }}€
                 </h3>
             </div>
-        </div>
+        </a>
     {% endfor %}
 </div>
