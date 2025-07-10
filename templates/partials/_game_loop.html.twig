@@ -3,7 +3,7 @@
 {% endif %}
 <div class="row">
     {% for game in games %}
-        <a class="col-lg-4 col-md-6 col-sm-12 mb-2"
+        <a class="col-lg-4 col-md-6 col-sm-12 mb-2 card-link"
            href="{{ path('app_show_game', {'slug': game.slug}) }}">
             <div class="container-img">
                 <img src="{{ game.thumbnailCover }}"

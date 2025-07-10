@@ -1,0 +1,19 @@
+
+.card-link {
+    text-decoration: none;
+    color: $default-gray;
+
+    img {
+        transition: ease-out 0.25s;
+    }
+
+    &:hover {
+        color: $default-color;
+
+        img {
+            transform: scale(1.025);
+            transition: ease-in 0.25s;
+        }
+    }
+
+}
