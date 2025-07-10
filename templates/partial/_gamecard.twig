@@ -1,19 +1,22 @@
-<ul class="row">
+<ul class="row p-0">
 	{% for game in games %}
-		<div class="card col-2">
-			{% if thumbnail is defined %}
-				<img src="{{ game.thumbnailCover }}" alt="" srcset="">
-			{% endif %}
+		<a href="{{ path("app_show_game", {slug: game.slug})}}" class="col-lg-2 col-md-4 p-1">
 
-			<div class="card-body">
-				<h5 class="card-title">{{ game.name }}</h5>
-				<p class="card-text">
-					- Prix:
-					{{ game.price }}€<br>
-					- Sortie:
-					{{ game.publishedAt.format("y/m/d") }}
-				</p>
+			<div class="card ">
+				{% if thumbnail is defined %}
+					<img src="{{ game.thumbnailCover }}" alt="" srcset="">
+				{% endif %}
+
+				<div class="card-body">
+					<h5 class="card-title">{{ game.name }}</h5>
+					<p class="card-text">
+						- Prix:
+						{{ game.price }}€<br>
+						- Sortie:
+						{{ game.publishedAt.format("y/m/d") }}
+					</p>
+				</div>
 			</div>
-		</div>
+		</a>
 	{% endfor %}
 </ul>

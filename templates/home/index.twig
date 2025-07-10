@@ -1,0 +1,52 @@
+{% extends 'base.twig' %}
+
+{% block title %}Steamish v3!
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="mt-5 text-center">Steamish v3</h1>
+
+		<h2 class="mt-5 text-center">Plus vendus</h2>
+		{% include "partial/_gamecard.twig" with { "games": bestSellers, thumbnail: true } %}
+
+		<h2 class="mt-5 text-center">Les derniers jeux</h2>
+		{% include "partial/_gamecard.twig" with { "games": latestGames } %}
+
+		<h2 class="mt-5 text-center">Les jeux les plus chers</h2>
+		{% include "partial/_gamecard.twig" with { "games": mostExpensiveGames } %}
+
+		<h2 class="mt-5 text-center">
+			Tout les jeux</h2>
+		{% include "partial/_gamecard.twig" with { "games": allGames } %}
+
+		<h2 class="mt-5 text-center">Derniers commentaires</h2>
+
+		<div class="col-md-8 mx-auto">
+			{% for review in lastReviews %}
+				<strong>
+					{{ review.user.name }}
+				</strong>
+				<small>
+					({{ review.createdAt|date("j/m/y h:m") }})
+				</small>
+				<blockquote>
+					{{ review.content }}
+				</blockquote>
+			{% endfor %}
+		</div>
+
+		<h2 class="mt-5 text-center">Genre les plus joués</h2>
+
+		<div class="col-md-4 mx-auto">
+			<ol>
+				{% for cat in mostPlayedCategories %}
+					<li>
+						{{ cat.name }}
+					</li>
+				{% endfor %}
+			</ol>
+		</div>
+
+	</div>
+{% endblock %}

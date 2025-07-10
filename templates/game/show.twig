@@ -1,0 +1,40 @@
+{% extends 'base.twig' %}
+
+{% block title %}
+	{{ game.name }}
+	- Steamish v3
+{% endblock %}
+
+{% block body %}
+	{% include "partial/_header.twig" %}
+
+	<div class="container">
+
+		<div class="row mt-3">
+
+			<div class="row col-lg-9 mx-auto">
+				<h1 class="my-5">{{ game.name }}</h1>
+
+				<div class="col-md-4">
+					<img class="w-100" src="{{ game.thumbnailCover }}" alt="" srcset="">
+				</div>
+
+				<div class="col-md-8">
+					<ul>
+						<li>
+							Prix:
+							{{ game.price }}€
+						</li>
+						<li>
+							Sortie:
+							{{ game.publishedAt.format("y/m/d") }}
+						</li>
+					</ul>
+					<p>
+						{{ game.description }}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
