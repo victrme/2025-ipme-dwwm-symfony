@@ -30,9 +30,9 @@ final class GameController extends AbstractController
 		}
 
 		return $this->render('game/show.twig', [
-			"lastReviews" => $lastReviews,
 			"categories" => $categories,
 			"countries" => $countries,
+			"reviews" => $lastReviews,
 			"game" => $game
 		]);
 	}
