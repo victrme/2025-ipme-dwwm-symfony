@@ -42,7 +42,9 @@
 			<ol>
 				{% for cat in mostPlayedCategories %}
 					<li>
-						{{ cat.name }}
+						<a href="{{ path('app_category', {slug: cat.slug}) }}">
+							{{ cat.name }}
+						</a>
 					</li>
 				{% endfor %}
 			</ol>

@@ -25,7 +25,6 @@ final class HomeController extends AbstractController
 		$mostExpensiveGames = $gameRepository->findBy([], ["price" => "DESC"], 9);
 		$mostPlayedCategories = $categoryRepository->findByMostPlayed();
 
-
 		return $this->render('home/index.twig', [
 			"allGames" => $allGames,
 			"bestSellers" => $bestSellers,
