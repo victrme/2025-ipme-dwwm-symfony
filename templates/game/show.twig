@@ -54,24 +54,7 @@
 			<div>
 				<h2 class="pt-5">Dernières reviews</h2>
 
-				{% for review in lastReviews %}
-				<div class="card my-2">
-					<div class="card-header">
-						<strong>
-							{{review.rating}} / 5
-						</strong>
-						<a href="{{path('app_home', {id: review.user.id})}}">
-							{{review.user.email}}
-						</a>
-						• {{review.createdAt|date("d/m/y h:m")}}
-					</div>
-					<div class="card-body">
-						<p>
-							{{review.content}}
-						</p>
-					</div>
-				</div>
-				{% endfor %}
+				{% include "partial/_review.twig" with { reviews: latestReviews } %}
 			</div>
 		</div>
 	</div>

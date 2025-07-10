@@ -1,0 +1,20 @@
+{% extends 'base.twig' %}
+
+{% block title %}{{user.email}} - Steamish v3{% endblock %}
+
+{% block body %}
+{% include "partial/_header.twig" %}
+
+<div class="container pt-5">
+	<h1>{{user.name}}</h1>
+	<ul>
+		<li>Email: {{user.email}}</li>
+		<li>Nickname: {{user.nickname}}</li>
+		<li>Créé le: {{user.createdAt|date()}}</li>
+	</ul>
+</div>
+
+<h2 class="mt-5 mb-2">Dernières reviews</h2>
+
+{% include "partial/_review.twig" with {reviews: reviews} %}
+{% endblock %}
