@@ -14,9 +14,9 @@ final class HomeController extends AbstractController
 
     #[Route(name: 'app_home')]
     public function index(
-        GameRepository     $gameRepository,
-        ReviewRepository   $reviewRepository,
-        CategoryRepository $categoryRepository
+        GameRepository         $gameRepository,
+        ReviewRepository       $reviewRepository,
+        CategoryRepository     $categoryRepository,
     ): Response
     {
         $lastGames = $gameRepository->findBy(
