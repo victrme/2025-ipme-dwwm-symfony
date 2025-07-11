@@ -23,8 +23,8 @@ final class RegisterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setCreatedAt(new DateTimeImmutable());
-            $em->persist($user);
-            $em->flush();
+            $em->persist($user); // Indiquer que l'instance $user de la classe User, doit être "INSERT" en base de données
+            $em->flush(); // Envoyer / confirmer que la requête d'INSERT doit passer en base de données
 
             $this->addFlash('success', 'Inscription réussie !');
             return $this->redirectToRoute('app_home');
