@@ -1,18 +1,20 @@
 {% for review in reviews %}
-<div class="card my-2">
-	<div class="card-header">
-		<strong>
-			{{review.rating}} / 5
-		</strong>
-		<a href="{{path('app_show_user', {id: review.user.id})}}">
-			{{review.user.email}}
-		</a>
-		• {{review.createdAt|date("d/m/y h:m")}}
+	<div class="card my-2">
+		<div class="card-header">
+			<strong>
+				{{review.rating}}
+				/ 5
+			</strong>
+			<a href="{{path('app_show_user', {id: review.user.id})}}">
+				{{review.user.email}}
+			</a>
+			•
+			{{review.createdAt|date("d/m/y h:m")}}
+		</div>
+		<div class="card-body">
+			<p>
+				{{review.content}}
+			</p>
+		</div>
 	</div>
-	<div class="card-body">
-		<p>
-			{{review.content}}
-		</p>
-	</div>
-</div>
 {% endfor %}
