@@ -31,4 +31,16 @@ class CategoryRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findFullBySlug(string $slug): ?Category
+    {
+        return $this->createQueryBuilder('c') // SELECT c.* FROM category c
+            ->select('c', 'g') // SELECT c.*, g.*
+            ->join('c.games', 'g') // JOIN game_category + JOIN game g
+            ->where('c.slug = :slug') // WHERE c.slug = ?
+            ->setParameter('slug', $slug) // ADD PARAMETER 0, $slug
+            ->orderBy('g.price', 'DESC') // ORDER BY g.price DESC
+            ->getQuery() // MET EN FORME LA REQUETE POUR L'EXECUTER
+            ->getOneOrNullResult(); // EXECUTE LA REQUETE (Le oneOrNullResult fait secrètement un LIMIT 1)
+    }
+
 }

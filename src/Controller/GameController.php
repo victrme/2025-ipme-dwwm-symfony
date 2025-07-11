@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\CategoryRepository;
 use App\Repository\GameRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -27,9 +28,12 @@ final class GameController extends AbstractController
     }
 
     #[Route('/categorie/{slug}', name: 'app_game_category')]
-    public function gameCategory(string $slug, CategoryRepository $categoryRepository): Response
+    public function gameCategory(
+        string $slug,
+        CategoryRepository $categoryRepository
+    ): Response
     {
-        $category = $categoryRepository->findOneBy(['slug' => $slug]);
+        $category = $categoryRepository->findFullBySlug($slug);
         if ($category === null) {
             $this->addFlash('danger', 'Cette catégorie n\'existe pas !');
             return $this->redirectToRoute('app_home');
