@@ -52,7 +52,7 @@ final class GameController extends AbstractController
 
 		// Render
 
-		$lastReviews = $reviewRepository->findByLastComments($game->getId(), 20);
+		$lastReviews = $reviewRepository->findLastByGameId($game->getId(), 20);
 		$categories = $game->getCategories()->getValues();
 		$countries = $game->getCountries()->getValues();
 

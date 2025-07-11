@@ -33,11 +33,24 @@ class ReviewRepository extends ServiceEntityRepository
 	}
 
 	/**
+	 * @param ?int $limit
+	 * @return Review[]
+	 */
+	public function findLast($limit = 10)
+	{
+		return $this->createQueryBuilder("r")
+			->orderBy("r.createdAt", 'DESC')
+			->setMaxResults($limit)
+			->getQuery()
+			->getResult();
+	}
+
+	/**
 	 * @param ?string $game
 	 * @param ?int $limit
 	 * @return Review[]
 	 */
-	public function findByLastComments(?string $game, $limit = 10)
+	public function findLastByGameId(?string $game, $limit = 10)
 	{
 		return $this->createQueryBuilder("r")
 			->join("r.game", "g")
