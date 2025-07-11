@@ -15,3 +15,9 @@
 - Le "downVote" sera initialisé à 0
 - Le "upVote" sera initialisé à 0
 - Le "user" sera un utilisateur aléatoire de votre choix (à récupérer vous-même via le UserRepository)
+
+
+## 3. 2025/07/11
+
+- Faire un formulaire de création des "Publisher"
+- (La difficulté réside sur le fait de relier l'entité à Country...)
