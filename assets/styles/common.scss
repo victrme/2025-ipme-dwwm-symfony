@@ -8,6 +8,10 @@ body {
     width: 100%;
     height: 180px;
 
+    &.big {
+        height: 560px;
+    }
+
     img {
         width: 100%;
         height: 100%;
