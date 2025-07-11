@@ -23,6 +23,13 @@
 							Prix:
 							{{ game.price }}€
 						</li>
+						{% if game.publisher is defined %}
+							<li>
+								Editeur:
+								{{ game.publisher.name }}
+							</li>
+						{% endif %}
+
 						<li>
 							Sortie:
 							{{ game.publishedAt.format("y/m/d") }}

@@ -45,7 +45,6 @@ final class GameController extends AbstractController
 			$userReview->setTitle("");
 			$userReview->setGame($game);
 			$userReview->setUser($userRepository->find(1));
-
 			$entityManager->persist($userReview);
 			$entityManager->flush();
 		}

@@ -1,0 +1,20 @@
+{% extends 'base.twig' %}
+
+{% block title %}Administrateur - Steamish v3!
+{% endblock %}
+
+{% block body %}
+	<h1>Page d'administration</h1>
+
+	<ul>
+		<li>
+			{#  #}
+			<a href="{{path('app_new_category')}}">
+				Nouvelle catégorie</a>
+		</li>
+		<li>
+			{#  #}
+			<a href="{{path('app_new_publisher')}}">Nouveau publisher</a>
+		</li>
+	</ul>
+{% endblock %}

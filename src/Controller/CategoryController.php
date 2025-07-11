@@ -24,7 +24,7 @@ final class CategoryController extends AbstractController
 		]);
 	}
 
-	#[Route('admin/category/new', name: 'app_new_category')]
+	#[Route('admin/new/category', name: 'app_new_category')]
 	public function new(Request $request, EntityManagerInterface $em): Response
 	{
 		/** @var Category */
