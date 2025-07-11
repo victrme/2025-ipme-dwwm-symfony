@@ -53,6 +53,8 @@ class ReviewRepository extends ServiceEntityRepository
 	public function findLastByGameId(?string $game, $limit = 10)
 	{
 		return $this->createQueryBuilder("r")
+			->addSelect("u")
+			->join("r.user", "u")
 			->join("r.game", "g")
 			->orderBy("r.createdAt", 'DESC')
 			->where("g.id = :id")
