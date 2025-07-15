@@ -48,16 +48,32 @@ final class AdminGameController extends AbstractController
 	}
 
 	#[Route('/admin/game/update/{id}', name: 'app_admin_update_game')]
-	public function update(string $id): Response
+	public function update(
+		string $id,
+		Request $request,
+		GameRepository $gameRepository,
+		EntityManagerInterface $entityManager): Response
 	{
-		// ... update
-		return $this->render('admin_game/index.twig');
+		/** @var Game game */
+		$game = $gameRepository->find($id);
+		$form = $this->createForm(GameType::class, $game);
+		$form->handleRequest($request);
+
+		if ($form->isSubmitted() && $form->isValid()) {
+			$entityManager->persist($game);
+			$entityManager->flush();
+
+			return $this->redirectToRoute('app_admin_show_game', [
+				'id' => $game->getId(),
+			]);
+		}
+
+		return $this->render('admin_game/update.twig', ['form' => $form]);
 	}
 
-	#[Route('/admin/game/delete/{id}', name: 'app_admin_delte_game')]
+	#[Route('/admin/game/delete/{id}', name: 'app_admin_delete_game')]
 	public function delete(string $id): Response
 	{
-		// ... suppr
 		return $this->render('admin_game/index.twig');
 	}
 
