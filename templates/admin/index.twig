@@ -1,20 +1,26 @@
-{% extends 'base.twig' %}
+{% extends 'admin.twig' %}
 
 {% block title %}Administrateur - Steamish v3!
 {% endblock %}
 
 {% block body %}
-	<h1>Page d'administration</h1>
 
-	<ul>
-		<li>
-			{#  #}
-			<a href="{{path('app_new_category')}}">
-				Nouvelle catégorie</a>
-		</li>
-		<li>
-			{#  #}
-			<a href="{{path('app_new_publisher')}}">Nouveau publisher</a>
-		</li>
-	</ul>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 mx-auto my-5">
+				<h1>Page d'administration</h1>
+
+				<h2>Les jeux</h2>
+				<ul>
+					{#  #}
+					<li>
+						<a href="{{path('app_admin_list_game')}}">Lister tout les jeux</a>
+					</li>
+					<li>
+						<a href="{{path('app_admin_new_game')}}">Ajouter un jeu</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 {% endblock %}

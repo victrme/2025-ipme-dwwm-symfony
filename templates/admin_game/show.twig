@@ -1,0 +1,24 @@
+{% extends 'admin.twig' %}
+
+{% block body %}
+	<ul>
+		<li>Nom:
+			{{ game.name }}
+		</li>
+		<li>Slug:
+			{{ game.slug }}
+		</li>
+		<li>Prix:
+			{{ game.price }}€
+		</li>
+		<li>Publié le:
+			{{ game.publishedAt|date }}
+		</li>
+		<li>Image:
+			{{ game.thumbnailCover }}
+		</li>
+		<li>Description:
+			{{ game.description }}
+		</li>
+	</ul>
+{% endblock %}

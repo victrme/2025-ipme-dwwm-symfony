@@ -1,0 +1,8 @@
+{% for label, value in field_choices(data) %}
+	<div class="form-check">
+		<input class="form-check-input" type="checkbox" value="{{ value }}" name="{{ class }}[{{ key }}][]" id="check-{{ key }}-{{ value }}">
+		<label class="form-check-label" for="check-{{ key }}-{{ value }}">
+			{{ label }}
+		</label>
+	</div>
+{% endfor %}
