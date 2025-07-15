@@ -1,18 +1,18 @@
 {% extends 'base.twig' %}
 
 {% block title %}
-	{{name}}
-	Games - Steamish v3
+    {{ name }}
+    Games - Steamish v3
 {% endblock %}
 
 {% block body %}
 
-	<div class="container">
-		<h1 class="mt-5">
-			Jeux disponible pour:
-			{{name}}
-		</h1>
+    <div class="container">
+        <h1 class="mt-5">
+            Jeux disponible pour:
+            {{ name }}
+        </h1>
 
-		{% include "partial/_gamecard.twig" with { "games": games } %}
-	</div>
+        {{ include('partial/_gamecard.twig', {games: games}) }}
+    </div>
 {% endblock %}

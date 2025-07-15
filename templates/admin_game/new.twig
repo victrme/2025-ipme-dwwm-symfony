@@ -1,64 +1,64 @@
 {% extends 'admin.twig' %}
 
 {% block body %}
-	<div class="container">
-		<div class="row">
-			<div class="col-md-8 mx-auto">
-				<h1 class="pt-5 pb-3">
-					Ajout de jeu
-				</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h1 class="pt-5 pb-3">
+                    Ajout de jeu
+                </h1>
 
-				{{ form_start(form) }}
+                {{ form_start(form) }}
 
-				<div class="row my-2">
-					<div class="col-8">
-						{{ form_row(form.name) }}
-					</div>
-					<div class="col-4">
-						{{ form_row(form.price) }}
-					</div>
-				</div>
+                <div class="row my-2">
+                    <div class="col-8">
+                        {{ form_row(form.name) }}
+                    </div>
+                    <div class="col-4">
+                        {{ form_row(form.price) }}
+                    </div>
+                </div>
 
-				<div class="my-2">
-					{{ form_row(form.description) }}
-				</div>
+                <div class="my-2">
+                    {{ form_row(form.description) }}
+                </div>
 
-				<div class="row my-2">
-					<div class="col-8">
-						{{ form_row(form.publisher) }}
-					</div>
-					<div class="col-4">
-						{{ form_row(form.publishedAt) }}
-					</div>
-				</div>
+                <div class="row my-2">
+                    <div class="col-8">
+                        {{ form_row(form.publisher) }}
+                    </div>
+                    <div class="col-4">
+                        {{ form_row(form.publishedAt) }}
+                    </div>
+                </div>
 
-				<div class="my-2">
-					{{ form_row(form.thumbnailCover) }}
-				</div>
+                <div class="my-2">
+                    {{ form_row(form.thumbnailCover) }}
+                </div>
 
-				<div class="row my-2">
-					<div class="col">
-						{{ form_label(form.countries) }}
-						{% include "partial/_checkboxes.twig" with { class: "game", key: "countries", data: form.countries } %}
-					</div>
+                <div class="row my-2">
+                    <div class="col">
+                        {{ form_label(form.countries) }}
+                        {{ include('partial/_checkboxes.twig', {class: 'game', key: 'countries', data: form.countries}) }}
+                    </div>
 
-					<div class="col">
-						{{ form_label(form.categories) }}
-						{% include "partial/_checkboxes.twig" with { class: "game", key: "categories", data: form.categories } %}
-					</div>
-				</div>
+                    <div class="col">
+                        {{ form_label(form.categories) }}
+                        {{ include('partial/_checkboxes.twig', {class: 'game', key: 'categories', data: form.categories}) }}
+                    </div>
+                </div>
 
-				<div class="text-center my-5">
-					{{ form_row(form.submit) }}
-				</div>
+                <div class="text-center my-5">
+                    {{ form_row(form.submit) }}
+                </div>
 
-				<div style="display: none">
-					{{form_rest(form)}}
-				</div>
+                <div style="display: none">
+                    {{ form_rest(form) }}
+                </div>
 
-				{{ form_end(form) }}
-			</div>
-		</div>
-	</div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

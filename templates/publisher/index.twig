@@ -3,17 +3,16 @@
 {% block title %}Editeurs - Steamish v3!
 {% endblock %}
 
-
 {% block body %}
-	<div class="container">
-		<h1 class="mt-5 mb-4">Tout les éditeurs</h1>
+    <div class="container">
+        <h1 class="mt-5 mb-4">Tout les éditeurs</h1>
 
-		<ul class="list-group">
-			{% for publisher in publishers %}
-				<li class="list-group-item">
-					{{publisher.name}}
-				</li>
-			{% endfor %}
-		</ul>
-	</div>
+        <ul class="list-group">
+            {% for publisher in publishers %}
+                <li class="list-group-item">
+                    {{ publisher.name }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

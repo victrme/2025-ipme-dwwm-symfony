@@ -1,11 +1,11 @@
 {% extends 'admin.twig' %}
 
 {% block body %}
-	<ul>
-		{% for game in games %}
-			<li>
-				<a href="{{path('app_admin_show_game', {id: game.id})}}">{{ game.name }}</a>
-			</li>
-		{% endfor %}
-	</ul>
+    <ul>
+        {% for game in games %}
+            <li>
+                <a href="{{ path('app_admin_show_game', {id: game.id}) }}">{{ game.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
