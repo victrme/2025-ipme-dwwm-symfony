@@ -9,10 +9,22 @@
 			<a href="{{path('app_publisher')}}">Les éditeurs</a>
 		</div>
 
-		<div>
-			<a href="{{path('app_admin')}}">Administration</a>
-			<a href="{{path('app_register')}}">S'inscrire</a>
-		</div>
-
+		{% if app.user.name is defined %}
+			<div
+				class="d-flex flex-column">
+				{# <a href="{{path('app_admin')}}">Administration</a> #}
+				<span>
+					Bonjour
+					<a href="{{path('app_show_user', {id: app.user.id})}}">{{ app.user.nickname }}</a>
+				</span>
+				<a href="{{ path('app_logout') }}">Se deconnecter</a>
+			</div>
+		{% else %}
+			<div>
+				<a href="{{path('app_register')}}">S'inscrire</a>
+				ou
+				<a href="{{path('app_login')}}">Se connecter</a>
+			</div>
+		{% endif %}
 	</div>
 </nav>

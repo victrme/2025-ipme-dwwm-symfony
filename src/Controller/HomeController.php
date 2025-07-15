@@ -17,7 +17,6 @@ final class HomeController extends AbstractController
 		ReviewRepository $reviewRepository,
 		CategoryRepository $categoryRepository,
 	): Response {
-
 		$allGames = $gameRepository->findBy([], ["name" => "ASC"], 9);
 		$bestSellers = $gameRepository->findByBestSellers(12);
 		$lastReviews = $reviewRepository->findLast(4);
