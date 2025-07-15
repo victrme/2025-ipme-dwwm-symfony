@@ -18,9 +18,11 @@
 					<li>
 						<a class="dropdown-item" href="{{path('app_show_user', {id: app.user.id})}}">Profil</a>
 					</li>
-					<li>
-						<a class="dropdown-item" href="{{path('app_admin')}}">Administration</a>
-					</li>
+					{% if app.user.roles[0] == "ROLE_ADMIN" %}
+						<li>
+							<a class="dropdown-item" href="{{path('app_admin')}}">Administration</a>
+						</li>
+					{% endif %}
 					<li>
 						<hr class="dropdown-divider">
 					</li>
