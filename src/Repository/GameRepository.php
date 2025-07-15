@@ -16,6 +16,13 @@ class GameRepository extends ServiceEntityRepository
 		parent::__construct($registry, Game::class);
 	}
 
+	public function getAll()
+	{
+		$qb = $this->createQueryBuilder('g');
+
+		return $qb;
+	}
+
 	/**
 	 * @param string $slug
 	 *

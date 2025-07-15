@@ -6,6 +6,7 @@ use App\Entity\Game;
 use App\Form\GameType;
 use App\Repository\GameRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,16 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 final class AdminGameController extends AbstractController
 {
 	#[Route('/admin/game/list', name: 'app_admin_list_game')]
-	public function index(GameRepository $gameRepository): Response
+	public function index(GameRepository $gameRepository, Request $request, PaginatorInterface $paginator): Response
 	{
+		$pagination = $paginator->paginate(
+			$gameRepository->getAll(),
+			$request->query->getInt('page', 1),
+			7
+		);
+
 		return $this->render('admin_game/index.twig', [
-			'games' => $gameRepository->findAll(),
+			'pagination' => $pagination,
 		]);
 	}
 
