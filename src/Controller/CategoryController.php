@@ -19,8 +19,8 @@ final class CategoryController extends AbstractController
 		$games = $gameRepository->findAllByCategory($slug);
 
 		return $this->render('category/index.twig', [
-			"name" => $slug,
-			"games" => $games
+			'name' => $slug,
+			'games' => $games,
 		]);
 	}
 
@@ -33,18 +33,18 @@ final class CategoryController extends AbstractController
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$category->setImage("https://imageplaceholder.net/16x16");
+			$category->setImage('https://imageplaceholder.net/16x16');
 
 			$em->persist($category);
 			$em->flush();
 
-			return $this->redirectToRoute("app_category", [
-				"slug" => $category->getSlug()
+			return $this->redirectToRoute('app_category', [
+				'slug' => $category->getSlug(),
 			]);
 		}
 
 		return $this->render('category/new.twig', [
-			"form" => $form->createView()
+			'form' => $form->createView(),
 		]);
 	}
 }

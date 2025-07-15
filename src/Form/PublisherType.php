@@ -20,21 +20,21 @@ class PublisherType extends AbstractType
 			//     'widget' => 'single_text',
 			// ])
 			->add('name', null, [
-				"label" => "Nom",
-				"attr" => ["class" => "form-control"]
+				'label' => 'Nom',
+				'attr' => ['class' => 'form-control'],
 			])
 			->add('website', UrlType::class, [
-				"label" => "Site web",
-				"attr" => ["class" => "form-control"]
+				'label' => 'Site web',
+				'attr' => ['class' => 'form-control'],
 			])
 			->add('country', EntityType::class, [
 				'class' => Country::class,
 				'label' => 'Pays',
 				'choice_label' => 'name',
-				"attr" => ["class" => "form-control"]
+				'attr' => ['class' => 'form-control'],
 			])
-			->add("submit", SubmitType::class, [
-				"attr" => ["class" => "btn btn-primary my-3"]
+			->add('submit', SubmitType::class, [
+				'attr' => ['class' => 'btn btn-primary my-3'],
 			])
 		;
 	}

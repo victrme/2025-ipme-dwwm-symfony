@@ -14,15 +14,15 @@ final class UserController extends AbstractController
 	public function show(
 		string $id,
 		UserRepository $userRepository,
-		ReviewRepository $reviewRepository
+		ReviewRepository $reviewRepository,
 	): Response {
 		/** @var User */
-		$user = $userRepository->findOneBy(["id" => $id]);
+		$user = $userRepository->findOneBy(['id' => $id]);
 		$reviews = $reviewRepository->findLatestByUserId($user->getId());
 
 		return $this->render('user/show.twig', [
-			"user" => $user,
-			"reviews" => $reviews
+			'user' => $user,
+			'reviews' => $reviews,
 		]);
 	}
 }

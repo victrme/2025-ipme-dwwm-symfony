@@ -13,8 +13,8 @@ final class CountryController extends AbstractController
 	public function show(string $slug, GameRepository $gameRepository): Response
 	{
 		return $this->render('country/show.twig', [
-			"name" => $slug,
-			"games" => $gameRepository->findAllByCountry($slug)
+			'name' => $slug,
+			'games' => $gameRepository->findAllByCountry($slug),
 		]);
 	}
 }

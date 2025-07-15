@@ -21,18 +21,18 @@ class RegistrationFormType extends AbstractType
 	{
 		$builder
 			->add('name', null, [
-				"label" => "Nom complet",
-				"attr" => ["class" => "form-control"]
+				'label' => 'Nom complet',
+				'attr' => ['class' => 'form-control'],
 			])
 			->add('nickname', null, [
-				"label" => "Surnom",
-				"attr" => ["class" => "form-control"]
+				'label' => 'Surnom',
+				'attr' => ['class' => 'form-control'],
 			])
 			->add('country', EntityType::class, [
-				"class" => Country::class,
-				"choice_label" => "name",
-				"label" => "Pays",
-				"attr" => ["class" => "form-control"]
+				'class' => Country::class,
+				'choice_label' => 'name',
+				'label' => 'Pays',
+				'attr' => ['class' => 'form-control'],
 			])
 			// ->add("wantedGames", EntityType::class, [
 			// 	"class" => Game::class,
@@ -42,11 +42,11 @@ class RegistrationFormType extends AbstractType
 			// 	"attr" => ["class" => "form-check"]
 			// ])
 			->add('email', null, [
-				"label" => "Email",
-				"attr" => ["class" => "form-control"]
+				'label' => 'Email',
+				'attr' => ['class' => 'form-control'],
 			])
 			->add('agreeTerms', CheckboxType::class, [
-				"label" => "Message",
+				'label' => 'Message',
 				'mapped' => false,
 				'constraints' => [
 					new IsTrue([
@@ -60,7 +60,7 @@ class RegistrationFormType extends AbstractType
 				'mapped' => false,
 				'attr' => [
 					'autocomplete' => 'new-password',
-					"class" => "form-control"
+					'class' => 'form-control',
 				],
 				'constraints' => [
 					new NotBlank([

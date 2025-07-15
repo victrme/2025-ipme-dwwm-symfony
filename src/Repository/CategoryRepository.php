@@ -18,15 +18,16 @@ class CategoryRepository extends ServiceEntityRepository
 
 	/**
 	 * @param int|null $limit
+	 *
 	 * @return Category[]
 	 */
 	public function findByMostPlayed($limit = null)
 	{
-		$qb = $this->createQueryBuilder("c")
-			->join("c.games", "g")
-			->join("g.ownedByUser", "uog")
-			->groupBy("c.id")
-			->orderBy("SUM(uog.gameTime)", "DESC");
+		$qb = $this->createQueryBuilder('c')
+			->join('c.games', 'g')
+			->join('g.ownedByUser', 'uog')
+			->groupBy('c.id')
+			->orderBy('SUM(uog.gameTime)', 'DESC');
 
 		if (isset($limit)) {
 			$qb->setMaxResults($limit);

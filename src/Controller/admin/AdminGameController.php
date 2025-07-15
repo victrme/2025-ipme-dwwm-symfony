@@ -18,15 +18,15 @@ final class AdminGameController extends AbstractController
 	public function index(GameRepository $gameRepository): Response
 	{
 		return $this->render('admin_game/index.twig', [
-			"games" => $gameRepository->findAll()
+			'games' => $gameRepository->findAll(),
 		]);
 	}
 
 	#[Route('/admin/game/new', name: 'app_admin_new_game')]
 	public function new(
-		Request 				$request,
-		SluggerInterface 		$slugger,
-		EntityManagerInterface 	$entityManager
+		Request $request,
+		SluggerInterface $slugger,
+		EntityManagerInterface $entityManager,
 	): Response {
 		$game = new Game();
 		$form = $this->createForm(GameType::class, $game);
@@ -39,12 +39,11 @@ final class AdminGameController extends AbstractController
 			$entityManager->persist($game);
 			$entityManager->flush();
 
-			return $this->redirectToRoute("app_admin_list_game");
+			return $this->redirectToRoute('app_admin_list_game');
 		}
 
-
 		return $this->render('admin_game/new.twig', [
-			"form" => $form
+			'form' => $form,
 		]);
 	}
 
@@ -66,7 +65,7 @@ final class AdminGameController extends AbstractController
 	public function show(string $id, GameRepository $gameRepository): Response
 	{
 		return $this->render('admin_game/show.twig', [
-			"game" => $gameRepository->find($id)
+			'game' => $gameRepository->find($id),
 		]);
 	}
 }

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use DateTimeImmutable;
 use App\Entity\Game;
 use App\Entity\Review;
 use App\Form\ReviewType;
@@ -24,13 +23,14 @@ final class GameController extends AbstractController
 		GameRepository $gameRepository,
 		UserRepository $userRepository,
 		ReviewRepository $reviewRepository,
-		EntityManagerInterface $entityManager
+		EntityManagerInterface $entityManager,
 	): Response {
 		/** @var Game */
-		$game = $gameRepository->findOneBy(["slug" => $slug]);
+		$game = $gameRepository->findOneBy(['slug' => $slug]);
 
 		if (!isset($game)) {
-			$this->addFlash("danger", "Ce jeu n'existe pas !");
+			$this->addFlash('danger', "Ce jeu n'existe pas !");
+
 			return $this->redirectToRoute('app_home');
 		}
 
@@ -41,8 +41,8 @@ final class GameController extends AbstractController
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$userReview->setCreatedAt(new DateTimeImmutable());
-			$userReview->setTitle("");
+			$userReview->setCreatedAt(new \DateTimeImmutable());
+			$userReview->setTitle('');
 			$userReview->setGame($game);
 			$userReview->setUser($userRepository->find(1));
 			$entityManager->persist($userReview);
@@ -56,12 +56,12 @@ final class GameController extends AbstractController
 		$countries = $game->getCountries()->getValues();
 
 		return $this->render('game/show.twig', [
-			"categories" => $categories,
-			"countries" => $countries,
-			"reviews" => $lastReviews,
-			"form" => $form,
-			"game" => $game,
-			"loggedin" => true
+			'categories' => $categories,
+			'countries' => $countries,
+			'reviews' => $lastReviews,
+			'form' => $form,
+			'game' => $game,
+			'loggedin' => true,
 		]);
 	}
 }

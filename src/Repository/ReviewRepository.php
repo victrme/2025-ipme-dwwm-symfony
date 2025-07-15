@@ -19,14 +19,15 @@ class ReviewRepository extends ServiceEntityRepository
 	/**
 	 * @param ?int $id
 	 * @param ?int $limit
+	 *
 	 * @return Review[]
 	 */
 	public function findLatestByUserId($id, $limit = 10)
 	{
-		return $this->createQueryBuilder("r")
-			->join("r.user", "u")
-			->where("u.id = :id")
-			->setParameter("id", $id)
+		return $this->createQueryBuilder('r')
+			->join('r.user', 'u')
+			->where('u.id = :id')
+			->setParameter('id', $id)
 			->setMaxResults($limit)
 			->getQuery()
 			->getResult();
@@ -34,31 +35,32 @@ class ReviewRepository extends ServiceEntityRepository
 
 	/**
 	 * @param ?int $limit
+	 *
 	 * @return Review[]
 	 */
 	public function findLast($limit = 10)
 	{
-		return $this->createQueryBuilder("r")
-			->orderBy("r.createdAt", 'DESC')
+		return $this->createQueryBuilder('r')
+			->orderBy('r.createdAt', 'DESC')
 			->setMaxResults($limit)
 			->getQuery()
 			->getResult();
 	}
 
 	/**
-	 * @param ?string $game
 	 * @param ?int $limit
+	 *
 	 * @return Review[]
 	 */
 	public function findLastByGameId(?string $game, $limit = 10)
 	{
-		return $this->createQueryBuilder("r")
-			->addSelect("u")
-			->join("r.user", "u")
-			->join("r.game", "g")
-			->orderBy("r.createdAt", 'DESC')
-			->where("g.id = :id")
-			->setParameter("id", $game)
+		return $this->createQueryBuilder('r')
+			->addSelect('u')
+			->join('r.user', 'u')
+			->join('r.game', 'g')
+			->orderBy('r.createdAt', 'DESC')
+			->where('g.id = :id')
+			->setParameter('id', $game)
 			->setMaxResults($limit)
 			->getQuery()
 			->getResult();
@@ -67,9 +69,9 @@ class ReviewRepository extends ServiceEntityRepository
 	/** @return Review[] */
 	public function findByLastMostRatedComments()
 	{
-		return $this->createQueryBuilder("r")
-			->orderBy("r.createdAt", 'DESC')
-			->addOrderBy("r.rating", "DESC")
+		return $this->createQueryBuilder('r')
+			->orderBy('r.createdAt', 'DESC')
+			->addOrderBy('r.rating', 'DESC')
 			->getQuery()
 			->getResult();
 	}

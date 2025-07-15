@@ -17,39 +17,38 @@ class GameType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options): void
 	{
 		$builder
-
-			->add('name', null, ["attr" => ["class" => "form-control"]])
-			->add('price', null, ["attr" => ["class" => "form-control"]])
-			->add('description', null, ["attr" => ["class" => "form-control"]])
+			->add('name', null, ['attr' => ['class' => 'form-control']])
+			->add('price', null, ['attr' => ['class' => 'form-control']])
+			->add('description', null, ['attr' => ['class' => 'form-control']])
 			->add('publishedAt', null, [
 				'widget' => 'single_text',
-				"attr" => ["class" => "form-control"]
+				'attr' => ['class' => 'form-control'],
 			])
-			->add('thumbnailCover', null, ["attr" => ["class" => "form-control"]])
+			->add('thumbnailCover', null, ['attr' => ['class' => 'form-control']])
 			->add(
 				'publisher',
 				EntityType::class,
 				[
 					'class' => Publisher::class,
 					'choice_label' => 'name',
-					"attr" => ["class" => "form-control"]
+					'attr' => ['class' => 'form-control'],
 				]
 			)
 			->add('categories', EntityType::class, [
 				'class' => Category::class,
 				'choice_label' => 'name',
 				'multiple' => true,
-				"expanded" => true,
+				'expanded' => true,
 			])
 			->add('countries', EntityType::class, [
 				'class' => Country::class,
 				'choice_label' => 'name',
 				'multiple' => true,
-				"expanded" => true
+				'expanded' => true,
 			])
-			->add("submit", SubmitType::class, [
-				"label" => "CAM ARHCE",
-				"attr" => ["class" => "btn btn-primary"]
+			->add('submit', SubmitType::class, [
+				'label' => 'CAM ARHCE',
+				'attr' => ['class' => 'btn btn-primary'],
 			])
 		;
 	}

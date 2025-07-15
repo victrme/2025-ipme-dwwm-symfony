@@ -18,12 +18,13 @@ class GameRepository extends ServiceEntityRepository
 
 	/**
 	 * @param string $slug
+	 *
 	 * @return ?Game[]
 	 */
 	public function findAllByCategory($slug)
 	{
-		$qb = $this->createQueryBuilder("g")
-			->join("g.categories", "c")
+		$qb = $this->createQueryBuilder('g')
+			->join('g.categories', 'c')
 			->andWhere('c.slug = :slug')
 			->setParameter('slug', $slug);
 
@@ -32,12 +33,13 @@ class GameRepository extends ServiceEntityRepository
 
 	/**
 	 * @param string $slug
+	 *
 	 * @return ?Game[]
 	 */
 	public function findAllByCountry($slug)
 	{
-		$qb = $this->createQueryBuilder("g")
-			->join("g.countries", "c")
+		$qb = $this->createQueryBuilder('g')
+			->join('g.countries', 'c')
 			->andWhere('c.slug = :slug')
 			->setParameter('slug', $slug);
 
@@ -49,10 +51,10 @@ class GameRepository extends ServiceEntityRepository
 	 */
 	public function findByBestSellers(int $amount)
 	{
-		return $this->createQueryBuilder("g")
-			->join("g.ownedByUser", "oBu")
-			->groupBy("g.id")
-			->orderBy("COUNT(g.name)")
+		return $this->createQueryBuilder('g')
+			->join('g.ownedByUser', 'oBu')
+			->groupBy('g.id')
+			->orderBy('COUNT(g.name)')
 			->setMaxResults($amount ?? 1)
 			->getQuery()
 			->getResult()

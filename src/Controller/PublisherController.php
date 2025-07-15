@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Publisher;
 use App\Form\PublisherType;
 use App\Repository\PublisherRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +19,7 @@ final class PublisherController extends AbstractController
 		$publishers = $publisherRepository->findAll();
 
 		return $this->render('publisher/index.twig', [
-			"publishers" => $publishers
+			'publishers' => $publishers,
 		]);
 	}
 
@@ -33,17 +32,17 @@ final class PublisherController extends AbstractController
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-			$publisher->setCreatedAt(new DateTimeImmutable());
+			$publisher->setCreatedAt(new \DateTimeImmutable());
 			$publisher->setSlug(strtolower($publisher->getName()));
 
 			$em->persist($publisher);
 			$em->flush();
 
-			return $this->redirectToRoute("app_publisher");
+			return $this->redirectToRoute('app_publisher');
 		}
 
 		return $this->render('publisher/new.twig', [
-			"form" => $form->createView()
+			'form' => $form->createView(),
 		]);
 	}
 }
