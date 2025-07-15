@@ -1,11 +1,50 @@
 {% extends 'admin.twig' %}
 
 {% block body %}
-    <ul>
-        {% for game in games %}
-            <li>
-                <a href="{{ path('app_admin_show_game', {id: game.id}) }}">{{ game.name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-{% endblock %}
+	<div class="container">
+		<div class="row">
+			<div class="mx-auto col-md-10">
+				<table>
+					<thead>
+						<th class="p-3">Game</th>
+						<th class="p-3">Actions</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="px-3">
+								Ajouter un nouveau jeu ?
+							</td>
+							<td class="px-3">
+								<a href="{{path('app_admin_new_game')}}">
+									<button class="btn btn-secondary">Ajouter</button>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</td>
+			</tr>
+
+			{% for game in games %}
+				<tr>
+					<td class="px-3">
+						<a href="{{ path('app_admin_show_game', {id: game.id}) }}">{{ game.name }}</a>
+					</td>
+					<td class="px-3">
+						<a href="{{ path('app_admin_update_game', {id: game.id}) }}">
+							<button class="btn btn-secondary">
+								Mettre à jour
+							</button>
+						</a>
+
+						<a href="{{ path('app_admin_delete_game', {id: game.id}) }}">
+							<button class="btn btn-danger">
+								Supprimer
+							</button>
+						</a>
+
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div></div></div>{% endblock %}

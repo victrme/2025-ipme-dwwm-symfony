@@ -72,9 +72,16 @@ final class AdminGameController extends AbstractController
 	}
 
 	#[Route('/admin/game/delete/{id}', name: 'app_admin_delete_game')]
-	public function delete(string $id): Response
+	public function delete(
+		string $id,
+		GameRepository $gameRepository,
+		EntityManagerInterface $entityManager): Response
 	{
-		return $this->render('admin_game/index.twig');
+		$game = $gameRepository->find($id);
+		$entityManager->remove($game);
+		$entityManager->flush();
+
+		return $this->redirectToRoute('app_admin_list_game');
 	}
 
 	#[Route('/admin/game/show/{id}', name: 'app_admin_show_game')]
