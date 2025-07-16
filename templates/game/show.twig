@@ -20,6 +20,11 @@
 				<div class="col-md-8">
 					<ul>
 						<li>
+							Note moyenne:
+							{{ game | average_rating }}
+						</li>
+
+						<li>
 							Prix:
 							{{ game.price | euro }}
 						</li>
