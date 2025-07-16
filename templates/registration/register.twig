@@ -1,32 +1,32 @@
 {% extends 'base.twig' %}
 
 {% block title %}
-	Inscription - Steamish v3
+    Inscription - Steamish v3
 {% endblock %}
 
 {% block body %}
 
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4 my-5 mx-auto">
-				<h1 class="mb-3">Inscrivez-vous</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 my-5 mx-auto">
+                <h1 class="mb-3">Inscrivez-vous</h1>
 
-				{{ form_errors(registrationForm) }}
-				{{ form_start(registrationForm) }}
+                {{ form_errors(registrationForm) }}
+                {{ form_start(registrationForm) }}
 
-				{{ form_row(registrationForm.name) }}
-				{{ form_row(registrationForm.nickname) }}
-				{{ form_row(registrationForm.email) }}
-				{{ form_row(registrationForm.plainPassword, {label: 'Mot de passe'}) }}
-				{{ form_row(registrationForm.country) }}
+                {{ form_row(registrationForm.name) }}
+                {{ form_row(registrationForm.nickname) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword, {label: 'Mot de passe'}) }}
+                {{ form_row(registrationForm.country) }}
 
-				{{ form_row(registrationForm.agreeTerms, {label: 'En vous inscrivant, vous acceptez de faire un bisous sur la joue de votre mamie qui ne vous a pas vu depuis 3 mois.'}) }}
+                {{ form_row(registrationForm.agreeTerms, {label: 'En vous inscrivant, vous acceptez de faire un bisous sur la joue de votre mamie qui ne vous a pas vu depuis 3 mois.'}) }}
 
-				<button type="submit" class="btn btn-primary">Register</button>
+                <button type="submit" class="btn btn-primary">Register</button>
 
-				{{ form_end(registrationForm) }}
-			</div>
-		</div>
-	</div>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

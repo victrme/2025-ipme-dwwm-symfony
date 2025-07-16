@@ -1,87 +1,87 @@
 {% extends 'base.twig' %}
 
 {% block title %}
-	{{ game.name }}
-	- Steamish v3
+    {{ game.name }}
+    - Steamish v3
 {% endblock %}
 
 {% block body %}
 
-	<div class="container">
+    <div class="container">
 
-		<div class="row mt-3">
-			<div class="row col-lg-9 mx-auto">
-				<h1 class="my-5">{{ game.name }}</h1>
+        <div class="row mt-3">
+            <div class="row col-lg-9 mx-auto">
+                <h1 class="my-5">{{ game.name }}</h1>
 
-				<div class="col-md-4">
-					<img class="w-100" src="{{ game.thumbnailCover }}" alt="" srcset="">
-				</div>
+                <div class="col-md-4">
+                    <img class="w-100" src="{{ game.thumbnailCover }}" alt="" srcset="">
+                </div>
 
-				<div class="col-md-8">
-					<ul>
-						<li>
-							Note moyenne:
-							{{ game | average_rating }}
-						</li>
+                <div class="col-md-8">
+                    <ul>
+                        <li>
+                            Note moyenne:
+                            {{ game|average_rating }}
+                        </li>
 
-						<li>
-							Prix:
-							{{ game.price | euro }}
-						</li>
-						{% if game.publisher.name is defined %}
-							<li>
-								Editeur:
-								{{ game.publisher.name }}
-							</li>
-						{% endif %}
+                        <li>
+                            Prix:
+                            {{ game.price|euro }}
+                        </li>
+                        {% if game.publisher.name is defined %}
+                            <li>
+                                Editeur:
+                                {{ game.publisher.name }}
+                            </li>
+                        {% endif %}
 
-						<li>
-							Sortie:
-							{{ game.publishedAt.format('y/m/d') }}
-						</li>
-						<li>
-							Catégories:
-							{% for cat in categories %}
-								-
-								<a href="{{ path('app_category', {slug: cat.slug}) }}">
-									{{ cat.name }}
-								</a>
-							{% endfor %}
-						</li>
-						<li>
-							Langues:
-							{% for country in countries %}
-								-
-								<a href="{{ path('app_show_country', {slug: country.slug}) }}">
-									<img src="{{ country.urlFlag }}" alt="" width="20" height="16">
-									<span>{{ country.code }}</span>
-								</a>
-							{% endfor %}
-						</li>
-					</ul>
-					<p>
-						{{ game.description | short_desc }}
-					</p>
-				</div>
+                        <li>
+                            Sortie:
+                            {{ game.publishedAt.format('y/m/d') }}
+                        </li>
+                        <li>
+                            Catégories:
+                            {% for cat in categories %}
+                                -
+                                <a href="{{ path('app_category', {slug: cat.slug}) }}">
+                                    {{ cat.name }}
+                                </a>
+                            {% endfor %}
+                        </li>
+                        <li>
+                            Langues:
+                            {% for country in countries %}
+                                -
+                                <a href="{{ path('app_show_country', {slug: country.slug}) }}">
+                                    <img src="{{ country.urlFlag }}" alt="" width="20" height="16">
+                                    <span>{{ country.code }}</span>
+                                </a>
+                            {% endfor %}
+                        </li>
+                    </ul>
+                    <p>
+                        {{ game.description|short_desc }}
+                    </p>
+                </div>
 
-				<div>
-					<h2 class="pt-5">Dernières reviews</h2>
+                <div>
+                    <h2 class="pt-5">Dernières reviews</h2>
 
-					<div>
-						{% if loggedin is defined %}
-							{{ form_start(form) }}
-							{{ form_end(form) }}
-						{% else %}
-							<div class="my-4">
-								<a href="{{ path('app_register') }}">Connectez-vous</a>
-								<span>pour ajouter votre review.</span>
-							</div>
-						{% endif %}
-					</div>
+                    <div>
+                        {% if loggedin is defined %}
+                            {{ form_start(form) }}
+                            {{ form_end(form) }}
+                        {% else %}
+                            <div class="my-4">
+                                <a href="{{ path('app_register') }}">Connectez-vous</a>
+                                <span>pour ajouter votre review.</span>
+                            </div>
+                        {% endif %}
+                    </div>
 
-					{{ include('partial/_review.twig', {reviews: reviews}) }}
-				</div>
-			</div>
-		</div>
-	</div>
+                    {{ include('partial/_review.twig', {reviews: reviews}) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

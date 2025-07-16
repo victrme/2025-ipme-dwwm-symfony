@@ -5,6 +5,7 @@ namespace App\Twig\Extension;
 use App\Twig\Runtime\GameRuntime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class GameExtension extends AbstractExtension
 {
@@ -12,6 +13,13 @@ class GameExtension extends AbstractExtension
 	{
 		return [
 			new TwigFilter('average_rating', [GameRuntime::class, 'getRatingAvg']),
+		];
+	}
+
+	public function getFunctions(): array
+	{
+		return [
+			new TwigFunction('get_last_game', [GameRuntime::class, 'getLastGame']),
 		];
 	}
 }
