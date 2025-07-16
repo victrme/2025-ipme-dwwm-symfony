@@ -25,7 +25,7 @@ final class AdminGameController extends AbstractController
 		);
 
 		return $this->render('admin_game/index.twig', [
-			'pagination' => $pagination,
+			'games' => $pagination,
 		]);
 	}
 
@@ -56,13 +56,10 @@ final class AdminGameController extends AbstractController
 
 	#[Route('/admin/game/update/{id}', name: 'app_admin_update_game')]
 	public function update(
-		string $id,
+		Game $game,
 		Request $request,
-		GameRepository $gameRepository,
 		EntityManagerInterface $entityManager): Response
 	{
-		/** @var Game game */
-		$game = $gameRepository->find($id);
 		$form = $this->createForm(GameType::class, $game);
 		$form->handleRequest($request);
 
