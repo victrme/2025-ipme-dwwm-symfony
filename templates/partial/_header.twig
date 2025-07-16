@@ -17,13 +17,14 @@
                 <ul class="dropdown-menu">
                     {% for category in categories %}
                     <li>
-                        <a class="dropdown-item">{{ category }}</a>
+                        <a href="{{ path('app_category', { slug: category.slug }) }}" class="dropdown-item">
+                            {{ category.name }}
+                        </a>
                     </li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
-
 
         {% if app.user.name is defined %}
         <div class="nav-item dropdown">

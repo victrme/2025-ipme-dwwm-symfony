@@ -13,16 +13,11 @@ class CategoryRuntime implements RuntimeExtensionInterface
 	) {
 	}
 
-	public function getCategoryNames(): mixed
+	public function getCategoryNames(): array
 	{
 		/** @var Category[] $categories */
 		$categories = $this->categoryRepository->findAll();
-		$names = [];
 
-		foreach ($categories as $category) {
-			$names[] = $category->getName();
-		}
-
-		return $names;
+		return $categories;
 	}
 }

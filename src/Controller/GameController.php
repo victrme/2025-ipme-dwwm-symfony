@@ -7,7 +7,6 @@ use App\Entity\Review;
 use App\Form\ReviewType;
 use App\Repository\GameRepository;
 use App\Repository\ReviewRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +20,6 @@ final class GameController extends AbstractController
 		string $slug,
 		Request $request,
 		GameRepository $gameRepository,
-		UserRepository $userRepository,
 		ReviewRepository $reviewRepository,
 		EntityManagerInterface $entityManager,
 	): Response {
@@ -44,7 +42,7 @@ final class GameController extends AbstractController
 			$userReview->setCreatedAt(new \DateTimeImmutable());
 			$userReview->setTitle('');
 			$userReview->setGame($game);
-			$userReview->setUser($userRepository->find(1));
+			$userReview->setUser($this->getUser());
 			$entityManager->persist($userReview);
 			$entityManager->flush();
 		}
