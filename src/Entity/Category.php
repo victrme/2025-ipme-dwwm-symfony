@@ -24,15 +24,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
         new GetCollection(normalizationContext: [
             'groups' => 'category:collection',
         ]),
-        new Post(
-            normalizationContext: [
-                "groups" => "category:item",
-                "groups" => "category:collection",
-            ],
-            denormalizationContext: [
-                "groups" => "category:post"
-            ],
-        )
+        // new Post(
+        //     normalizationContext: [
+        //         "groups" => "category:item",
+        //         "groups" => "category:collection",
+        //     ],
+        //     denormalizationContext: [
+        //         "groups" => "category:post"
+        //     ],
+        // )
     ]
 )]
 class Category

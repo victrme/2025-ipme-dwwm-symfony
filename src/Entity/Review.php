@@ -26,8 +26,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
                 "review:collection"
             ]
         ]),
-        new Post(),
-        new Patch()
+        // new Post(),
+        // new Patch()
     ]
 )]
 class Review

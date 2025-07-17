@@ -28,32 +28,32 @@ use Doctrine\ORM\Mapping as ORM;
                 "game:collection"
             ]
         ]),
-        new Post(
-            normalizationContext: [
-                "groups" => [
-                    "game:item",
-                    "game:collection",
-                ]
-            ],
-            denormalizationContext: [
-                "groups" => [
-                    "game:post"
-                ]
-            ]
-        ),
-        new Patch(
-            normalizationContext: [
-                "groups" => [
-                    "game:item",
-                    "game:collection",
-                ]
-            ],
-            denormalizationContext: [
-                "groups" => [
-                    "game:patch"
-                ]
-            ]
-        )
+        // new Post(
+        //     normalizationContext: [
+        //         "groups" => [
+        //             "game:item",
+        //             "game:collection",
+        //         ]
+        //     ],
+        //     denormalizationContext: [
+        //         "groups" => [
+        //             "game:post"
+        //         ]
+        //     ]
+        // ),
+        // new Patch(
+        //     normalizationContext: [
+        //         "groups" => [
+        //             "game:item",
+        //             "game:collection",
+        //         ]
+        //     ],
+        //     denormalizationContext: [
+        //         "groups" => [
+        //             "game:patch"
+        //         ]
+        //     ]
+        // )
     ]
 )]
 class Game
