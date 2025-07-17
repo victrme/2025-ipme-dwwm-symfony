@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use App\Controller\Api\Country\PostController;
 use App\Repository\CountryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,7 +23,13 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ]),
         new GetCollection(normalizationContext: [
             'groups' => 'country:collection',
-        ])
+        ]),
+        new Post(
+            controller: 'App\Controller\Api\Country\PostController::index',
+            denormalizationContext: [
+                'groups' => 'country:post',
+            ],
+        ),
     ]
 )]
 class Country
@@ -33,15 +41,15 @@ class Country
     private ?int $id = null;
 
     #[ORM\Column(length: 2)]
-    #[Groups('country:item')]
+    #[Groups(['country:item', 'country:post'])]
     private ?string $code = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('country:item')]
+    #[Groups(['country:item', 'country:post'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('country:collection')]
+    #[Groups(['country:collection', 'country:post'])]
     private ?string $nationality = null;
 
     #[ORM\Column(length: 255)]
