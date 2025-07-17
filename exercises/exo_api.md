@@ -10,3 +10,4 @@
 
 - Réfléchir sur les attributs à récupérer en fonction des méthodes HTTP demandées
 - Idem pour les POST ? Savoir quelles informations envoyées ?
+- Pour les POST... Faire des validations correctes ?
