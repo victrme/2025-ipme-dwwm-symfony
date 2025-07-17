@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,17 +23,37 @@ use Symfony\Component\Serializer\Annotation\Groups;
             ],
         ]),
         new GetCollection(normalizationContext: [
-            'groups' => 'category:collection',
+            'groups' => [
+                'category:collection'
+            ],
         ]),
-        // new Post(
-        //     normalizationContext: [
-        //         "groups" => "category:item",
-        //         "groups" => "category:collection",
-        //     ],
-        //     denormalizationContext: [
-        //         "groups" => "category:post"
-        //     ],
-        // )
+        new Post(
+            normalizationContext: [
+                "groups" => [
+                    "category:item",
+                    "category:collection",
+                ]
+            ],
+            denormalizationContext: [
+                "groups" => [
+                    "category:post"
+                ]
+            ],
+        ),
+        new Patch(
+            normalizationContext: [
+                "groups" => [
+                    "category:item",
+                    "category:collection"
+                ]
+            ],
+            denormalizationContext: [
+                "groups" => [
+                    "category:post",
+                    "category:patch"
+                ]
+            ],
+        )
     ]
 )]
 class Category
@@ -44,7 +65,7 @@ class Category
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups("category:item")]
+    #[Groups(["category:item", "category:patch"])]
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
@@ -52,7 +73,7 @@ class Category
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups("category:post", "category:collection", "game:collection")]
+    #[Groups(["category:post", "category:collection", "game:collection"])]
     private ?string $slug = null;
 
     /**
