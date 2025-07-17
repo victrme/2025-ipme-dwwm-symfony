@@ -2,6 +2,6 @@ api_platform:
   title: Steamish v3 API
   version: 0.0.1
   defaults:
-    stateless: true
+    stateless: false
     cache_headers:
       vary: ["Content-Type", "Authorization", "Origin"]
