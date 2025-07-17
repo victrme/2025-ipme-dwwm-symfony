@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
@@ -17,9 +18,11 @@ class Game
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('country:item')]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Groups('country:item')]
     private ?int $price = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -29,9 +32,11 @@ class Game
     private ?\DateTimeImmutable $publishedAt = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('country:item')]
     private ?string $thumbnailCover = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('country:item')]
     private ?string $slug = null;
 
     #[ORM\ManyToOne(inversedBy: 'games')]

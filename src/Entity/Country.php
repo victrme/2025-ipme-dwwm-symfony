@@ -2,32 +2,54 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Repository\CountryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
+#[ApiResource(operations: [
+        new Get(normalizationContext: [
+            'groups' => [
+                'country:item',
+                'country:collection'
+            ],
+        ]),
+        new GetCollection(normalizationContext: [
+            'groups' => 'country:collection',
+        ])
+    ]
+)]
 class Country
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('country:item')]
     private ?int $id = null;
 
     #[ORM\Column(length: 2)]
+    #[Groups('country:item')]
     private ?string $code = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('country:item')]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('country:collection')]
     private ?string $nationality = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('country:collection')]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('country:collection')]
     private ?string $urlFlag = null;
 
     /**
@@ -46,6 +68,7 @@ class Country
      * @var Collection<int, Game>
      */
     #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'countries')]
+    #[Groups('country:item')]
     private Collection $games;
 
     public function __construct()
@@ -206,4 +229,11 @@ class Country
 
         return $this;
     }
+
+    #[Groups('country:item')]
+    public function getNbGames(): int
+    {
+        return count($this->games);
+    }
+
 }
