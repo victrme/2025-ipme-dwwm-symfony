@@ -18,11 +18,11 @@ class Game
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('country:item')]
+    #[Groups('game:collection')]
     private ?string $name = null;
 
     #[ORM\Column]
-    #[Groups('country:item')]
+    #[Groups('game:collection')]
     private ?int $price = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -32,11 +32,11 @@ class Game
     private ?\DateTimeImmutable $publishedAt = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('country:item')]
+    #[Groups('game:collection')]
     private ?string $thumbnailCover = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('country:item')]
+    #[Groups('game:collection')]
     private ?string $slug = null;
 
     #[ORM\ManyToOne(inversedBy: 'games')]

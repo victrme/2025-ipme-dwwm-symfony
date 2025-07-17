@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,14 +16,30 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ApiResource(
     operations: [
-        new Post(
+        new GetCollection( // Récupère un tableau d'objets => Category[]
+            normalizationContext:[
+                'groups' => [
+                    'category:collection',
+                    'category:post',
+                ],
+            ]
+        ),
+        new Get( // Récupère UN objet Category
             normalizationContext: [
                 'groups' => [
                     'category:item',
+                    'game:collection',
+                ],
+            ]
+        ),
+        new Post( // Créer la ressource en BDD
+            normalizationContext: [ // Donnée renvoyée à la création
+                'groups' => [
+                    'category:collection',
                     'category:post'
                 ],
             ],
-            denormalizationContext: [
+            denormalizationContext: [ // JSON à partir duquel on va créer la donnée
                 'groups' => 'category:post',
             ]
         )
@@ -32,7 +50,7 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('category:item')]
+    #[Groups('category:collection')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -40,7 +58,7 @@ class Category
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('category:post')]
+    #[Groups(['category:post', 'category:item'])]
     #[Assert\NotBlank(message: 'Le nom doit être renseigné !')]
     #[Assert\Length(
         min: 3,
@@ -59,6 +77,7 @@ class Category
      * @var Collection<int, Game>
      */
     #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'categories')]
+    #[Groups('category:item')]
     private Collection $games;
 
     public function __construct()

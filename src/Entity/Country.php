@@ -18,7 +18,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Get(normalizationContext: [
             'groups' => [
                 'country:item',
-                'country:collection'
+                'country:collection',
+                'game:collection',
             ],
         ]),
         new GetCollection(normalizationContext: [
@@ -37,7 +38,7 @@ class Country
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups('country:item')]
+    #[Groups(['country:item', 'publisher:post'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 2)]
