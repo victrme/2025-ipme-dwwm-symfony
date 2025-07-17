@@ -16,16 +16,22 @@ use Symfony\Component\Serializer\Annotation\Groups;
     operations: [
         new Get(normalizationContext: [
             "groups" => [
-                "publisher:item"
+                "owngame:item",
+                // "owngame:collection",
             ]
         ]),
-        new GetCollection(),
-        new Post(),
-        new Patch()
+        // new GetCollection(normalizationContext: [
+        //     "groups" => [
+        //         "owngame:collection"
+        //     ]
+        // ]),
+        // new Post(),
+        // new Patch()
     ]
 )]
 class UserOwnGame
 {
+    #[Groups("owngame:item")]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -47,10 +53,12 @@ class UserOwnGame
     #[ORM\Column]
     private ?bool $isInstalled = null;
 
+    #[Groups("owngame:item")]
     #[ORM\ManyToOne(inversedBy: 'ownedByUser')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Game $game = null;
 
+    #[Groups("owngame:item")]
     #[ORM\ManyToOne(inversedBy: 'ownedGames')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;

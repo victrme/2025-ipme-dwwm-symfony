@@ -24,16 +24,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
         ]),
         new GetCollection(normalizationContext: [
             "groups" => [
-                "publisher:item",
                 "publisher:collection"
             ]
         ]),
-        new Post(),
-        new Patch()
     ]
 )]
 class Publisher
 {
+    #[Groups("publisher:item")]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -43,18 +41,19 @@ class Publisher
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[Groups(["publisher:item", "game:item", "game:collection"])]
+    #[Groups(["publisher:collection", "game:item"])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[Groups("publisher:item")]
+    #[Groups("publisher:collection", "game:item")]
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[Groups(["publisher:item", "game:item", "game:collection"])]
+    #[Groups(["publisher:item", "game:item"])]
     #[ORM\Column(length: 255)]
     private ?string $website = null;
 
+    #[Groups(["publisher:item"])]
     #[ORM\ManyToOne(inversedBy: 'publishers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Country $country = null;

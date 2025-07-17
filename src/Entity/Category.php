@@ -40,18 +40,19 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("category:item")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups("category:collection")]
+    #[Groups("category:item")]
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["category:post", "category:item", "game:item", "game:collection"])]
+    #[Groups(["category:post", "category:collection", "game:collection"])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('category:collection')]
+    #[Groups("category:post", "category:collection", "game:collection")]
     private ?string $slug = null;
 
     /**

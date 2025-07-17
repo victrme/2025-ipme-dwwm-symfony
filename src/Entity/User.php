@@ -19,9 +19,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["game:item", "review:item", "owngame:item"])]
     private ?int $id = null;
 
-    #[Groups(["game:item", "game:collection", "review:item", "review:collection"])]
+    #[Groups(["game:item", "review:item", "owngame:item"])]
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
@@ -40,21 +41,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[Groups(["game:item", "game:collection", "review:item", "review:collection"])]
+    #[Groups(["game:item", "review:item"])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[Groups(["game:item", "game:collection", "review:item", "review:collection"])]
+    #[Groups(["game:item", "review:collection", "owngame:item"])]
     #[ORM\Column(length: 255)]
     private ?string $nickname = null;
 
-    #[Groups(["game:item", "game:collection", "review:item", "review:collection"])]
+    #[Groups(["game:item", "review:item"])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profileImage = null;
 
     #[ORM\Column]
     private ?int $wallet = 0;
 
+    #[Groups(["review:item"])]
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Country $country = null;
 

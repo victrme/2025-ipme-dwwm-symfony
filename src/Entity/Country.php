@@ -15,25 +15,31 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
 #[ApiResource(operations: [
-    new GetCollection(),
     new Get(normalizationContext: [
-        "groups" => ["country:item"]
+        "groups" => [
+            "country:item",
+            "country:collection"
+        ]
     ]),
-    new Post(),
-    new Patch()
+    new GetCollection(normalizationContext: [
+        "groups" => [
+            "country:collection"
+        ]
+    ]),
 ])]
 class Country
 {
+    #[Groups("country:item")]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups("country:item")]
+    #[Groups("country:collection")]
     #[ORM\Column(length: 2)]
     private ?string $code = null;
 
-    #[Groups("country:item")]
+    #[Groups("country:collection")]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -41,7 +47,7 @@ class Country
     #[ORM\Column(length: 255)]
     private ?string $nationality = null;
 
-    #[Groups("country:item")]
+    #[Groups(["country:item", "review:item"])]
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
