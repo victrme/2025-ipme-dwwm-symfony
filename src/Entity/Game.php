@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 use App\Repository\GameRepository;
 use App\Slugify\SlugInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,29 +15,68 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(
+            normalizationContext: [
+                'groups' => [
+                    'game:item',
+                    'publisher:collection',
+                    'category:collection',
+                    'country:collection',
+                    'review:collection',
+                    'review:collection:user',
+                ],
+            ],
+        ),
+        new GetCollection(
+            normalizationContext: [
+                'groups' => 'game:collection',
+            ]
+        ),
+        new Post(
+            normalizationContext: [
+                'groups' => [
+                    'game:item',
+                    'publisher:collection',
+                    'category:collection',
+                    'country:collection',
+                    'review:collection',
+                    'review:collection:user',
+                ],
+            ],
+            denormalizationContext: [
+                'groups' => 'game:post',
+            ]
+        )
+    ],
+)]
 class Game implements SlugInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('game:item')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('game:collection')]
+    #[Groups(['game:collection', 'game:item', 'game:post'])]
     private ?string $name = null;
 
     #[ORM\Column]
-    #[Groups('game:collection')]
+    #[Groups(['game:collection', 'game:item', 'game:post'])]
     private ?int $price = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['game:item', 'game:post'])]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups(['game:item', 'game:post'])]
     private ?\DateTimeImmutable $publishedAt = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('game:collection')]
+    #[Groups(['game:collection', 'game:item', 'game:post'])]
     private ?string $thumbnailCover = null;
 
     #[ORM\Column(length: 255)]
@@ -41,19 +84,21 @@ class Game implements SlugInterface
     private ?string $slug = null;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
+    #[Groups(['game:item', 'game:post'])]
     private ?Publisher $publisher = null;
 
     /**
      * @var Collection<int, Category>
      */
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'games')]
-    #[Groups('game:item')]
+    #[Groups(['game:item', 'game:post'])]
     private Collection $categories;
 
     /**
      * @var Collection<int, Country>
      */
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'games')]
+    #[Groups(['game:item', 'game:post'])]
     private Collection $countries;
 
     /**
@@ -66,6 +111,7 @@ class Game implements SlugInterface
      * @var Collection<int, Review>
      */
     #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'game')]
+    #[Groups('game:item')]
     private Collection $reviews;
 
     public function __construct()
@@ -277,4 +323,23 @@ class Game implements SlugInterface
     {
         return $this->name;
     }
+
+    #[Groups('game:item')]
+    public function getAvgRating(): ?float
+    {
+        $totalReview = count($this->getReviews());
+        if ($totalReview === 0) return null;
+        $sum = 0;
+        foreach ($this->getReviews() as $review) {
+            $sum += $review->getRating();
+        }
+        return round($sum / $totalReview, 2);
+    }
+
+    #[Groups('game:item')]
+    public function getTotalReview(): int
+    {
+        return count($this->getReviews());
+    }
+
 }

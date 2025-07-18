@@ -85,7 +85,7 @@ class Category implements SlugInterface
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['category:post', 'category:item'])]
+    #[Groups(['category:post', 'category:item', 'category:collection'])]
     #[Assert\NotBlank(message: 'Le nom doit être renseigné !')]
     #[Assert\Length(
         min: 3,
