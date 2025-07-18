@@ -22,9 +22,21 @@ use Doctrine\ORM\Mapping as ORM;
         new Get(normalizationContext: [
             "groups" =>  ["game:collection", "game:item"]
         ]),
-        new GetCollection(normalizationContext: [
-            "groups" => ["game:collection"]
-        ]),
+        new GetCollection(
+            name: "games-most-expensive",
+            uriTemplate: "games-most-expensive",
+            order: ["price" => "DESC"],
+            normalizationContext: [
+                "groups" => ["game:collection"]
+            ]
+        ),
+        new GetCollection(
+            name: "games",
+            uriTemplate: "games",
+            normalizationContext: [
+                "groups" => ["game:collection"]
+            ]
+        ),
         new Post(
             normalizationContext: [
                 "groups" => ["game:collection", "game:item"]
