@@ -25,15 +25,18 @@ class Publisher implements SlugInterface
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['publisher:post'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['publisher:post'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['publisher:post'])]
     private ?string $website = null;
 
     #[ORM\ManyToOne(inversedBy: 'publishers')]

@@ -83,7 +83,7 @@ class Country implements SlugInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['country:item', 'publisher:post'])]
+    #[Groups(['country:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 2)]
