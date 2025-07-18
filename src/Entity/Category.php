@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\CategoryRepository;
+use App\Slugger\SlugInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,48 +17,40 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(normalizationContext: [
-            'groups' => ['category:item', 'category:collection'],
-        ]),
-        new GetCollection(normalizationContext: [
-            'groups' => ['category:collection'],
-        ]),
+        new Get(
+            normalizationContext: ['groups' => ['category:item']]
+        ),
+        new GetCollection(
+            normalizationContext: ['groups' => ['category:collection']]
+        ),
         new Post(
-            normalizationContext: [
-                "groups" => ["category:item", "category:collection"]
-            ],
-            denormalizationContext: [
-                "groups" => ["category:post"]
-            ],
+            normalizationContext: ["groups" => ["category:item"]],
+            denormalizationContext: ["groups" => ["category:post"]],
         ),
         new Patch(
-            normalizationContext: [
-                "groups" => ["category:item", "category:collection"]
-            ],
-            denormalizationContext: [
-                "groups" => ["category:post", "category:patch"]
-            ],
+            normalizationContext: ["groups" => ["category:item"]],
+            denormalizationContext: ["groups" => ["category:post"]],
         )
     ]
 )]
-class Category
+class Category implements SlugInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups("category:item")]
+    #[Groups(["category:item"])]
     private ?int $id = null;
 
+    #[ORM\Column(length: 255)]
+    #[Groups(["category:item", "category:post", "game:collection"])]
+    private ?string $name = null;
+
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["category:item", "category:patch"])]
+    #[Groups(["category:item", "category:post"])]
     private ?string $image = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["category:post", "category:collection", "game:collection"])]
-    private ?string $name = null;
-
-    #[ORM\Column(length: 255)]
-    #[Groups(["category:post", "category:collection", "game:collection"])]
+    #[Groups(["category:item"])]
     private ?string $slug = null;
 
     /**
@@ -137,5 +130,10 @@ class Category
         }
 
         return $this;
+    }
+
+    public function getFields(): ?string
+    {
+        return $this->name;
     }
 }
