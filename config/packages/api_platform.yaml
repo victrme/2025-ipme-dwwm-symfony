@@ -1,6 +1,13 @@
 api_platform:
-  title: Steamish v3 API
+  title: Steamish v3
   version: 0.0.1
+  show_webby: false
+  use_symfony_listeners: true
+
+  swagger:
+    swagger_ui_extra_configuration:
+      docExpansion: none # list|full|none
+
   defaults:
     stateless: false
     cache_headers:
