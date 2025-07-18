@@ -17,41 +17,25 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Get(normalizationContext: [
-            'groups' => [
-                'category:item',
-                'category:collection'
-            ],
+            'groups' => ['category:item', 'category:collection'],
         ]),
         new GetCollection(normalizationContext: [
-            'groups' => [
-                'category:collection'
-            ],
+            'groups' => ['category:collection'],
         ]),
         new Post(
             normalizationContext: [
-                "groups" => [
-                    "category:item",
-                    "category:collection",
-                ]
+                "groups" => ["category:item", "category:collection"]
             ],
             denormalizationContext: [
-                "groups" => [
-                    "category:post"
-                ]
+                "groups" => ["category:post"]
             ],
         ),
         new Patch(
             normalizationContext: [
-                "groups" => [
-                    "category:item",
-                    "category:collection"
-                ]
+                "groups" => ["category:item", "category:collection"]
             ],
             denormalizationContext: [
-                "groups" => [
-                    "category:post",
-                    "category:patch"
-                ]
+                "groups" => ["category:post", "category:patch"]
             ],
         )
     ]

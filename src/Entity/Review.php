@@ -26,8 +26,22 @@ use Symfony\Component\Serializer\Annotation\Groups;
                 "review:collection"
             ]
         ]),
-        // new Post(),
-        // new Patch()
+        new Post(
+            normalizationContext: [
+                "groups" => ["review:collection", "review:item"]
+            ],
+            denormalizationContext: [
+                "groups" => ["review:post"]
+            ]
+        ),
+        new Patch(
+            normalizationContext: [
+                "groups" => ["review:collection", "review:item"]
+            ],
+            denormalizationContext: [
+                "groups" => ["review:post"]
+            ]
+        )
     ]
 )]
 class Review
@@ -38,36 +52,36 @@ class Review
     #[Groups("review:item")]
     private ?int $id = null;
 
-    #[Groups("review:collection", "game:item")]
+    #[Groups(["review:post", "review:collection", "game:item"])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[Groups("review:collection", "game:item")]
+    #[Groups(["review:post", "review:collection", "game:item"])]
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[Groups("review:collection", "game:item")]
+    #[Groups(["review:post", "review:collection", "game:item"])]
     #[ORM\Column]
     private ?int $downVote = 0;
 
-    #[Groups("review:collection", "game:item")]
+    #[Groups(["review:post", "review:collection", "game:item"])]
     #[ORM\Column]
     private ?int $upVote = 0;
 
-    #[Groups("review:collection", "game:item")]
+    #[Groups(["review:post", "review:collection", "game:item"])]
     #[ORM\Column]
     private ?float $rating = null;
 
-    #[Groups("review:item", "game:item")]
+    #[Groups(["review:post", "review:item", "game:item"])]
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[Groups("review:item", "game:item")]
+    #[Groups(["review:post", "review:item", "game:item"])]
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[Groups("review:item")]
+    #[Groups(["review:post", "review:item"])]
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Game $game = null;

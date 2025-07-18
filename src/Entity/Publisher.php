@@ -17,21 +17,32 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     operations: [
         new Get(normalizationContext: [
-            "groups" => [
-                "publisher:item",
-                "publisher:collection",
-            ]
+            "groups" => ["publisher:collection", "publisher:item"]
         ]),
         new GetCollection(normalizationContext: [
-            "groups" => [
-                "publisher:collection"
-            ]
+            "groups" => ["publisher:collection"]
         ]),
+        new Post(
+            normalizationContext: [
+                "groups" => ["publisher:collection", "publisher:item"]
+            ],
+            denormalizationContext: [
+                "groups" => ["publisher:post"]
+            ]
+        ),
+        new Patch(
+            normalizationContext: [
+                "groups" => ["publisher:collection", "publisher:item"]
+            ],
+            denormalizationContext: [
+                "groups" => ["publisher:post"]
+            ]
+        )
     ]
 )]
 class Publisher
 {
-    #[Groups("publisher:item")]
+    #[Groups(["publisher:item", "game:post"])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -41,19 +52,19 @@ class Publisher
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[Groups(["publisher:collection", "game:item"])]
+    #[Groups(["publisher:collection", "publisher:post", "game:item"])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[Groups("publisher:collection", "game:item")]
+    #[Groups("publisher:collection", "publisher:post", "game:item")]
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[Groups(["publisher:item", "game:item"])]
+    #[Groups(["publisher:item", "publisher:post", "game:item"])]
     #[ORM\Column(length: 255)]
     private ?string $website = null;
 
-    #[Groups(["publisher:item"])]
+    #[Groups(["publisher:item", "publisher:post"])]
     #[ORM\ManyToOne(inversedBy: 'publishers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Country $country = null;

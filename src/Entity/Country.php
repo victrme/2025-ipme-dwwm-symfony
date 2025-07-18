@@ -16,42 +16,53 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
 #[ApiResource(operations: [
     new Get(normalizationContext: [
-        "groups" => [
-            "country:item",
-            "country:collection"
-        ]
+        "groups" => ["country:item", "country:collection"]
     ]),
     new GetCollection(normalizationContext: [
-        "groups" => [
-            "country:collection"
-        ]
+        "groups" => ["country:collection"]
     ]),
+    new Post(
+        normalizationContext: [
+            "groups" => ["country:item", "country:collection"]
+        ],
+        denormalizationContext: [
+            "groups" => ["country:post"]
+        ]
+    ),
+    new Patch(
+        normalizationContext: [
+            "groups" => ["country:item", "country:collection"]
+        ],
+        denormalizationContext: [
+            "groups" => ["country:post"]
+        ]
+    )
 ])]
 class Country
 {
-    #[Groups("country:item")]
+    #[Groups("country:item", "publisher:post")]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups("country:collection")]
+    #[Groups(["country:collection", "country:post"])]
     #[ORM\Column(length: 2)]
     private ?string $code = null;
 
-    #[Groups("country:collection")]
+    #[Groups(["country:collection", "country:post"])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[Groups("country:item")]
+    #[Groups(["country:item", "country:post"])]
     #[ORM\Column(length: 255)]
     private ?string $nationality = null;
 
-    #[Groups(["country:item", "review:item"])]
+    #[Groups(["country:item", "country:post", "review:item"])]
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[Groups("country:item")]
+    #[Groups("country:item", "country:post")]
     #[ORM\Column(length: 255)]
     private ?string $urlFlag = null;
 

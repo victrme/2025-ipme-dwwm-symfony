@@ -18,77 +18,62 @@ use Doctrine\ORM\Mapping as ORM;
 #[ApiResource(
     operations: [
         new Get(normalizationContext: [
-            "groups" =>  [
-                "game:item",
-                "game:collection",
-            ]
+            "groups" =>  ["game:collection", "game:item"]
         ]),
         new GetCollection(normalizationContext: [
-            "groups" => [
-                "game:collection"
-            ]
+            "groups" => ["game:collection"]
         ]),
-        // new Post(
-        //     normalizationContext: [
-        //         "groups" => [
-        //             "game:item",
-        //             "game:collection",
-        //         ]
-        //     ],
-        //     denormalizationContext: [
-        //         "groups" => [
-        //             "game:post"
-        //         ]
-        //     ]
-        // ),
-        // new Patch(
-        //     normalizationContext: [
-        //         "groups" => [
-        //             "game:item",
-        //             "game:collection",
-        //         ]
-        //     ],
-        //     denormalizationContext: [
-        //         "groups" => [
-        //             "game:patch"
-        //         ]
-        //     ]
-        // )
+        new Post(
+            normalizationContext: [
+                "groups" => ["game:collection", "game:item"]
+            ],
+            denormalizationContext: [
+                "groups" => ["game:post"]
+            ]
+        ),
+        new Patch(
+            normalizationContext: [
+                "groups" => ["game:collection", "game:item"]
+            ],
+            denormalizationContext: [
+                "groups" => ["game:post"]
+            ]
+        )
     ]
 )]
 class Game
 {
-    #[Groups(["game:item"])]
+    #[Groups(["game:item", "review:post"])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups(["game:collection", "review:item", "category:item", "owngame:collection"])]
+    #[Groups(["game:collection", "game:post", "review:item", "category:item", "owngame:collection"])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[Groups(["game:collection", "category:item", "owngame:collection"])]
+    #[Groups(["game:collection", "game:post", "category:item", "owngame:collection"])]
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[Groups(["game:collection"])]
+    #[Groups(["game:collection", "game:post"])]
     #[ORM\Column]
     private ?int $price = null;
 
-    #[Groups(["game:collection"])]
+    #[Groups(["game:collection", "game:post"])]
     #[ORM\Column]
     private ?\DateTimeImmutable $publishedAt = null;
 
-    #[Groups(["game:item"])]
+    #[Groups(["game:item", "game:post"])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[Groups(["game:item"])]
+    #[Groups(["game:item", "game:post"])]
     #[ORM\Column(length: 255)]
     private ?string $thumbnailCover = null;
 
-    #[Groups(["game:collection", "publisher:item"])]
+    #[Groups(["game:collection", "game:post"])]
     #[ORM\ManyToOne(inversedBy: 'games')]
     private ?Publisher $publisher = null;
 
