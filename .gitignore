@@ -1,7 +1,5 @@
 .idea
 node_modules
-.env
-.env.dev
 
 ###> symfony/framework-bundle ###
 /.env.local
