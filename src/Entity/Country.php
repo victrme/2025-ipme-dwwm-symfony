@@ -8,62 +8,100 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Repository\CountryRepository;
+use App\Slugger\SlugInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ORM\Entity(repositoryClass: CountryRepository::class)]
 #[ApiResource(operations: [
-    new Get(normalizationContext: [
-        "groups" => ["country:item", "country:collection"]
-    ]),
-    new GetCollection(normalizationContext: [
-        "groups" => ["country:collection"]
-    ]),
+    new Get(
+        normalizationContext: [
+            "groups" => [
+                "country:id",
+                "country:code",
+                "country:name",
+                "country:slug",
+                "country:urlFlag",
+                "country:nationality",
+            ]
+        ]
+    ),
+    new GetCollection(
+        normalizationContext: [
+            "groups" => [
+                "country:code",
+                "country:name",
+            ]
+        ]
+    ),
     new Post(
         normalizationContext: [
-            "groups" => ["country:item", "country:collection"]
+            "groups" => [
+                "country:id",
+                "country:code",
+                "country:name",
+                "country:slug",
+                "country:urlFlag",
+                "country:nationality",
+            ]
         ],
         denormalizationContext: [
-            "groups" => ["country:post"]
+            "groups" => [
+                "country:code",
+                "country:name",
+                "country:nationality",
+            ]
         ]
     ),
     new Patch(
         normalizationContext: [
-            "groups" => ["country:item", "country:collection"]
+            "groups" => [
+                "country:id",
+                "country:code",
+                "country:name",
+                "country:slug",
+                "country:urlFlag",
+                "country:nationality",
+            ]
         ],
         denormalizationContext: [
-            "groups" => ["country:post"]
+            "groups" => [
+                "country:code",
+                "country:name",
+                "country:nationality",
+            ]
         ]
     )
 ])]
-class Country
+
+#[ORM\Entity(repositoryClass: CountryRepository::class)]
+class Country implements SlugInterface
 {
-    #[Groups("country:item", "publisher:post")]
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[ORM\GeneratedValue]
+    #[Groups("country:id")]
     private ?int $id = null;
 
-    #[Groups(["country:collection", "country:post"])]
     #[ORM\Column(length: 2)]
+    #[Groups(["country:code"])]
     private ?string $code = null;
 
-    #[Groups(["country:collection", "country:post"])]
     #[ORM\Column(length: 255)]
+    #[Groups(["country:name"])]
     private ?string $name = null;
 
-    #[Groups(["country:item", "country:post"])]
     #[ORM\Column(length: 255)]
+    #[Groups(["country:nationality"])]
     private ?string $nationality = null;
 
-    #[Groups(["country:item", "country:post", "review:item"])]
     #[ORM\Column(length: 255)]
+    #[Groups(["country:slug"])]
     private ?string $slug = null;
 
-    #[Groups("country:item", "country:post")]
     #[ORM\Column(length: 255)]
+    #[Groups("country:urlFlag")]
     private ?string $urlFlag = null;
 
     /**
@@ -241,5 +279,10 @@ class Country
         }
 
         return $this;
+    }
+
+    public function getFields(): ?string
+    {
+        return $this->name;
     }
 }
