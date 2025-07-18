@@ -47,6 +47,7 @@ class Game implements SlugInterface
      * @var Collection<int, Category>
      */
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'games')]
+    #[Groups('game:item')]
     private Collection $categories;
 
     /**

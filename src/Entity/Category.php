@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\CategoryRepository;
 use App\Slugify\SlugInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -43,7 +46,30 @@ use Symfony\Component\Validator\Constraints as Assert;
             denormalizationContext: [ // JSON à partir duquel on va créer la donnée
                 'groups' => 'category:post',
             ]
-        )
+        ),
+        new Put(
+            normalizationContext: [ // Donnée renvoyée à la création
+                'groups' => [
+                    'category:collection',
+                    'category:post'
+                ],
+            ],
+            denormalizationContext: [ // JSON à partir duquel on va créer la donnée
+                'groups' => 'category:post',
+            ]
+        ),
+        new Patch(
+            normalizationContext: [ // Donnée renvoyée à la création
+                'groups' => [
+                    'category:collection',
+                    'category:post'
+                ],
+            ],
+            denormalizationContext: [ // JSON à partir duquel on va créer la donnée
+                'groups' => 'category:post',
+            ]
+        ),
+        new Delete()
     ]
 )]
 class Category implements SlugInterface
