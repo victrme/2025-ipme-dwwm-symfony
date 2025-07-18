@@ -9,6 +9,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Controller\ApiFrontpageController;
 use App\Repository\GameRepository;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,13 +20,19 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(normalizationContext: [
-            "groups" =>  ["game:collection", "game:item"]
-        ]),
+        new Get(
+            normalizationContext: [
+                "groups" =>  ["game:collection", "game:item"]
+            ]
+        ),
         new GetCollection(
-            name: "games-most-expensive",
-            uriTemplate: "games-most-expensive",
+            controller: ApiFrontpageController::class,
+            uriTemplate: "games-homepage",
+        ),
+        new GetCollection(
+            uriTemplate: "games-expensive",
             order: ["price" => "DESC"],
+            paginationItemsPerPage: 9,
             normalizationContext: [
                 "groups" => ["game:collection"]
             ]
