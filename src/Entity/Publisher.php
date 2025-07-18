@@ -16,12 +16,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: PublisherRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(normalizationContext: [
-            "groups" => ["publisher:collection", "publisher:item"]
-        ]),
-        new GetCollection(normalizationContext: [
-            "groups" => ["publisher:collection"]
-        ]),
+        new Get(
+            normalizationContext: [
+                "groups" => ["publisher:collection", "publisher:item"]
+            ]
+        ),
+        new GetCollection(
+            normalizationContext: [
+                "groups" => ["publisher:collection"]
+            ]
+        ),
         new Post(
             normalizationContext: [
                 "groups" => ["publisher:collection", "publisher:item"]

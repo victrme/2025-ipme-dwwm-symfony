@@ -17,17 +17,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(normalizationContext: [
-            "groups" => [
-                "review:item",
-                "review:collection"
+        new Get(
+            normalizationContext: [
+                "groups" => [
+                    "review:item",
+                    "review:collection"
+                ]
             ]
-        ]),
-        new GetCollection(normalizationContext: [
-            "groups" => [
-                "review:collection"
+        ),
+        new GetCollection(
+            normalizationContext: [
+                "groups" => [
+                    "review:collection"
+                ]
             ]
-        ]),
+        ),
         new Post(
             normalizationContext: [
                 "groups" => ["review:collection", "review:item"]

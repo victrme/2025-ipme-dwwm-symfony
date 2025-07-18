@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,15 +16,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[ApiResource(operations: [new Get(normalizationContext: ["groups" => "user:item"])])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["game:item", "review:item", "review:post",  "owngame:item"])]
+    #[Groups(["user:item", "game:item", "review:item", "review:post",  "owngame:item"])]
     private ?int $id = null;
 
-    #[Groups(["game:item", "review:item", "owngame:item"])]
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
@@ -41,22 +43,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[Groups(["game:item", "review:item"])]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[Groups(["game:item", "review:collection", "owngame:item"])]
     #[ORM\Column(length: 255)]
     private ?string $nickname = null;
 
-    #[Groups(["game:item", "review:item"])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profileImage = null;
 
     #[ORM\Column]
     private ?int $wallet = 0;
 
-    #[Groups(["review:item"])]
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Country $country = null;
 

@@ -2,11 +2,8 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserOwnGameRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -14,19 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: UserOwnGameRepository::class)]
 #[ApiResource(
     operations: [
-        new Get(normalizationContext: [
-            "groups" => [
-                "owngame:item",
-                // "owngame:collection",
-            ]
-        ]),
-        // new GetCollection(normalizationContext: [
-        //     "groups" => [
-        //         "owngame:collection"
-        //     ]
-        // ]),
-        // new Post(),
-        // new Patch()
+        new Get(normalizationContext: ["groups" => ["owngame:item"]])
     ]
 )]
 class UserOwnGame
