@@ -3,7 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\PublisherRepository;
 use App\Slugify\SlugInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,41 +17,81 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: PublisherRepository::class)]
 #[ApiResource(operations: [
-    new Post(denormalizationContext: [
-        'groups' => 'publisher:post',
-    ])
+    new Get(
+        normalizationContext: [
+            'groups' => [
+                'publisher:item',
+                'game:collection',
+            ]
+        ]
+    ),
+    new GetCollection(
+        order: ['createdAt' => 'DESC'],
+        normalizationContext: [
+            'groups' => [
+                'publisher:collection',
+            ]
+        ]
+    ),
+    new Post(
+        normalizationContext: [
+            'groups' => 'publisher:item',
+        ],
+        denormalizationContext: [
+            'groups' => 'publisher:post',
+        ]
+    ),
+    new Put(
+        normalizationContext: [
+            'groups' => 'publisher:item',
+        ],
+        denormalizationContext: [
+            'groups' => 'publisher:post',
+        ]
+    ),
+    new Patch(
+        normalizationContext: [
+            'groups' => 'publisher:item',
+        ],
+        denormalizationContext: [
+            'groups' => 'publisher:post',
+        ]
+    )
 ])]
 class Publisher implements SlugInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['publisher:item', 'publisher:collection'])]
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Groups(['publisher:post'])]
+    #[Groups(['publisher:post', 'publisher:item'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['publisher:post'])]
+    #[Groups(['publisher:post', 'publisher:item', 'publisher:collection'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['publisher:item', 'publisher:collection'])]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['publisher:post'])]
+    #[Groups(['publisher:post', 'publisher:item'])]
     private ?string $website = null;
 
     #[ORM\ManyToOne(inversedBy: 'publishers')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups('publisher:post')]
+    #[Groups(['publisher:post', 'publisher:item', 'publisher:collection'])]
     private ?Country $country = null;
 
     /**
      * @var Collection<int, Game>
      */
     #[ORM\OneToMany(targetEntity: Game::class, mappedBy: 'publisher')]
+    #[Groups('publisher:item')]
     private Collection $games;
 
     public function __construct()

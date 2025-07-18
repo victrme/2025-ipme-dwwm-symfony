@@ -22,7 +22,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiResource(
     operations: [
         new GetCollection( // Récupère un tableau d'objets => Category[]
-            normalizationContext:[
+            paginationEnabled: false,
+            order: [
+                'name' => 'ASC',
+            ],
+            normalizationContext: [
                 'groups' => [
                     'country:collection',
                     'country:post',
@@ -83,27 +87,27 @@ class Country implements SlugInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['country:item'])]
+    #[Groups(['country:item', 'publisher:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 2)]
-    #[Groups(['country:item', 'country:post'])]
+    #[Groups(['country:item', 'country:post', 'publisher:item'])]
     private ?string $code = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['country:item', 'country:post'])]
+    #[Groups(['country:item', 'country:post', 'publisher:item', 'publisher:collection'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['country:collection', 'country:post'])]
+    #[Groups(['country:collection', 'country:post', 'publisher:item'])]
     private ?string $nationality = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('country:collection')]
+    #[Groups(['country:collection', 'publisher:item', 'publisher:collection'])]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('country:collection')]
+    #[Groups(['country:collection', 'publisher:item', 'publisher:collection'])]
     private ?string $urlFlag = null;
 
     /**
