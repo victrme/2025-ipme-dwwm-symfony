@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use App\Repository\PublisherRepository;
+use App\Slugify\SlugInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,7 +17,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         'groups' => 'publisher:post',
     ])
 ])]
-class Publisher
+class Publisher implements SlugInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -144,5 +145,10 @@ class Publisher
         }
 
         return $this;
+    }
+
+    public function getFields(): ?string
+    {
+        return $this->name;
     }
 }

@@ -10,7 +10,7 @@ use Doctrine\ORM\Events;
 
 #[AsDoctrineListener(event: Events::preUpdate, priority: 500, connection: 'default')]
 #[AsDoctrineListener(event: Events::prePersist, priority: 500, connection: 'default')]
-readonly class PrePersistEventSubscriber
+readonly class SlugifyEventSubscriber
 {
 
     public function __construct(private SlugService $slugService)
@@ -27,7 +27,7 @@ readonly class PrePersistEventSubscriber
 
     private function handle(object $object): void {
         if ($object instanceof SlugInterface) {
-            $object->setSlug($this->slugService->slugify($object->getName()));
+            $object->setSlug($this->slugService->slugify($object->getFields()));
         }
 
         if ($object instanceof Country) {

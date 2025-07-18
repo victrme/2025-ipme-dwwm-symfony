@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Repository\CategoryRepository;
+use App\Slugify\SlugInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -45,7 +46,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         )
     ]
 )]
-class Category
+class Category implements SlugInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -69,8 +70,7 @@ class Category
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('category:post')]
-    #[Assert\NotBlank(message: 'Le slug doit être renseigné !')]
+    #[Groups('category:collection')]
     private ?string $slug = null;
 
     /**
@@ -151,5 +151,10 @@ class Category
         }
 
         return $this;
+    }
+
+    public function getFields(): ?string
+    {
+        return $this->name;
     }
 }

@@ -7,6 +7,6 @@ interface SlugInterface
 
     public function setSlug(string $slug): self;
 
-    public function getName(): ?string;
+    public function getFields(): ?string;
 
 }

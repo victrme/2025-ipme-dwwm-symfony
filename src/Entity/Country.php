@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use App\Controller\Api\Country\PostController;
 use App\Repository\CountryRepository;
+use App\Slugify\SlugInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -26,14 +28,20 @@ use Symfony\Component\Serializer\Attribute\Groups;
             'groups' => 'country:collection',
         ]),
         new Post(
-            controller: 'App\Controller\Api\Country\PostController::index',
+//            controller: 'App\Controller\Api\Country\PostController::index',
             denormalizationContext: [
                 'groups' => 'country:post',
             ],
         ),
     ]
 )]
-class Country
+#[ApiFilter(
+    SearchFilter::class, properties: [
+        'name' => 'partial',
+        'nationality' => 'partial',
+    ],
+)]
+class Country implements SlugInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -245,4 +253,8 @@ class Country
         return count($this->games);
     }
 
+    public function getFields(): ?string
+    {
+        return $this->name;
+    }
 }
