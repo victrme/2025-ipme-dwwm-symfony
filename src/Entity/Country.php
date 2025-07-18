@@ -5,9 +5,12 @@ namespace App\Entity;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\CountryRepository;
 use App\Slugify\SlugInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,23 +19,57 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
-#[ApiResource(operations: [
-        new Get(normalizationContext: [
-            'groups' => [
-                'country:item',
-                'country:collection',
-                'game:collection',
-            ],
-        ]),
-        new GetCollection(normalizationContext: [
-            'groups' => 'country:collection',
-        ]),
-        new Post(
-//            controller: 'App\Controller\Api\Country\PostController::index',
-            denormalizationContext: [
-                'groups' => 'country:post',
-            ],
+#[ApiResource(
+    operations: [
+        new GetCollection( // Récupère un tableau d'objets => Category[]
+            normalizationContext:[
+                'groups' => [
+                    'country:collection',
+                    'country:post',
+                ],
+            ]
         ),
+        new Get( // Récupère UN objet Category
+            normalizationContext: [
+                'groups' => [
+                    'country:item',
+                ],
+            ]
+        ),
+        new Post( // Créer la ressource en BDD
+            normalizationContext: [ // Donnée renvoyée à la création
+                'groups' => [
+                    'country:collection',
+                    'country:post'
+                ],
+            ],
+            denormalizationContext: [ // JSON à partir duquel on va créer la donnée
+                'groups' => 'country:post',
+            ]
+        ),
+        new Put(
+            normalizationContext: [ // Donnée renvoyée à la création
+                'groups' => [
+                    'country:collection',
+                    'country:post'
+                ],
+            ],
+            denormalizationContext: [ // JSON à partir duquel on va créer la donnée
+                'groups' => 'country:post',
+            ]
+        ),
+        new Patch(
+            normalizationContext: [ // Donnée renvoyée à la création
+                'groups' => [
+                    'country:collection',
+                    'country:post'
+                ],
+            ],
+            denormalizationContext: [ // JSON à partir duquel on va créer la donnée
+                'groups' => 'country:post',
+            ]
+        ),
+        new Delete()
     ]
 )]
 #[ApiFilter(
