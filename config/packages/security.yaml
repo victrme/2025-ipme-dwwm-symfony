@@ -55,6 +55,7 @@ security:
   access_control:
     - { path: ^/api/, roles: ROLE_ADMIN, methods: ["POST", "PUT", "PATCH", "DELETE"] }
     - { path: ^/api/reviews, roles: [ROLE_USER], methods: ["POST", "PUT", "PATCH"] }
+    - { path: ^/api/user_own_games, roles: [ROLE_USER], methods: ["POST", "PUT", "PATCH"] }
     - { path: ^/api/me, roles: [ROLE_USER] }
     - { path: ^/api/login, roles: PUBLIC_ACCESS }
     - { path: ^/api/docs, roles: PUBLIC_ACCESS }

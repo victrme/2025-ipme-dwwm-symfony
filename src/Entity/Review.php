@@ -5,10 +5,11 @@ namespace App\Entity;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Controller\PostReviewController;
 use App\Repository\ReviewRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,186 +17,188 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
 #[ApiResource(
-    operations: [
-        new Get(
-            normalizationContext: [
-                "groups" => [
-                    "review:item",
-                    "review:collection"
-                ]
-            ]
-        ),
-        new GetCollection(
-            normalizationContext: [
-                "groups" => [
-                    "review:collection"
-                ]
-            ]
-        ),
-        new Post(
-            normalizationContext: [
-                "groups" => ["review:collection", "review:item"]
-            ],
-            denormalizationContext: [
-                "groups" => ["review:post"]
-            ]
-        ),
-        new Patch(
-            normalizationContext: [
-                "groups" => ["review:collection", "review:item"]
-            ],
-            denormalizationContext: [
-                "groups" => ["review:post"]
-            ]
-        )
-    ]
+	operations: [
+		new Get(
+			normalizationContext: [
+				'groups' => [
+					'review:item',
+					'review:collection',
+				],
+			]
+		),
+		new GetCollection(
+			normalizationContext: [
+				'groups' => [
+					'review:collection',
+				],
+			]
+		),
+		new Post(
+			uriTemplate: '/reviews/{id}',
+			controller: PostReviewController::class,
+			normalizationContext: [
+				'groups' => ['review:collection', 'review:item'],
+			],
+			denormalizationContext: [
+				'groups' => ['review:post'],
+			]
+		),
+		new Patch(
+			normalizationContext: [
+				'groups' => ['review:collection', 'review:item'],
+			],
+			denormalizationContext: [
+				'groups' => ['review:post'],
+			]
+		),
+	]
 )]
 #[ApiFilter(SearchFilter::class, properties: [
-    "rating" => "partial",
-    "content" => "partial",
-    "game.name" => "partial",
-    "user.nickname" => "partial"
+	'rating' => 'partial',
+	'content' => 'partial',
+	'game.name' => 'partial',
+	'user.nickname' => 'partial',
 ])]
 class Review
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    #[Groups("review:item")]
-    private ?int $id = null;
+	#[ORM\Id]
+	#[ORM\GeneratedValue]
+	#[ORM\Column]
+	#[Groups('review:item')]
+	private ?int $id = null;
 
-    #[Groups(["review:post", "review:collection", "game:item"])]
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $content = null;
+	#[Groups(['review:post', 'review:collection', 'game:item'])]
+	#[ORM\Column(type: Types::TEXT)]
+	private ?string $content = null;
 
-    #[Groups(["review:post", "review:collection", "game:item"])]
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+	#[Groups(['review:collection', 'game:item'])]
+	#[ORM\Column]
+	private ?\DateTimeImmutable $createdAt = null;
 
-    #[Groups(["review:post", "review:collection", "game:item"])]
-    #[ORM\Column]
-    private ?int $downVote = 0;
+	#[Groups(['review:collection', 'game:item'])]
+	#[ORM\Column]
+	private ?int $downVote = 0;
 
-    #[Groups(["review:post", "review:collection", "game:item"])]
-    #[ORM\Column]
-    private ?int $upVote = 0;
+	#[Groups(['review:collection', 'game:item'])]
+	#[ORM\Column]
+	private ?int $upVote = 0;
 
-    #[Groups(["review:post", "review:collection", "game:item"])]
-    #[ORM\Column]
-    private ?float $rating = null;
+	#[Groups(['review:post', 'review:collection', 'game:item'])]
+	#[ORM\Column]
+	private ?float $rating = null;
 
-    #[Groups(["review:post", "review:item", "game:item"])]
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
+	#[Groups(['review:post', 'review:item', 'game:item'])]
+	#[ORM\Column(length: 255)]
+	private ?string $title = null;
 
-    #[Groups(["review:post", "review:item", "game:item"])]
-    #[ORM\ManyToOne(inversedBy: 'reviews')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+	#[Groups(['review:item', 'game:item'])]
+	#[ORM\ManyToOne(inversedBy: 'reviews')]
+	#[ORM\JoinColumn(nullable: false)]
+	private ?User $user = null;
 
-    #[Groups(["review:post", "review:item"])]
-    #[ORM\ManyToOne(inversedBy: 'reviews')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Game $game = null;
+	#[Groups(['review:item'])]
+	#[ORM\ManyToOne(inversedBy: 'reviews')]
+	#[ORM\JoinColumn(nullable: false)]
+	private ?Game $game = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+	public function getId(): ?int
+	{
+		return $this->id;
+	}
 
-    public function getContent(): ?string
-    {
-        return $this->content;
-    }
+	public function getContent(): ?string
+	{
+		return $this->content;
+	}
 
-    public function setContent(string $content): static
-    {
-        $this->content = $content;
+	public function setContent(string $content): static
+	{
+		$this->content = $content;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
+	public function getCreatedAt(): ?\DateTimeImmutable
+	{
+		return $this->createdAt;
+	}
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
+	public function setCreatedAt(\DateTimeImmutable $createdAt): static
+	{
+		$this->createdAt = $createdAt;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getDownVote(): ?int
-    {
-        return $this->downVote;
-    }
+	public function getDownVote(): ?int
+	{
+		return $this->downVote;
+	}
 
-    public function setDownVote(int $downVote): static
-    {
-        $this->downVote = $downVote;
+	public function setDownVote(int $downVote): static
+	{
+		$this->downVote = $downVote;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getUpVote(): ?int
-    {
-        return $this->upVote;
-    }
+	public function getUpVote(): ?int
+	{
+		return $this->upVote;
+	}
 
-    public function setUpVote(int $upVote): static
-    {
-        $this->upVote = $upVote;
+	public function setUpVote(int $upVote): static
+	{
+		$this->upVote = $upVote;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getRating(): ?float
-    {
-        return $this->rating;
-    }
+	public function getRating(): ?float
+	{
+		return $this->rating;
+	}
 
-    public function setRating(float $rating): static
-    {
-        $this->rating = $rating;
+	public function setRating(float $rating): static
+	{
+		$this->rating = $rating;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
+	public function getTitle(): ?string
+	{
+		return $this->title;
+	}
 
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
+	public function setTitle(string $title): static
+	{
+		$this->title = $title;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
+	public function getUser(): ?User
+	{
+		return $this->user;
+	}
 
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
+	public function setUser(?User $user): static
+	{
+		$this->user = $user;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    public function getGame(): ?Game
-    {
-        return $this->game;
-    }
+	public function getGame(): ?Game
+	{
+		return $this->game;
+	}
 
-    public function setGame(?Game $game): static
-    {
-        $this->game = $game;
+	public function setGame(?Game $game): static
+	{
+		$this->game = $game;
 
-        return $this;
-    }
+		return $this;
+	}
 }
