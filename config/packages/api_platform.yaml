@@ -12,3 +12,7 @@ api_platform:
     stateless: false
     cache_headers:
       vary: ["Content-Type", "Authorization", "Origin"]
+    api_keys:
+      JWT:
+        name: Authorization
+        type: header
