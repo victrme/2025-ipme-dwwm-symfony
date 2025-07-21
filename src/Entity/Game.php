@@ -60,7 +60,7 @@ class Game implements SlugInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['game:collection', 'game:item', 'game:post', 'review:item'])]
+    #[Groups(['game:collection', 'game:item', 'game:post', 'review:item', 'userOwnGame:item'])]
     private ?string $name = null;
 
     #[ORM\Column]
@@ -80,7 +80,7 @@ class Game implements SlugInterface
     private ?string $thumbnailCover = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['game:collection', 'review:item'])]
+    #[Groups(['game:collection', 'review:item', 'userOwnGame:item'])]
     private ?string $slug = null;
 
     #[ORM\ManyToOne(inversedBy: 'games')]

@@ -16,12 +16,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Post(
             uriTemplate: '/reviews/{id}', // id => id d'un jeu et non d'un commentaire !
             controller: PostReviewController::class,
-//            normalizationContext: [
-//                'groups' => [
-//                    'review:post',
-//                    'review:item',
-//                ]
-//            ],
             denormalizationContext: [
                 'groups' => 'review:post',
             ],

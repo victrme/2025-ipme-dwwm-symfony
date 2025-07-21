@@ -53,7 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['review:collection:user', 'user:item', 'review:item'])]
+    #[Groups(['review:collection:user', 'user:item', 'review:item', 'userOwnGame:item'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]

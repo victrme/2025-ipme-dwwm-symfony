@@ -11,15 +11,18 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
+#[AsController]
 class PostReviewController extends AbstractController
 {
     /**
      * @throws ExceptionInterface
      */
     public function __invoke(
+        string                 $id,
         Request                $request,
         GameRepository         $gameRepository,
         EntityManagerInterface $em,
@@ -28,7 +31,7 @@ class PostReviewController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        if (null === $game = $gameRepository->findOneBy(['id' => $request->get('id')])) {
+        if (null === $game = $gameRepository->findOneBy(['id' => $id])) {
             return new Response('Jeu incorrect', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 

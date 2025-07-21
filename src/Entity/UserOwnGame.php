@@ -2,10 +2,32 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Post;
+use App\Controller\Api\UserOwnGames\UserOwnGamesPostController;
 use App\Repository\UserOwnGameRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UserOwnGameRepository::class)]
+#[ApiResource(
+    operations: [
+        new Post(
+            uriTemplate: '/user_own_games/{gameId}',
+            uriVariables: [
+                'gameId' => new Link(
+                    toProperty: 'id',
+                    fromClass: Game::class
+                )
+            ],
+            controller: UserOwnGamesPostController::class,
+            denormalizationContext: [
+                'groups' => '',
+            ],
+        ),
+    ]
+)]
 class UserOwnGame
 {
     #[ORM\Id]
@@ -14,23 +36,29 @@ class UserOwnGame
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups('userOwnGame:item')]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?int $gameTime = null;
+    #[Groups('userOwnGame:item')]
+    private ?int $gameTime = 0;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('userOwnGame:item')]
     private ?\DateTimeImmutable $lastUsedAt = null;
 
     #[ORM\Column]
-    private ?bool $isInstalled = null;
+    #[Groups('userOwnGame:item')]
+    private ?bool $isInstalled = false;
 
     #[ORM\ManyToOne(inversedBy: 'ownedByUser')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('userOwnGame:item')]
     private ?Game $game = null;
 
     #[ORM\ManyToOne(inversedBy: 'ownedGames')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('userOwnGame:item')]
     private ?User $user = null;
 
     public function getId(): ?int
