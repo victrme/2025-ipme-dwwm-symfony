@@ -7,12 +7,12 @@ api_platform:
   swagger:
     swagger_ui_extra_configuration:
       docExpansion: none # list|full|none
+    api_keys:
+      JWT:
+        name: Authorization
+        type: header
 
   defaults:
     stateless: false
     cache_headers:
       vary: ["Content-Type", "Authorization", "Origin"]
-    api_keys:
-      JWT:
-        name: Authorization
-        type: header

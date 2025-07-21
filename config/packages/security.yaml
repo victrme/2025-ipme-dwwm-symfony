@@ -23,7 +23,7 @@ security:
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
         username_path: email
         password_path: password
-    
+
     api:
       pattern: ^/api
       stateless: true
@@ -53,11 +53,13 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
+    - { path: ^/api/, roles: ROLE_ADMIN, methods: ["POST", "PUT", "PATCH", "DELETE"] }
+    - { path: ^/api/reviews, roles: [ROLE_USER], methods: ["POST", "PUT", "PATCH"] }
+    - { path: ^/api/me, roles: [ROLE_USER] }
     - { path: ^/api/login, roles: PUBLIC_ACCESS }
     - { path: ^/api/docs, roles: PUBLIC_ACCESS }
     - { path: ^/api, roles: PUBLIC_ACCESS }
     - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
   security:
