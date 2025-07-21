@@ -30,9 +30,8 @@ security:
         api:
             pattern: ^/api
             stateless: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_manager
+            custom_authenticators:
+                - lexik_jwt_authentication.jwt_manager
 
     access_control:
         - { path: ^/api/countries, roles: ROLE_ADMIN, methods: ['POST', 'PUT'] }
