@@ -49,7 +49,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
             ],
             denormalizationContext: [ // JSON à partir duquel on va créer la donnée
                 'groups' => 'country:post',
-            ]
+            ],
         ),
         new Put(
             normalizationContext: [ // Donnée renvoyée à la création

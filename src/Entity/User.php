@@ -2,6 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use App\Controller\Api\User\UserMeController;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,6 +15,17 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ApiResource(
+    operations: [
+        new Get(
+            uriTemplate: '/user/me',
+            controller: UserMeController::class,
+            normalizationContext: [
+                'groups' => ['user:item'],
+            ]
+        )
+    ]
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,6 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Groups('user:item')]
     private ?string $email = null;
 
     /**
@@ -38,17 +53,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('review:collection:user')]
+    #[Groups(['review:collection:user', 'user:item'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('user:item')]
     private ?string $nickname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups('review:collection:user')]
+    #[Groups(['review:collection:user', 'user:item'])]
     private ?string $profileImage = null;
 
     #[ORM\Column]
+    #[Groups('user:item')]
     private ?int $wallet = 0;
 
     #[ORM\ManyToOne(inversedBy: 'users')]

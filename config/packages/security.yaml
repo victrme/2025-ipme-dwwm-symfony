@@ -1,5 +1,4 @@
 security:
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
@@ -13,9 +12,6 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            lazy: true
-            provider: app_user_provider
 
         login:
             pattern: ^/api/login
@@ -30,14 +26,26 @@ security:
         api:
             pattern: ^/api
             stateless: true
-            custom_authenticators:
-                - lexik_jwt_authentication.jwt_manager
+            jwt: ~
+
+        main:
+            lazy: true
+            provider: app_user_provider
+            logout:
+                path: app_logout
+                target: /
 
     access_control:
-        - { path: ^/api/countries, roles: ROLE_ADMIN, methods: ['POST', 'PUT'] }
-        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api/countries, roles: ROLE_ADMIN, methods: ['POST', 'PUT', 'PATCH', 'DELETE'] }
+        - { path: ^/api/categories, roles: ROLE_ADMIN, methods: ['POST', 'PUT', 'PATCH', 'DELETE'] }
+        - { path: ^/api/games, roles: ROLE_ADMIN, methods: ['POST', 'PUT', 'PATCH', 'DELETE'] }
+        - { path: ^/api/publishers, roles: ROLE_ADMIN, methods: ['POST', 'PUT', 'PATCH', 'DELETE'] }
+        - { path: ^/api/me, roles: ROLE_USER }
+        - { path: ^/api/reviews, roles: ROLE_USER, methods: ['POST', 'PUT', 'PATCH'] }
+        - { path: ^/api/user_own_games, roles: ROLE_USER, methods: ['POST', 'PUT', 'PATCH'] }
+        - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
         - { path: ^/api/docs, roles: PUBLIC_ACCESS }
-        - { path: ^/api,       roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
