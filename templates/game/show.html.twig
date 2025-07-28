@@ -14,6 +14,17 @@
             <div class="col-lg-6">
                 <h1 class="text-center">{{ game.name }}</h1>
                 <p>{{ game.price }}€</p>
+
+                <button class="btn btn-outline-primary"
+                        title="Ajouter ce jeu à votre liste de souhait !"
+                        data-wishlist="{{ path('app_handle_wishlist', {'id': game.id}) }}"
+                >
+                    {% if app.user and app.user.wantedGames.contains(game) %}
+                        <i class="fa-solid fa-heart text-danger"></i>
+                    {% else %}
+                        <i class="fa-regular fa-heart"></i>
+                    {% endif %}
+                </button>
             </div>
         </div>
 

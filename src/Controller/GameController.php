@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Review;
+use App\Entity\User;
 use App\Form\ReviewType;
 use App\Repository\CategoryRepository;
 use App\Repository\GameRepository;
@@ -11,6 +12,7 @@ use App\Repository\UserRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -73,6 +75,34 @@ final class GameController extends AbstractController
         return $this->render('game/games_by_category.html.twig', [
             'category' => $category,
         ]);
+    }
+
+    #[Route('/handle-wishlist/{id}', name: 'app_handle_wishlist', methods: ['POST'])]
+    public function handleWishlist(
+        string $id,
+        UserRepository $userRepository,
+        GameRepository $gameRepository,
+        EntityManagerInterface $em
+    ): JsonResponse
+    {
+        $game = $gameRepository->find($id);
+        $user = $this->getUser();
+        $action = '/se-connecter'; // nothing
+        $user = $userRepository->findOneBy(['id' => 42]); // Car j'ai pas de security !
+
+        /** @var User $user */
+        if ($user) {
+            if ($user->getWantedGames()->contains($game)) {
+                $user->removeWantedGame($game);
+                $action = 100; // remove
+            } else {
+                $user->addWantedGame($game);
+                $action = 200; // add
+            }
+            $em->flush();
+        }
+
+        return new JsonResponse($action);
     }
 
 }
