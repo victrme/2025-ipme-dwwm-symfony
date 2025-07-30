@@ -31,6 +31,14 @@
         <div class="row">
             {% for review in reviews %}
                 <div class="col-lg-3">
+                    <p>
+                        Ecrit par
+                        <a  class="text-decoration-none"
+                            href="{{ path('app_user_index', {'name': review.user.name}) }}"
+                        >
+                            {{ review.user.name }}
+                        </a>
+                    </p>
                     <p>{{ review.content }}</p>
                     <p>{{ review.rating }}</p>
                 </div>

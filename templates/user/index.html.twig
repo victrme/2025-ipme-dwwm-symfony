@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Profil de {{ user.name }}
+{% endblock %}
+
+{% block body %}
+
+    {% set isLoggedUser = app.user.id == user.id %}
+
+    <div class="container mt-3">
+        <h1>
+        {% if isLoggedUser %}
+            Mon profil
+        {% else %}
+            Profil de {{ user.name }}
+        {% endif %}
+        </h1>
+
+        {% if isLoggedUser and form is not null %}
+            {% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_end(form) }}
+        {% endif %}
+    </div>
+
+{% endblock %}

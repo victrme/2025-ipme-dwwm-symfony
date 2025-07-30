@@ -3,26 +3,32 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\RegisterType;
+use App\Form\UserType;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class RegisterController extends AbstractController
 {
     #[Route('/inscription', name: 'app_register', methods: ['POST', 'GET'])]
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(
+        Request $request,
+        EntityManagerInterface $em,
+        PasswordHasherInterface $passwordHasher,
+    ): Response
     {
         $user = new User();
-        // RegisterType::class => App\Form\RegisterType
-        $form = $this->createForm(RegisterType::class, $user);
+        // UserType::class => App\Form\UserType
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request); // Lie la requête HTTP en POST (à la soumission du form) à notre objet form
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setCreatedAt(new DateTimeImmutable());
+            $user->setPassword($passwordHasher->hash($user->getPassword()));
             $em->persist($user); // Indiquer que l'instance $user de la classe User, doit être "INSERT" en base de données
             $em->flush(); // Envoyer / confirmer que la requête d'INSERT doit passer en base de données
 

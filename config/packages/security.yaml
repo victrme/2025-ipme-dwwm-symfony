@@ -33,7 +33,12 @@ security:
             provider: app_user_provider
             logout:
                 path: app_logout
-                target: /
+                # where to redirect after logout
+                # target: app_any_route
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
 
     access_control:
         - { path: ^/api/countries, roles: ROLE_ADMIN, methods: ['POST', 'PUT', 'PATCH', 'DELETE'] }
