@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\PasswordHasherInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class RegisterController extends AbstractController
@@ -18,7 +18,7 @@ final class RegisterController extends AbstractController
     public function index(
         Request $request,
         EntityManagerInterface $em,
-        PasswordHasherInterface $passwordHasher,
+        UserPasswordHasherInterface $hashPassword,
     ): Response
     {
         $user = new User();
@@ -28,7 +28,7 @@ final class RegisterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setCreatedAt(new DateTimeImmutable());
-            $user->setPassword($passwordHasher->hash($user->getPassword()));
+            $user->setPassword($hashPassword->hashPassword($user, $user->getPassword()));
             $em->persist($user); // Indiquer que l'instance $user de la classe User, doit être "INSERT" en base de données
             $em->flush(); // Envoyer / confirmer que la requête d'INSERT doit passer en base de données
 
