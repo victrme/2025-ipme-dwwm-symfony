@@ -50,7 +50,7 @@ final class GameController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_show_game', [
-                'slug' => $game->getSlug()
+                'slug' => $game->getSlug(),
             ]);
         }
 
@@ -58,6 +58,7 @@ final class GameController extends AbstractController
             'game' => $game,
             'form' => $form,
             'reviews' => $reviewRepository->findBy(['game' => $game], ['createdAt' => 'DESC'], 4),
+            'categories' => $game->getCategories(),
         ]);
     }
 
