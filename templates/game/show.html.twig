@@ -14,9 +14,9 @@
             <div class="col-lg-6">
                 <h1 class="text-center">{{ game.name }}</h1>
                 <p>{{ game.price }}€</p>
-                <p> Genre du jeu :
+                <p> Genre(s) du jeu :
                 {% for category in categories %}
-                        {{ category.name }}
+                    {{ category.name }}
                 {% endfor %}
                 </p>
 
@@ -48,7 +48,10 @@
                     <p>{{ review.rating }}</p>
                 </div>
             {% endfor %}
-            <p> Plus d'informations: {{ game.description }}</p>
+            <h2> Plus d'informations</h2>
+            <p>
+                {{ game.description|raw }}
+            </p>
         </div>
         <div class="col-lg-6 col-md-12 mx-auto mb-5">
             {{ form_start(form) }}
