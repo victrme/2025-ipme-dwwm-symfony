@@ -4,12 +4,8 @@
 
 {% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
 
-{% block body %}
-
-    <div class="container">
-        <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="{{ path('app_admin')}}">Retour</a>
+{% block content %}
         {{ form_start(form) }}
         {{ form_end(form) }}
-    </div>
-
+    {% block page_contents %}{% endblock %}
 {% endblock %}
