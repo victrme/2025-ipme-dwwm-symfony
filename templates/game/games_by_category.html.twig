@@ -6,7 +6,7 @@
         <h1>Jeux de la catégorie {{ category.name }}</h1>
 
         {% for game in pagination %}
-            {% include "template/_game_card.html.twig" with { game: game } %}
+            {% include "partials/_game_card.html.twig" with { game: game } %}
         {% endfor %}
 
         <div class="navigation">
