@@ -21,7 +21,7 @@
                     </li>
                 {% elseif app.user and is_granted("ROLE_ADMIN") %}
                     <li class="nav-item">
-                        <a class="nav-link" href={{ path('app_admin_game') }}>Admin</a>
+                        <a class="nav-link" href={{ path('app_admin') }}>Admin</a>
                     </li>
                 {% else %}
                     <li class="nav-item">

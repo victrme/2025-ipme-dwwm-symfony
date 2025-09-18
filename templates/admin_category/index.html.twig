@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-admin.html.twig' %}
 
 {% block title %}Hello AdminCategoryController!{% endblock %}
 
@@ -7,6 +7,7 @@
 {% block body %}
 
     <div class="container">
+        <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" href="{{ path('app_admin')}}">Retour</a>
         {{ form_start(form) }}
         {{ form_end(form) }}
     </div>

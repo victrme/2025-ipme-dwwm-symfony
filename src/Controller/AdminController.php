@@ -13,8 +13,17 @@ use Symfony\Component\Routing\Attribute\Route;
 #[IsGranted('ROLE_ADMIN')]
 final class AdminController extends AbstractController
 {
+
+    #[Route('/admin', name: 'app_admin')]
+    public function index(): Response
+    {
+        return $this->render('admin/index.html.twig', [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
     #[Route('/admin/game', name: 'app_admin_game')]
-    public function index(GameRepository $gameRepository, EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
+    public function game(GameRepository $gameRepository, EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
     {
         $pagination = $paginator->paginate(
             $gameRepository->getAll(),
@@ -25,7 +34,7 @@ final class AdminController extends AbstractController
             'align' => 'center',
         ]);
 
-        return $this->render('admin/index.html.twig', [
+        return $this->render('admin/show-game.html.twig', [
             'controller_name' => 'AdminGameController',
             'games' => $pagination
         ]);
