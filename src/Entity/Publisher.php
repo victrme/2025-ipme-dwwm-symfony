@@ -58,6 +58,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ]
     )
 ])]
+#[ORM\Index(columns: ['created_at'])]
+#[ORM\Index(columns: ['name'])]
+#[ORM\Index(columns: ['slug'])]
 class Publisher implements SlugInterface
 {
     #[ORM\Id]

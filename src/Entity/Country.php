@@ -82,6 +82,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
         'nationality' => 'partial',
     ],
 )]
+#[ORM\Index(columns: ['nationality'])]
+#[ORM\Index(columns: ['slug'])]
 class Country implements SlugInterface
 {
     #[ORM\Id]

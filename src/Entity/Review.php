@@ -22,6 +22,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
         )
     ]
 )]
+#[ORM\Index(columns: ['created_at'])]
 class Review
 {
     #[ORM\Id]

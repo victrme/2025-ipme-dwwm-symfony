@@ -43,7 +43,7 @@ final class GameController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $review->setGame($game);
-            $review->setUser($userRepository->findOneBy(['id' => 42]));
+            $review->setUser($this->getUser());
             $review->setCreatedAt(new DateTimeImmutable());
             $entityManager->persist($review);
             $entityManager->flush();
