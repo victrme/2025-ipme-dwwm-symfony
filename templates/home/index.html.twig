@@ -21,10 +21,13 @@
             'games': lastGames
         } %}
 
+
         {% include 'partials/_game_loop.html.twig' with {
             'title': 'Les meilleures offres',
             'games': expensiveGames
         } %}
+
+        {% include 'partials/common/_review_loop.html.twig' %}
 
         {% include 'partials/_game_loop.html.twig' with {
             'title': 'Les tendances actuelles',
