@@ -14,6 +14,11 @@
             <div class="col-lg-6">
                 <h1 class="text-center">{{ game.name }}</h1>
                 <p>{{ game.price }}€</p>
+                <p> Genre(s) du jeu :
+                {% for category in categories %}
+                    {{ category.name }}
+                {% endfor %}
+                </p>
 
                 <button class="btn btn-outline-primary"
                         title="Ajouter ce jeu à votre liste de souhait !"
@@ -28,22 +33,8 @@
             </div>
         </div>
 
-        <div class="row">
-            {% for review in reviews %}
-                <div class="col-lg-3">
-                    <p>
-                        Ecrit par
-                        <a  class="text-decoration-none"
-                            href="{{ path('app_user_index', {'name': review.user.name}) }}"
-                        >
-                            {{ review.user.name }}
-                        </a>
-                    </p>
-                    <p>{{ review.content }}</p>
-                    <p>{{ review.rating }}</p>
-                </div>
-            {% endfor %}
-        </div>
+        {% include 'partials/common/_review_loop.html.twig' %}
+
         <div class="col-lg-6 col-md-12 mx-auto mb-5">
             {{ form_start(form) }}
                 <div class="text-danger">{{ form_errors(form) }}</div>

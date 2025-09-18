@@ -47,6 +47,7 @@ final class HomeController extends AbstractController
             'mostPlayedGames' => $mostPlayedGames,
             'lastReviews' => $lastReviews,
             'categories' => $categories,
+            'reviews' => $reviewRepository->findBy([], ['createdAt' => 'DESC'], 4),
         ]);
     }
 
