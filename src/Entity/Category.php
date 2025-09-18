@@ -72,6 +72,8 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete()
     ]
 )]
+#[ORM\Index(columns: ['name'])]
+#[ORM\Index(columns: ['slug'])]
 class Category implements SlugInterface
 {
     #[ORM\Id]

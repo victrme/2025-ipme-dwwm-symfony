@@ -28,6 +28,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
         ),
     ]
 )]
+#[ORM\Index(columns: ['created_at'])]
+#[ORM\Index(columns: ['game_time'])]
 class UserOwnGame
 {
     #[ORM\Id]

@@ -26,6 +26,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
         )
     ]
 )]
+#[ORM\Index(columns: ['created_at'])]
+#[ORM\Index(columns: ['name'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

@@ -51,6 +51,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
         )
     ],
 )]
+#[ORM\Index(columns: ['slug'])]
+#[ORM\Index(columns: ['name'])]
+#[ORM\Index(columns: ['published_at'])]
 class Game implements SlugInterface
 {
     #[ORM\Id]
