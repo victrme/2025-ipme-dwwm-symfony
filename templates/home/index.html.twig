@@ -21,6 +21,12 @@
             'games': lastGames
         } %}
 
+
+        {% include 'partials/_game_loop.html.twig' with {
+            'title': 'Les meilleures offres',
+            'games': expensiveGames
+        } %}
+
         <div class="row">
             {% for review in reviews %}
                 <div class="col-lg-3">
@@ -37,11 +43,6 @@
                 </div>
             {% endfor %}
         </div>
-
-        {% include 'partials/_game_loop.html.twig' with {
-            'title': 'Les meilleures offres',
-            'games': expensiveGames
-        } %}
 
         {% include 'partials/_game_loop.html.twig' with {
             'title': 'Les tendances actuelles',
