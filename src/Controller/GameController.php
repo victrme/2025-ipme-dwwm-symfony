@@ -76,7 +76,7 @@ final class GameController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        $perPage = 4;
+        $perPage = 12;
 
         $pagination = $paginator->paginate(
             $categoryRepository->findFullBySlug($slug)->getGames(),
