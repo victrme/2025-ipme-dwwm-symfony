@@ -43,6 +43,7 @@ class PublisherRepository extends ServiceEntityRepository
     //    }
     public function getAll(): QueryBuilder
     {
-        return $this->createQueryBuilder('p');
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.name', 'ASC');
     }
 }

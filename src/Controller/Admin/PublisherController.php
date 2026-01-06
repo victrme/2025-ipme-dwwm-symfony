@@ -75,7 +75,6 @@ class PublisherController extends AbstractController
                 foreach($publisher->getGames() as $game) {
                     $game->setPublisher($publisher);
                 }
-
                 $this->em->persist($publisher);
                 $this->em->flush();
             } catch (\Throwable $exception) {
