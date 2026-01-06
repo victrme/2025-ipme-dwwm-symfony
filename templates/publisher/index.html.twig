@@ -1,0 +1,49 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Admin - Editeur{% endblock %}
+
+{% trans_default_domain 'admin' %}
+
+{% block content %}
+
+    <h2 class="my-3">Les éditeurs</h2>
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th>{{ 'publisher.properties.name'|trans }}</th>
+            <th>{{ 'publisher.properties.createdAt'|trans }}</th>
+            <th>{{ 'publisher.properties.website'|trans }}</th>
+            <th>{{ 'publisher.properties.country'|trans }}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for publisher in publishers %}
+            <tr>
+                <td>
+                    {{ publisher.name }}
+                </td>
+                <td>
+                    {{ publisher.createdAt|date('Y-m-d') }}
+                </td>
+                <td>
+                    {{ publisher.website }}
+                </td>
+                <td>
+                    <img alt="Drapeau {{ publisher.country.nationality }}" src="{{ publisher.country.urlFlag }}">
+                </td>
+                <td>
+                    <a class="text-decoration-none" href="{{ path('app_admin_publisher_edit', {'id': publisher.id}) }}">
+                        <i class="fa fa-pencil text-warning"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <div class="navigation my-4" data-bs-theme="dark">
+        {{ knp_pagination_render(publishers, '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig')}}
+    </div>
+{% endblock %}

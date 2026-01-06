@@ -17,6 +17,18 @@ game:
     index:
         title: "Tous les jeux"
 
+publisher:
+    form:
+        title:
+            new: "Ajout d'un éditeur %gameName%"
+            edit: "Modification de %gameName%"
+    properties:
+        name: "Nom"
+        createdAt: "Créé en"
+        website: "Site web"
+        country: "Pays"
+        games: "Jeux"
+
 alert:
     game:
         new:
