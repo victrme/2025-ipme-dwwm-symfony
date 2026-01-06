@@ -18,9 +18,7 @@ final class AdminController extends AbstractController
     #[Route('/admin', name: 'app_admin')]
     public function index(): Response
     {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
+        return $this->render('admin/index.html.twig');
     }
 
     #[Route('/admin/game', name: 'app_admin_game')]
@@ -36,7 +34,6 @@ final class AdminController extends AbstractController
         ]);
 
         return $this->render('admin/show-game.html.twig', [
-            'controller_name' => 'AdminGameController',
             'games' => $pagination
         ]);
     }
