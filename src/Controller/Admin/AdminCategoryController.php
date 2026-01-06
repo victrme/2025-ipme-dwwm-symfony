@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
+use App\Controller\IsGranted;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Service\FileUploaderService;

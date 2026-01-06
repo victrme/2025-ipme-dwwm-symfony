@@ -19,3 +19,9 @@
         @include defaultLink(#1f7200, #00ff17);
     }
 }
+
+.icon-click {
+    color: red;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
