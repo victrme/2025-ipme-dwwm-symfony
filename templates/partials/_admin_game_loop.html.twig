@@ -1,5 +1,15 @@
+
+{% trans_default_domain 'admin' %}
+
 <h2 class="my-3">{{ title }}</h2>
-<table class="table-dark w-100">
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th>{{ 'game.properties.name'|trans }}</th>
+            <th>{{ 'game.properties.price'|trans }}</th>
+            <th></th>
+        </tr>
+    </thead>
     <tbody>
         {% for game in games %}
             <tr>
@@ -8,6 +18,11 @@
                 </td>
                 <td>
                     {{ game.price|euro }}
+                </td>
+                <td>
+                    <a class="text-decoration-none" href="{{ path('app_admin_game_edit', {'id': game.id}) }}">
+                        <i class="fa fa-pencil text-warning"></i>
+                    </a>
                 </td>
             </tr>
         {% endfor %}

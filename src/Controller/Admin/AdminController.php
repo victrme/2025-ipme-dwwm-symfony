@@ -21,20 +21,4 @@ final class AdminController extends AbstractController
         return $this->render('admin/index.html.twig');
     }
 
-    #[Route('/admin/game', name: 'app_admin_game')]
-    public function game(GameRepository $gameRepository, EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
-    {
-        $pagination = $paginator->paginate(
-            $gameRepository->getAll(),
-            $request->query->getInt('page', 1), /* page number */
-            10 /* limit per page */
-        );
-        $pagination->setCustomParameters([
-            'align' => 'center',
-        ]);
-
-        return $this->render('admin/show-game.html.twig', [
-            'games' => $pagination
-        ]);
-    }
 }

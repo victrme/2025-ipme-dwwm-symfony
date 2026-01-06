@@ -4,7 +4,7 @@
 
 {% block content %}
         {% include 'partials/_admin_game_loop.html.twig' with {
-            'title': 'Tous les jeux : ',
+            'title': 'game.index.title'|trans,
             'games': games
         } %}
 

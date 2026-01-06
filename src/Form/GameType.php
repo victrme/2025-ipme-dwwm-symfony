@@ -3,21 +3,18 @@
 namespace App\Form;
 
 use App\Entity\Category;
+use App\Entity\Country;
 use App\Entity\Game;
 use App\Entity\Publisher;
 use App\Form\Component\AddButtonCollectionType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GameType extends AbstractType
@@ -26,20 +23,20 @@ class GameType extends AbstractType
     {
         $builder
             ->add('name', null, [
-                'label' => 'Nom',
+                'label' => 'game.properties.name',
             ])
             ->add('price', null, [
-                'label' => 'Prix',
+                'label' => 'game.properties.price',
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description',
+                'label' => 'game.properties.description',
             ])
             ->add('publishedAt', null, [
-                'label' => 'Sortie le :',
+                'label' => 'game.properties.publishedAt',
                 'widget' => 'single_text',
             ])
             ->add('publisher', EntityType::class, [
-                'label' => 'Edité par :',
+                'label' => 'game.properties.publisher',
                 'class' => Publisher::class,
                 'choice_label' => 'name',
                 'query_builder' => function (EntityRepository $er) {
@@ -47,8 +44,31 @@ class GameType extends AbstractType
                         ->orderBy('p.name', 'ASC');
                 },
             ])
+            ->add('countries', CollectionType::class, [
+                'label' => 'game.properties.countries',
+                'entry_type' => EntityType::class,
+                'entry_options' => [
+                    'label' => false,
+                    'class' => Country::class,
+                    'choice_label' => 'nationality',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('p')
+                            ->orderBy('p.nationality', 'ASC');
+                    }
+                ],
+                'attr' => [
+                    'data-list-selector' => 'countries',
+                ],
+                'allow_add' => true,
+                'allow_delete' => true,
+            ])
+            ->add('btnAddCountry', AddButtonCollectionType::class, [
+                'data-btn-selector' => 'countries',
+                'mapped' => false,
+                'label' => false,
+            ])
             ->add('categories', CollectionType::class, [
-                'label' => 'Catégories :',
+                'label' => 'game.properties.categories',
                 'entry_type' => EntityType::class,
                 'entry_options' => [
                     'label' => false,
@@ -71,12 +91,12 @@ class GameType extends AbstractType
                 'label' => false,
             ])
             ->add('thumbnailCover', FileType::class, [
-                'label' => 'Image',
+                'label' => 'game.properties.thumbnailCover',
                 'mapped' => false,
                 'required' => false,
             ])
             ->add('thumbnailCoverLink', null, [
-                'label' => 'Lien image',
+                'label' => 'game.properties.thumbnailCoverLink',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Créer',
@@ -85,16 +105,18 @@ class GameType extends AbstractType
                 ]
             ]);
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
-            $form = $event->getForm();
+// TODO : exemple d'un FormEvent
 
-            $field = $form->get('thumbnailCover');
-            $fieldLink = $form->get('thumbnailCoverLink');
-
-            if ($field->getData() === null && $fieldLink->getData() === null) {
-                $form->addError(new FormError('MET AU MOINS UNE IMAGE'));
-            }
-        });
+//        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+//            $form = $event->getForm();
+//
+//            $field = $form->get('thumbnailCover');
+//            $fieldLink = $form->get('thumbnailCoverLink');
+//
+//            if ($field->getData() === null && $fieldLink->getData() === null) {
+//                $form->addError(new FormError('MET AU MOINS UNE IMAGE'));
+//            }
+//        });
 
     }
 
@@ -102,6 +124,7 @@ class GameType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Game::class,
+            'translation_domain' => 'admin',
         ]);
     }
 }
