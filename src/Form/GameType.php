@@ -15,6 +15,9 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GameType extends AbstractType
@@ -69,7 +72,11 @@ class GameType extends AbstractType
             ])
             ->add('thumbnailCover', FileType::class, [
                 'label' => 'Image',
-                'mapped' => false, // Indique à Symfony qu'il n'aura pas à gérer cette propriété via le form
+                'mapped' => false,
+                'required' => false,
+            ])
+            ->add('thumbnailCoverLink', null, [
+                'label' => 'Lien image',
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Créer',
@@ -77,6 +84,18 @@ class GameType extends AbstractType
                     'class' => 'btn btn-primary',
                 ]
             ]);
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+            $form = $event->getForm();
+
+            $field = $form->get('thumbnailCover');
+            $fieldLink = $form->get('thumbnailCoverLink');
+
+            if ($field->getData() === null && $fieldLink->getData() === null) {
+                $form->addError(new FormError('MET AU MOINS UNE IMAGE'));
+            }
+        });
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

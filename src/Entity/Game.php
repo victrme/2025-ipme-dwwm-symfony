@@ -78,9 +78,13 @@ class Game implements SlugInterface
     #[Groups(['game:item', 'game:post'])]
     private ?\DateTimeImmutable $publishedAt = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['game:collection', 'game:item', 'game:post'])]
     private ?string $thumbnailCover = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['game:collection', 'game:item', 'game:post'])]
+    private ?string $thumbnailCoverLink = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(['game:collection', 'review:item', 'userOwnGame:item'])]
@@ -343,6 +347,16 @@ class Game implements SlugInterface
     public function getTotalReview(): int
     {
         return count($this->getReviews());
+    }
+
+    public function getThumbnailCoverLink(): ?string
+    {
+        return $this->thumbnailCoverLink;
+    }
+
+    public function setThumbnailCoverLink(?string $thumbnailCoverLink): void
+    {
+        $this->thumbnailCoverLink = $thumbnailCoverLink;
     }
 
 }
