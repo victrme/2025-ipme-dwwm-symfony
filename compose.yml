@@ -1,0 +1,8 @@
+services:
+    yarn:
+        image: node:20
+        working_dir: /var/www/html
+        volumes:
+            - ./:/var/www/html
+        command: sh
+        tty: true

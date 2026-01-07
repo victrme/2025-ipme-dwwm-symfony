@@ -27,4 +27,9 @@ class SessionCartService
         // TODO : some logic there
     }
 
+    public function getCart(): array
+    {
+        return [];
+    }
+
 }
