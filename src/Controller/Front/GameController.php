@@ -16,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class GameController extends AbstractController
@@ -28,7 +29,6 @@ final class GameController extends AbstractController
         ReviewRepository       $reviewRepository,
         Request                $request,
         EntityManagerInterface $entityManager,
-        UserRepository         $userRepository,
     ): Response
     {
         $game = $gameRepository->findOneBy(['slug' => $slug]);
@@ -93,9 +93,9 @@ final class GameController extends AbstractController
 
     #[Route('/handle-wishlist/{id}', name: 'app_handle_wishlist', methods: ['POST'])]
     public function handleWishlist(
-        string $id,
-        UserRepository $userRepository,
-        GameRepository $gameRepository,
+        string                 $id,
+        UserRepository         $userRepository,
+        GameRepository         $gameRepository,
         EntityManagerInterface $em
     ): JsonResponse
     {
