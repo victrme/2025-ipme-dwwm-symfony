@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/base.html.twig' %}
 
 {% block body %}
 
@@ -7,7 +7,7 @@
 
         <div class="row">
             {% for game in pagination %}
-                {% include "partials/_game_card.html.twig" with { game: game } %}
+                {% include "front/partials/_game_card.html.twig" with { game: game } %}
             {% endfor %}
         </div>
 

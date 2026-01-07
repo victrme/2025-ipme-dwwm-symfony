@@ -18,9 +18,9 @@ class MyListener
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
-        $objet = $lifecycleEventArgs->getObject();
+        $object = $args->getObject();
 
-        if ($objet instanceof SlugInterface) {
+        if ($object instanceof SlugInterface) {
             // Slug logic there
         }
     }
@@ -57,6 +57,8 @@ Les événements sont des constantes de la classe `Doctrine\ORM\Events` :
 class MyListener
 {
 
-    public function prePersist(LifecycleEvent`
+    public function prePersist(LifecycleEvent $argts): void {
+    
+    }
  
 ```

@@ -78,8 +78,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
 )]
 #[ApiFilter(
     SearchFilter::class, properties: [
-        'name' => 'partial',
-        'nationality' => 'partial',
+        'name' => 'partials',
+        'nationality' => 'partials',
     ],
 )]
 #[ORM\Index(columns: ['nationality'])]

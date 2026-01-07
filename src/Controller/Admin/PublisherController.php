@@ -46,7 +46,7 @@ class PublisherController extends AbstractController
             'align' => 'center',
         ]);
 
-        return $this->render('publisher/index.html.twig', [
+        return $this->render('admin/publisher/index.html.twig', [
             'publishers' => $pagination
         ]);
     }

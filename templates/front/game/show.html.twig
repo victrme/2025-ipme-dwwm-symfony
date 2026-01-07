@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/base.html.twig' %}
 
 {% block title %}Hello GameController!{% endblock %}
 
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        {% include 'partials/common/_review_loop.html.twig' %}
+        {% include 'front/partials/common/_review_loop.html.twig' %}
 
         <div class="col-lg-6 col-md-12 mx-auto mb-5">
             {{ form_start(form) }}

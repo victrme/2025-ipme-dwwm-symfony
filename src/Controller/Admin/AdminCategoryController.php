@@ -41,7 +41,7 @@ final class AdminCategoryController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('admin_category/index.html.twig', [
+        return $this->render('admin/category/index.html.twig', [
             'form' => $form,
         ]);
     }

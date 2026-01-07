@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/base.html.twig' %}
 
 {% block title %}SteamIsh V3{% endblock %}
 
@@ -16,20 +16,20 @@
 {#            {% endfor %}#}
 {#        </div>#}
 
-        {% include 'partials/_game_loop.html.twig' with {
+        {% include 'front/partials/_game_loop.html.twig' with {
             'title': 'Les dernières sorties',
             'games': lastGames
         } %}
 
 
-        {% include 'partials/_game_loop.html.twig' with {
+        {% include 'front/partials/_game_loop.html.twig' with {
             'title': 'Les meilleures offres',
             'games': expensiveGames
         } %}
 
-        {% include 'partials/common/_review_loop.html.twig' %}
+        {% include 'front/partials/common/_review_loop.html.twig' %}
 
-        {% include 'partials/_game_loop.html.twig' with {
+        {% include 'front/partials/_game_loop.html.twig' with {
             'title': 'Les tendances actuelles',
             'games': bestSellers
         } %}
@@ -48,7 +48,7 @@
             {% endfor %}
         </div>
 
-        {% include 'partials/_game_loop.html.twig' with {
+        {% include 'front/partials/_game_loop.html.twig' with {
             'title': 'Les plus joués',
             'games': mostPlayedGames
         } %}

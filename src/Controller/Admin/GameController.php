@@ -44,7 +44,7 @@ class GameController extends AbstractController
             'align' => 'center',
         ]);
 
-        return $this->render('admin/show-game.html.twig', [
+        return $this->render('admin/game/index.html.twig', [
             'games' => $pagination
         ]);
     }

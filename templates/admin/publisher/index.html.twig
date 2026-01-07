@@ -1,4 +1,4 @@
-{% extends 'base-admin.html.twig' %}
+{% extends 'admin/base-admin.html.twig' %}
 
 {% block title %}Admin - Editeur{% endblock %}
 
@@ -33,9 +33,9 @@
                     <img alt="Drapeau {{ publisher.country.nationality }}" src="{{ publisher.country.urlFlag }}">
                 </td>
                 <td>
-                    <a class="text-decoration-none" href="{{ path('app_admin_publisher_edit', {'id': publisher.id}) }}">
-                        <i class="fa fa-pencil text-warning"></i>
-                    </a>
+                    {% include 'admin/partials/_actions_buttons.html.twig' with {
+                        'pathEdit': path('app_admin_publisher_edit', {'id': publisher.id})
+                    } %}
                 </td>
             </tr>
         {% endfor %}

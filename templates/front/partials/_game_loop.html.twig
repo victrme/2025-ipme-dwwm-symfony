@@ -3,7 +3,7 @@
 {% endif %}
 <div class="row">
     {% for game in games %}
-        {% include 'partials/_game_card.html.twig' with {
+        {% include 'front/partials/_game_card.html.twig' with {
             'game': game
         } %}
     {% endfor %}

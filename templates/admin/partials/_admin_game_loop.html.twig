@@ -20,9 +20,9 @@
                     {{ game.price|euro }}
                 </td>
                 <td>
-                    <a class="text-decoration-none" href="{{ path('app_admin_game_edit', {'id': game.id}) }}">
-                        <i class="fa fa-pencil text-warning"></i>
-                    </a>
+                    {% include 'admin/partials/_actions_buttons.html.twig' with {
+                        'pathEdit': path('app_admin_game_edit', {'id': game.id})
+                    } %}
                 </td>
             </tr>
         {% endfor %}
