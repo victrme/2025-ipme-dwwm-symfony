@@ -2,7 +2,7 @@
 ## Session Symfony
 
 
-### 1. Récupérer les session
+### 1. Récupérer la session
 
 
 #### 1.1 Depuis un contrôleur
@@ -58,7 +58,7 @@ class ExampleService
 ### 2. Utiliser la session
 
 
-Il existe plusieurs fonctions via l'objet Session, qui nous permette de travailler avec :
+Il existe plusieurs fonctions via l'objet Session, qui nous permette de l'utiliser :
 
 
 - Ajouter un élément dans la session :
