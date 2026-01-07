@@ -10,6 +10,7 @@ use App\Form\Component\AddButtonCollectionType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -34,16 +35,28 @@ class GameType extends AbstractType
             ->add('publishedAt', null, [
                 'label' => 'game.properties.publishedAt',
                 'widget' => 'single_text',
-            ])
-            ->add('publisher', EntityType::class, [
-                'label' => 'game.properties.publisher',
-                'class' => Publisher::class,
-                'choice_label' => 'name',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('p')
-                        ->orderBy('p.name', 'ASC');
-                },
-            ])
+            ]);
+
+        if (!$options['add_publisher']) {
+            $builder
+                ->add('publisher', EntityType::class, [
+                    'label' => 'game.properties.publisher',
+                    'class' => Publisher::class,
+                    'choice_label' => 'name',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('p')
+                            ->orderBy('p.name', 'ASC');
+                    },
+                ]);
+        } else {
+            $builder
+                ->add('publisher', PublisherType::class, [
+                    'label' => 'game.properties.publisher',
+                    'isWithFullInformation' => false,
+                ]);
+        }
+
+        $builder
             ->add('countries', CollectionType::class, [
                 'label' => 'game.properties.countries',
                 'entry_type' => EntityType::class,
@@ -125,6 +138,7 @@ class GameType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Game::class,
             'translation_domain' => 'admin',
+            'add_publisher' => 0,
         ]);
     }
 }

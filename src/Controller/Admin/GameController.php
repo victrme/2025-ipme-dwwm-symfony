@@ -63,16 +63,23 @@ class GameController extends AbstractController
 
     private function handleForm(Request $request, Game $game): Response
     {
-        $form = $this->createForm(GameType::class, $game);
+        $addPublisher = $request->get('addPublisher', false);
+        $form = $this->createForm(GameType::class, $game, [
+            'add_publisher' => $addPublisher && $game->getId() === null,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $type = 'success';
             try {
+                if ($game->getPublisher()->getId() === null) {
+                    $this->em->persist($game->getPublisher());
+                }
                 $this->em->persist($game);
                 $this->em->flush();
             } catch (\Throwable $exception) {
                 $type = 'danger';
+                dump($exception->getMessage());
                 $this->logger->error($exception->getMessage());
             }
             $this->addFlash($type, $this->translator->trans('alert.game.new.' . $type, [], 'admin'));
@@ -83,6 +90,7 @@ class GameController extends AbstractController
             'form' => $form,
             'mode' => $game->getId() == null ? 'new' : 'edit',
             'game' => $game,
+            'addPublisher' => !$addPublisher,
         ]);
     }
 }

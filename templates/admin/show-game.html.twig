@@ -2,9 +2,11 @@
 
 {% block title %}Admin - Game{% endblock %}
 
+{% trans_default_domain 'admin' %}
+
 {% block content %}
         {% include 'partials/_admin_game_loop.html.twig' with {
-            'title': 'game.index.title'|trans,
+            'title': ('game.index.title')|trans,
             'games': games
         } %}
 

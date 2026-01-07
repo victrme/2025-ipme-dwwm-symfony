@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Entity\Game;
 use App\Entity\Publisher;
-use App\Form\GameType;
 use App\Form\PublisherType;
 use App\Repository\GameRepository;
 use App\Repository\PublisherRepository;
@@ -24,9 +22,10 @@ class PublisherController extends AbstractController
 {
 
     public function __construct(
-        private EntityManagerInterface $em,
-        private TranslatorInterface    $translator,
-        private LoggerInterface        $logger,
+        private readonly EntityManagerInterface $em,
+        private readonly TranslatorInterface    $translator,
+        private readonly GameRepository         $gameRepository,
+        private readonly LoggerInterface        $logger,
     )
     {
     }
@@ -72,9 +71,21 @@ class PublisherController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $type = 'success';
             try {
-                foreach($publisher->getGames() as $game) {
+                $newGames = $publisher->getGames();
+                // Handle logic if we remove a game from the Collection games of Publisher
+                if ($publisher->getId() !== null) {
+                    $previousGames = $this->gameRepository->findBy(['publisher' => $publisher]);
+                    foreach($previousGames as $previousGame) {
+                        if (!$newGames->contains($previousGame)) {
+                            $previousGame->setPublisher(null);
+                        }
+                    }
+                }
+
+                foreach($newGames as $game) {
                     $game->setPublisher($publisher);
                 }
+
                 $this->em->persist($publisher);
                 $this->em->flush();
             } catch (\Throwable $exception) {

@@ -70,7 +70,7 @@ class GameRepository extends ServiceEntityRepository
     public function getAll(): QueryBuilder
     {
         return $this->createQueryBuilder('g')
-            ->orderBy('g.id', 'ASC');
+            ->orderBy('g.name', 'ASC');
     }
 
 }

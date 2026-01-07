@@ -12,6 +12,19 @@
 
     {{ form_start(form) }}
         {{ form_errors(form) }}
+        {{ form_row(form.name)}}
+        {{ form_row(form.price)}}
+        {{ form_row(form.description)}}
+        {{ form_row(form.publishedAt)}}
+        {% if game.id is null %}
+            <a class="btn btn-secondary text-decoration-none" href="{{ path('app_admin_game_new', {'addPublisher': addPublisher }) }}">
+                {% if addPublisher %}
+                    {{ 'game.form.button.new_publisher'|trans }}
+                {% else %}
+                    {{ 'game.form.button.select_publisher'|trans }}
+                {% endif %}
+            </a>
+        {% endif %}
     {{ form_end(form) }}
 
 {% endblock %}

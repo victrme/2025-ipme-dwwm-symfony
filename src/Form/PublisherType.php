@@ -39,36 +39,40 @@ class PublisherType extends AbstractType
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.name', 'ASC');
                 }
-            ])
-            ->add('games', CollectionType::class, [
-                'label' => 'publisher.properties.games',
-                'entry_type' => EntityType::class,
-                'entry_options' => [
-                    'label' => false,
-                    'class' => Game::class,
-                    'choice_label' => 'name',
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('g')
-                            ->orderBy('g.name', 'ASC');
-                    }
-                ],
-                'attr' => [
-                    'data-list-selector' => 'games',
-                ],
-                'allow_add' => true,
-                'allow_delete' => true,
-            ])
-            ->add('btnAddGames', AddButtonCollectionType::class, [
-                'data-btn-selector' => 'games',
-                'mapped' => false,
-                'label' => false,
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Créer',
-                'attr' => [
-                    'class' => 'btn btn-primary',
-                ]
             ]);
+
+        if ($options['isWithFullInformation']) {
+            $builder
+                ->add('games', CollectionType::class, [
+                    'label' => 'publisher.properties.games',
+                    'entry_type' => EntityType::class,
+                    'entry_options' => [
+                        'label' => false,
+                        'class' => Game::class,
+                        'choice_label' => 'name',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('g')
+                                ->orderBy('g.name', 'ASC');
+                        }
+                    ],
+                    'attr' => [
+                        'data-list-selector' => 'games',
+                    ],
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                ])
+                ->add('btnAddGames', AddButtonCollectionType::class, [
+                    'data-btn-selector' => 'games',
+                    'mapped' => false,
+                    'label' => false,
+                ])
+                ->add('submit', SubmitType::class, [
+                    'label' => 'Créer',
+                    'attr' => [
+                        'class' => 'btn btn-primary',
+                    ]
+                ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -76,6 +80,7 @@ class PublisherType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Publisher::class,
             'translation_domain' => 'admin',
+            'isWithFullInformation' => true,
         ]);
     }
 }

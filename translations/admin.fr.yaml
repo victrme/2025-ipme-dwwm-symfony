@@ -4,6 +4,9 @@ game:
         title:
             new: "Ajout d'un jeu %gameName%"
             edit: "Modification de %gameName%"
+        button:
+            new_publisher: "Nouvel éditeur"
+            select_publisher: "Sélectionner éditeur"
     properties:
         name: "Nom"
         price: "Prix"
