@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Post;
 use App\Controller\Api\Review\PostReviewController;
+use App\Interfaces\CreatedAtInterface;
 use App\Repository\ReviewRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,7 +24,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     ]
 )]
 #[ORM\Index(columns: ['created_at'])]
-class Review
+class Review implements CreatedAtInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

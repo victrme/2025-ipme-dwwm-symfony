@@ -33,8 +33,7 @@ class UserOwnGamesPostController extends AbstractController
         $user = $this->getUser();
         $userOwnGame = (new UserOwnGame())
             ->setUser($user)
-            ->setGame($game)
-            ->setCreatedAt(new DateTimeImmutable());
+            ->setGame($game);
 
         $em->persist($userOwnGame);
         $em->flush();

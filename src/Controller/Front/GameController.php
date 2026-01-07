@@ -43,9 +43,9 @@ final class GameController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $review->setGame($game);
-            $review->setUser($this->getUser());
-            $review->setCreatedAt(new DateTimeImmutable());
+            $review->setGame($game)
+                ->setUser($this->getUser());
+
             $entityManager->persist($review);
             $entityManager->flush();
 

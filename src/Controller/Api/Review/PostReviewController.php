@@ -39,8 +39,7 @@ class PostReviewController extends AbstractController
             ->setGame($game)
             ->setUser($this->getUser())
             ->setContent($data['content'])
-            ->setRating($data['rating'])
-            ->setCreatedAt(new DateTimeImmutable());
+            ->setRating($data['rating']);
 
         $em->persist($review);
         $em->flush();

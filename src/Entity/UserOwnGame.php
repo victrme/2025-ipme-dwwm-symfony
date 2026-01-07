@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
 use App\Controller\Api\UserOwnGames\UserOwnGamesPostController;
+use App\Interfaces\CreatedAtInterface;
 use App\Repository\UserOwnGameRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
@@ -30,7 +31,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 )]
 #[ORM\Index(columns: ['created_at'])]
 #[ORM\Index(columns: ['game_time'])]
-class UserOwnGame
+class UserOwnGame implements CreatedAtInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
