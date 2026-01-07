@@ -29,26 +29,37 @@
     <div class="row">
         <div class="col-lg-2 col-12">
             {% block sidebar %}
-                <h3 class="my-3">Menu Dashboard</h3>
-                <div class="row">
-                    <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                       href="{{ path('app_admin_game_index') }}">Jeux</a>
-                </div>
-                <div class="row">
-                    <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                       href="{{ path('app_admin_game_new') }}">Ajouter un jeu</a>
-                </div>
-                <div class="row">
-                    <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                       href="{{ path('app_admin_publisher_index') }}">Editeurs</a>
-                </div>
-                <div class="row">
-                    <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                       href="{{ path('app_admin_publisher_new') }}">Ajouter éditeur</a>
-                </div>
-                <div class="row">
-                    <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                       href="{{ path('app_admin_category_new') }}">Categories</a>
+                <div class="px-2">
+                    <h2 class="my-3">Dashboard</h2>
+                    {% set menu = [
+                        {
+                            'path': path('app_admin_game_index'),
+                            'name': 'Jeux',
+                        },
+                        {
+                            'path': path('app_admin_game_new'),
+                            'name': 'Ajouter un jeu',
+                        },
+                        {
+                            'path': path('app_admin_publisher_index'),
+                            'name': 'Editeurs',
+                        },
+                        {
+                            'path': path('app_admin_publisher_new'),
+                            'name': 'Ajouter éditeur',
+                        },
+                        {
+                            'path': path('app_admin_category_new'),
+                            'name': 'Ajouter catégorie',
+                        },
+                    ] %}
+
+                    {% for item in menu %}
+                        <div class="row mt-1">
+                            <a class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+                               href="{{ item.path }}">{{ item.name }}</a>
+                        </div>
+                    {% endfor %}
                 </div>
             {% endblock %}
         </div>
