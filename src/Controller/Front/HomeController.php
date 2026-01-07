@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Repository\CategoryRepository;
 use App\Repository\GameRepository;
@@ -40,7 +40,7 @@ final class HomeController extends AbstractController
 
         $categories = $categoryRepository->findByMostPlayed(9);
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('front/home/index.html.twig', [
             'lastGames' => $lastGames,
             'expensiveGames' => $expensiveGames,
             'bestSellers' => $bestSellers,

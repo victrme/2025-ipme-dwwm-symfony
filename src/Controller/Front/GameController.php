@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Entity\Review;
 use App\Entity\User;
@@ -54,7 +54,7 @@ final class GameController extends AbstractController
             ]);
         }
 
-        return $this->render('game/show.html.twig', [
+        return $this->render('front/game/show.html.twig', [
             'game' => $game,
             'form' => $form,
             'reviews' => $reviewRepository->findBy(['game' => $game], ['createdAt' => 'DESC'], 4),
@@ -85,7 +85,7 @@ final class GameController extends AbstractController
             $perPage
         );
 
-        return $this->render('game/games_by_category.html.twig', [
+        return $this->render('front/game/games_by_category.html.twig', [
             'category' => $category,
             'pagination' => $pagination,
         ]);

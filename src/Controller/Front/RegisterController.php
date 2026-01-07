@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -36,7 +36,7 @@ final class RegisterController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('register/index.html.twig', [
+        return $this->render('front/register/index.html.twig', [
             'formRegister' => $form,
         ]);
     }

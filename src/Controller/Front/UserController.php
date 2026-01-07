@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Front;
 
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class UserController extends AbstractController
 {
-    #[Route('/profil/{name?}')]
+    #[Route('/profil/{name?}', name: 'app_user_show')]
     public function index(
         UserRepository $userRepository,
         Request $request,
@@ -41,7 +41,7 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('front/user/index.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);

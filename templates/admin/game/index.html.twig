@@ -5,13 +5,12 @@
 {% trans_default_domain 'admin' %}
 
 {% block content %}
-        {% include 'admin/partials/_admin_game_loop.html.twig' with {
-            'title': ('game.index.title')|trans,
-            'games': games
-        } %}
+    {% include 'admin/partials/_admin_game_loop.html.twig' with {
+        'title': ('game.index.title')|trans,
+        'games': games
+    } %}
 
-        <div class="navigation my-4" data-bs-theme="dark">
-            {{ knp_pagination_render(games, '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig')}}
-        </div>
-    {% block page_contents %}{% endblock %}
+    <div class="navigation my-4" data-bs-theme="dark">
+        {{ knp_pagination_render(games, '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig')}}
+    </div>
 {% endblock %}

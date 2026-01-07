@@ -28,7 +28,7 @@ class GameController extends AbstractController
     {
     }
 
-    #[Route('', name: '')]
+    #[Route('', name: '_index')]
     public function index(
         GameRepository     $gameRepository,
         PaginatorInterface $paginator,
@@ -83,7 +83,7 @@ class GameController extends AbstractController
                 $this->logger->error($exception->getMessage());
             }
             $this->addFlash($type, $this->translator->trans('alert.game.new.' . $type, [], 'admin'));
-            return $this->redirectToRoute('app_admin_game');
+            return $this->redirectToRoute('app_admin_game_index');
         }
 
         return $this->render('/admin/game/form.html.twig', [
