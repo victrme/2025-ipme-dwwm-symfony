@@ -3,7 +3,6 @@
 namespace App\Service;
 
 use App\Entity\Game;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
