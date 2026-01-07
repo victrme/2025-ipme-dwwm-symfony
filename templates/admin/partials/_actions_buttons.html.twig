@@ -1,16 +1,16 @@
 
 <div class="d-flex">
-    {% if pathView is defined and is not null %}
+    {% if pathView is defined and pathView is not null %}
         <a class="text-decoration-none" href="{{ pathView }}">
             <i class="fa fa-eye text-primary"></i>
         </a>
     {% endif %}
-    {% if pathEdit is defined and is not null %}
+    {% if pathEdit is defined and pathEdit is not null %}
         <a class="text-decoration-none" href="{{ pathEdit }}">
             <i class="fa fa-pencil text-warning"></i>
         </a>
     {% endif %}
-    {% if pathDelete is defined and is not null %}
+    {% if pathDelete is defined and pathDelete is not null %}
         <a class="text-decoration-none" href="{{ pathDelete }}">
             <i class="fa fa-trash text-danger"></i>
         </a>
