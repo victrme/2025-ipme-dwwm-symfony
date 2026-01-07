@@ -1,0 +1,48 @@
+{% extends 'admin/base-admin.html.twig' %}
+
+{% block title %}Admin - Pays{% endblock %}
+
+{% trans_default_domain 'admin' %}
+
+{% block content %}
+
+    <h2 class="my-3">Les pays</h2>
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th>{{ 'country.properties.name'|trans }}</th>
+            <th>{{ 'country.properties.nationality'|trans }}</th>
+            <th>{{ 'country.properties.code'|trans }}</th>
+            <th>{{ 'country.properties.flag'|trans }}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for country in countries %}
+            <tr>
+                <td>
+                    {{ country.name }}
+                </td>
+                <td>
+                    {{ country.nationality }}
+                </td>
+                <td>
+                    {{ country.code }}
+                </td>
+                <td>
+                    <img alt="Drapeau {{ country.nationality }}" src="{{ country.urlFlag }}">
+                </td>
+                <td>
+                    {% include 'admin/partials/_actions_buttons.html.twig' with {
+                        'pathEdit': path('app_admin_country_edit', {'id': country.id})
+                    } %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation my-4" data-bs-theme="dark">
+        {{ knp_pagination_render(countries, '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig')}}
+    </div>
+{% endblock %}

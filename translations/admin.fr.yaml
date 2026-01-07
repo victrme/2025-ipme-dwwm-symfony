@@ -32,8 +32,23 @@ publisher:
         country: "Pays"
         games: "Jeux"
 
+country:
+    form:
+        title:
+            new: "Ajout d'un pays %country%"
+            edit: "Modification de %country%"
+    properties:
+        name: "Nom"
+        code: "Code"
+        nationality: "Nationalité"
+        flag: "Drapeau"
+
 alert:
     game:
         new:
             success: "Le jeu a été créé !"
             danger: "Une erreur est survenue lors de la création du jeu"
+    country:
+        new:
+            success: "Le pays a été créé !"
+            danger: "Une erreur est survenue lors de la création du pays"

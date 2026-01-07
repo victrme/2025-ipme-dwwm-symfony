@@ -1,0 +1,17 @@
+{% extends 'admin/base-admin.html.twig' %}
+
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+
+{% trans_default_domain 'admin' %}
+
+{% block content %}
+
+    <h1 class="my-3">
+        {{ ('country.form.title.' ~ mode)|trans({'%country%': country.name}) }}
+    </h1>
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+    {{ form_end(form) }}
+
+{% endblock %}
