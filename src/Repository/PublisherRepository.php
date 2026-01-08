@@ -10,7 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Publisher>
  */
-class PublisherRepository extends ServiceEntityRepository
+class PublisherRepository extends SearchedRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

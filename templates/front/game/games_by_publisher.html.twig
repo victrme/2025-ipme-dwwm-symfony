@@ -1,0 +1,24 @@
+{% extends 'front/base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Jeux de l'éditeur {{ publisher.name }}</h1>
+
+        <div class="row">
+            {% for game in pagination %}
+                {% include "front/partials/_game_card.html.twig" with { game: game } %}
+            {% endfor %}
+        </div>
+
+        <div class="navigation">
+            {{ knp_pagination_render(pagination, "/front/partials/_pagination.html.twig") }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block title %}
+    {{ publisher.name }}
+{% endblock %}
+

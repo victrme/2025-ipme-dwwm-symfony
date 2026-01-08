@@ -1,0 +1,19 @@
+
+{% trans_default_domain 'front' %}
+
+{% for key, dataResult in results %}
+    {% if dataResult|length > 0 %}
+        <h2 class="dropdown-header h6">{{ ('page.result.' ~ key)|trans }} ({{ dataResult|length }})</h2>
+        <ul class="list-unstyled">
+            {% set route = 'app_show_' ~ key %}
+            {% for data in dataResult %}
+            <li class="dropdown-item">
+                <a class="text-decoration-none" href="{{ path(route, {'slug': data.slug}) }}">
+                    {{ data.name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endfor %}
+

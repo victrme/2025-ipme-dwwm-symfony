@@ -7,17 +7,16 @@ use App\Entity\User;
 use App\Form\ReviewType;
 use App\Repository\CategoryRepository;
 use App\Repository\GameRepository;
+use App\Repository\PublisherRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
 use App\Service\SessionCartService;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class GameController extends AbstractController
@@ -64,7 +63,7 @@ final class GameController extends AbstractController
         ]);
     }
 
-    #[Route('/categorie/{slug}', name: 'app_game_category')]
+    #[Route('/categorie/{slug}', name: 'app_show_category')]
     public function gameCategory(
         string             $slug,
         Request            $request,
@@ -90,6 +89,40 @@ final class GameController extends AbstractController
         return $this->render('front/game/games_by_category.html.twig', [
             'category' => $category,
             'pagination' => $pagination,
+        ]);
+    }
+
+    #[Route('/editeur/{slug}', name: 'app_show_publisher')]
+    public function gamePublisher(
+        string              $slug,
+        Request             $request,
+        PaginatorInterface  $paginator,
+        PublisherRepository $publisherRepository,
+        GameRepository      $gameRepository,
+    ): Response
+    {
+        $publisher = $publisherRepository->findOneBy(['slug' => $slug]);
+
+        if ($publisher === null) {
+            $this->addFlash('danger', 'Cet éditeur n\'existe pas !');
+            return $this->redirectToRoute('app_home');
+        }
+
+        $perPage = 12;
+
+        $games = $gameRepository->getAll()
+            ->where('publisher = :publisher')
+            ->setParameter('publisher', $publisher);
+
+        $pagination = $paginator->paginate(
+            $games,
+            $request->query->getInt('page', 1),
+            $perPage
+        );
+
+        return $this->render('front/game/games_by_publisher.html.twig', [
+            'publisher' => $publisher,
+            'games' => $pagination,
         ]);
     }
 

@@ -4,10 +4,18 @@
             <img src="https://store.fastly.steamstatic.com/public/shared/images/header/logo_steam.svg?t=962016" alt="logo steam" height="50px">
         </a>
         <div class="mx-auto d-flex">
-            <input name="search-bar" class="form-control">
-            <button class="btn btn-secondary">
-                <i class="fa fa-search"></i>
-            </button>
+            <div class="dropdown" data-bs-toggle="dropdown">
+                <div class="input-group">
+                    <input id="search-input"  name="search-bar" class="form-control">
+                    <button class="btn btn-secondary">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+
+                <div id="search-dropdown" class="dropdown-menu w-100">
+                    <h2 class="dropdown-header">Recherchez un jeu, éditeur...</h2>
+                </div>
+            </div>
         </div>
         <a class="ms-5 position-relative text-white" href="{{ path('app_cart') }}" title="Panier">
             <i class="fa fa-cart-shopping fa-2x"></i>

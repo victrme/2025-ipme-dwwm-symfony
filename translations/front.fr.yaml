@@ -2,3 +2,8 @@
 page:
     cart:
         title: "Mon panier"
+
+    result:
+        publisher: "Editeur(s)"
+        category: "Catégorie(s)"
+        game: "Jeux"

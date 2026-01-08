@@ -11,7 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Game>
  */
-class GameRepository extends ServiceEntityRepository
+class GameRepository extends SearchedRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
