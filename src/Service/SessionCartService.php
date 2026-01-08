@@ -66,7 +66,8 @@ class SessionCartService
     {
         $totalPrice = 0;
         $games = [];
-        foreach ($this->getSession()->get(self::CART_GAMES) as $jsonGame) {
+        $sessionData = $this->getSession()->get(self::CART_GAMES) ?? [];
+        foreach ($sessionData as $jsonGame) {
             $gameDTO = $this->serializer->deserialize(
                 $jsonGame,
                 GameDTO::class,
