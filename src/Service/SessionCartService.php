@@ -53,7 +53,6 @@ class SessionCartService
         }
 
         $session->set(self::CART_GAMES, $existingGames);
-        dd($session->get(self::CART_GAMES));
     }
 
     public function getCart(): array

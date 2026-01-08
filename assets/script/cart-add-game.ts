@@ -11,6 +11,7 @@ function initAddGameButton(): void {
                     console.log("All good muh frend");
                 });
         });
+        buttonAdd.removeAttribute('data-add-to-cart');
     }
 }
 
