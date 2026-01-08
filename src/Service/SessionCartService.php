@@ -20,14 +20,30 @@ class SessionCartService
         return $this->requestStack->getSession();
     }
 
-    public function addItemToCart(Game $game): void
+    public function addItemToCart(string $id): void
     {
-        // TODO : some logic there
+        $session = $this->getSession();
+        $existingGames = [];
+
+        if ($session->has(self::CART_GAMES)) {
+            $existingGames = $session->get(self::CART_GAMES);
+        }
+
+        if (!in_array($id, $existingGames)) {
+            $existingGames[] = $id;
+        }
+
+        $session->set(self::CART_GAMES, $existingGames);
     }
 
     public function getCart(): array
     {
         return [];
+    }
+
+    public function clearCart(): void
+    {
+        $this->getSession()->remove(self::CART_GAMES);
     }
 
 }

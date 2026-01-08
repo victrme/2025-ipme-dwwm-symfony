@@ -9,6 +9,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\GameRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\UserRepository;
+use App\Service\SessionCartService;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -29,6 +30,7 @@ final class GameController extends AbstractController
         ReviewRepository       $reviewRepository,
         Request                $request,
         EntityManagerInterface $entityManager,
+        SessionCartService     $sessionCartService,
     ): Response
     {
         $game = $gameRepository->findOneBy(['slug' => $slug]);
@@ -53,6 +55,8 @@ final class GameController extends AbstractController
                 'slug' => $game->getSlug(),
             ]);
         }
+
+        $sessionCartService->addItemToCart($game->getId());
 
         return $this->render('front/game/show.html.twig', [
             'game' => $game,
