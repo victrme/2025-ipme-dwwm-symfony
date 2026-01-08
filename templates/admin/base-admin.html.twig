@@ -30,7 +30,11 @@
         <div class="col-lg-2 col-12">
             {% block sidebar %}
                 <div class="px-2">
-                    <h2 class="my-3">Dashboard</h2>
+                    <h2 class="my-3">
+                        <a class="text-decoration-none" href="{{ path('app_admin') }}">
+                            Dashboard
+                        </a>
+                    </h2>
                     {% set menu = [
                         {
                             'path': path('app_admin_game_index'),

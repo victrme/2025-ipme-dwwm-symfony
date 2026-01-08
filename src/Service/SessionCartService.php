@@ -71,7 +71,8 @@ class SessionCartService
             $gameDTO = $this->serializer->deserialize(
                 $jsonGame,
                 GameDTO::class,
-                'json');
+                'json'
+            );
             $totalPrice += $gameDTO->getPrice();
             $games[] = $gameDTO;
         }
