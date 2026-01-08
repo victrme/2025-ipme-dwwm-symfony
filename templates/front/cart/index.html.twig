@@ -1,5 +1,14 @@
 {% extends 'front/base.html.twig' %}
 
+{% trans_default_domain 'front' %}
+
 {% block body %}
+
+    <div class="container">
+        <h1>{{ 'page.cart.title'|trans }}</h1>
+        <div id="vue-root-container" data-cart-games="{{ cartJson }}">
+
+        </div>
+    </div>
 
 {% endblock %}

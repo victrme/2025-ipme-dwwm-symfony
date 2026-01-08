@@ -7,19 +7,21 @@
 
 <script lang="ts">
 
-import {IGame} from "../interfaces/i-game";
+import {ICart} from "../interfaces/i-cart";
+import {PropType} from "vue";
 
 export default {
     name: 'RootCartComponent',
     components: {},
     props: {
-        propsGames: {
-            type: Array<IGame>,
+        propsCart: {
+            type: Object as PropType<ICart>,
         },
     },
     data() {
+        console.log(this.propsCart)
         return {
-            games: this.propsGames,
+            cart: this.propsCart,
         }
     },
     mounted() {},

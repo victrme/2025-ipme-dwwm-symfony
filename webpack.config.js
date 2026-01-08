@@ -63,6 +63,12 @@ Encore
     // uncomment if you use TypeScript
     .enableTypeScriptLoader()
 
+    .enableVueLoader()
+    .enableTypeScriptLoader((options) =>{
+        options.appendTsSuffixTo = [/\.vue$/];
+    })
+
+
     // uncomment if you use React
     //.enableReactPreset()
 

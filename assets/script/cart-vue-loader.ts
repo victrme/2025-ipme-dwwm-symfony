@@ -1,5 +1,5 @@
 import {App, createApp} from "vue";
-import {RootCartComponent} from "../vue/RootCartComponent";
+import RootCartComponent from './vue/RootCartComponent.vue';
 
 window.addEventListener('load', () => {
     initCartLoader();
@@ -12,7 +12,7 @@ function initCartLoader(): void {
         const vueApp: App<Element> = createApp(
             RootCartComponent,
             {
-                propsGames: JSON.parse(data),
+                propsCart: JSON.parse(data),
             }
         );
         vueApp.mount(element);
