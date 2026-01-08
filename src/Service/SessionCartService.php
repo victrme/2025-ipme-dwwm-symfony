@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\DTO\CartDTO;
 use App\DTO\GameDTO;
 use App\Entity\Game;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -55,16 +56,22 @@ class SessionCartService
         $session->set(self::CART_GAMES, $existingGames);
     }
 
-    public function getCart(): array
+    /**
+     * @throws ExceptionInterface
+     */
+    public function getCart(): CartDTO
     {
+        $totalPrice = 0;
         $games = [];
         foreach ($this->getSession()->get(self::CART_GAMES) as $jsonGame) {
-            $games[] = $this->serializer->deserialize(
+            $gameDTO = $this->serializer->deserialize(
                 $jsonGame,
                 GameDTO::class,
                 'json');
+            $totalPrice += $gameDTO->getPrice();
+            $games[] = $gameDTO;
         }
-        return $games;
+        return new CartDTO($totalPrice, $games);
     }
 
     public function clearCart(): void
