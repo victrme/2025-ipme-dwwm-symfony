@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use ApiPlatform\Metadata\UrlGeneratorInterface;
 use App\DTO\CartDTO;
 use App\DTO\GameDTO;
 use App\Entity\Game;
@@ -16,8 +17,9 @@ class SessionCartService
     const CART_GAMES = 'cart_games';
 
     public function __construct(
-        private readonly RequestStack        $requestStack,
-        private readonly SerializerInterface $serializer,
+        private readonly RequestStack          $requestStack,
+        private readonly SerializerInterface   $serializer,
+        private readonly UrlGeneratorInterface $generator,
     )
     {
     }
@@ -40,10 +42,11 @@ class SessionCartService
         }
 
         if (!in_array($game->getId(), $existingGames)) {
-            $existingGames[] =  $this->serializer->serialize(
+            $existingGames[] = $this->serializer->serialize(
                 new GameDTO(
                     $game->getName(),
                     $game->getSlug(),
+                    $this->generator->generate('app_show_game', ['slug' => $game->getSlug()]),
                     $game->getThumbnailCover(),
                     $game->getThumbnailCoverLink(),
                     $game->getPrice()
