@@ -7,8 +7,11 @@ function initAddGameButton(): void {
                 .then((response: Response)=> {
                     if (response.ok) return response.json();
                 })
-                .then((data) => {
-                    console.log("All good muh frend");
+                .then((data: {qty: number}) => {
+                    const cartQty: HTMLDivElement = document.querySelector('div.cart-quantity');
+                    if (cartQty) {
+                        cartQty.innerHTML = data.qty + '';
+                    }
                 });
         });
         buttonAdd.removeAttribute('data-add-to-cart');

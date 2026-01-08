@@ -18,6 +18,36 @@ body {
         object-fit: cover;
     }
 }
-.navbar{
+.navbar {
     border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.cart-quantity {
+    position: absolute;
+    left: -25%;
+    top: 50%;
+    display: grid;
+    place-content: center;
+    aspect-ratio: 1;
+    min-width: 1.6rem;
+    border-radius: 1.5rem;
+    background-color: $default-orange;
+    font-weight: 700;
+
+    &.animation {
+        animation: cart-updated .6s ease-in-out alternate;
+        animation-iteration-count: 2;
+    }
+}
+
+@keyframes cart-updated {
+    0% {
+        color: $default-color;
+        scale: 1;
+    }
+    100% {
+        color: $default-orange;
+        background-color: $default-color;
+        scale: 1.2;
+    }
 }

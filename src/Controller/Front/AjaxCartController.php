@@ -10,10 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 
 class AjaxCartController extends AbstractController
 {
 
+    /**
+     * @throws ExceptionInterface
+     */
     #[Route('/ajax/add-game-to-cart/{id}', name: 'app_add_game_cart')]
     public function addGameCart(
         GameRepository     $gameRepository,
@@ -25,7 +29,9 @@ class AjaxCartController extends AbstractController
             return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
         $sessionCartService->addItemToCart($game);
-        return new JsonResponse([], Response::HTTP_OK);
+        return new JsonResponse([
+            'qty' => $sessionCartService->getCartQty(),
+        ], Response::HTTP_OK);
     }
 
 }

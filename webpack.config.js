@@ -61,8 +61,6 @@ Encore
     .enableSassLoader()
 
     // uncomment if you use TypeScript
-    .enableTypeScriptLoader()
-
     .enableVueLoader()
     .enableTypeScriptLoader((options) =>{
         options.appendTsSuffixTo = [/\.vue$/];

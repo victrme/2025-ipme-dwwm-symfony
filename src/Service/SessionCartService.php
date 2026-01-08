@@ -41,8 +41,8 @@ class SessionCartService
             $existingGames = $session->get(self::CART_GAMES);
         }
 
-        if (!in_array($game->getId(), $existingGames)) {
-            $existingGames[] = $this->serializer->serialize(
+        if (!array_key_exists($game->getId(), $existingGames)) {
+            $existingGames[$game->getId()] = $this->serializer->serialize(
                 new GameDTO(
                     $game->getName(),
                     $game->getSlug(),
@@ -77,6 +77,12 @@ class SessionCartService
             $games[] = $gameDTO;
         }
         return new CartDTO($totalPrice, $games);
+    }
+
+    public function getCartQty(): int
+    {
+        $items = $this->getSession()->get(self::CART_GAMES) ?? [];
+        return sizeof($items);
     }
 
     public function clearCart(): void

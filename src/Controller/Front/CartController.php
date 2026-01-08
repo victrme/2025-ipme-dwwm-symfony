@@ -26,4 +26,11 @@ class CartController extends AbstractController
         ]);
     }
 
+    #[Route('/vider-panier', name: 'app_clear_cart')]
+    public function clearCart(SessionCartService  $sessionCartService): Response
+    {
+        $sessionCartService->clearCart();
+        return $this->redirectToRoute('app_home');
+    }
+
 }

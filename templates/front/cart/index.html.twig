@@ -6,7 +6,8 @@
 
     <div class="container">
         <h1>{{ 'page.cart.title'|trans }}</h1>
-        <div id="vue-root-container" data-cart-games="{{ cartJson }}">
+        <a class="text-decoration-none" href="{{ path('app_clear_cart') }}">Vider mon panier</a>
+        <div id="vue-root-container" class="mt-3" data-cart-games="{{ cartJson }}">
 
         </div>
     </div>
