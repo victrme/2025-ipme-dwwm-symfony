@@ -19,7 +19,6 @@ export default {
         },
     },
     data() {
-        console.log(this.propsCart)
         return {
             cart: this.propsCart,
         }
