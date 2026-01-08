@@ -56,7 +56,7 @@ final class GameController extends AbstractController
             ]);
         }
 
-        $sessionCartService->addItemToCart($game->getId());
+        dump($sessionCartService->getCart());
 
         return $this->render('front/game/show.html.twig', [
             'game' => $game,

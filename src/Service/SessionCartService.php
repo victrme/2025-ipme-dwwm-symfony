@@ -2,9 +2,12 @@
 
 namespace App\Service;
 
+use App\DTO\GameDTO;
 use App\Entity\Game;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class SessionCartService
 {
@@ -12,15 +15,21 @@ class SessionCartService
     const CART_GAMES = 'cart_games';
 
     public function __construct(
-        private readonly RequestStack $requestStack,
+        private readonly RequestStack        $requestStack,
+        private readonly SerializerInterface $serializer,
     )
-    { }
+    {
+    }
 
-    private function getSession(): SessionInterface {
+    private function getSession(): SessionInterface
+    {
         return $this->requestStack->getSession();
     }
 
-    public function addItemToCart(string $id): void
+    /**
+     * @throws ExceptionInterface
+     */
+    public function addItemToCart(Game $game): void
     {
         $session = $this->getSession();
         $existingGames = [];
@@ -29,16 +38,34 @@ class SessionCartService
             $existingGames = $session->get(self::CART_GAMES);
         }
 
-        if (!in_array($id, $existingGames)) {
-            $existingGames[] = $id;
+        if (!in_array($game->getId(), $existingGames)) {
+            $existingGames[] =  $this->serializer->serialize(
+                new GameDTO(
+                    $game->getName(),
+                    $game->getSlug(),
+                    $game->getThumbnailCover(),
+                    $game->getThumbnailCoverLink(),
+                    $game->getPrice()
+                ),
+                'json'
+            );
+
         }
 
         $session->set(self::CART_GAMES, $existingGames);
+        dd($session->get(self::CART_GAMES));
     }
 
     public function getCart(): array
     {
-        return [];
+        $games = [];
+        foreach ($this->getSession()->get(self::CART_GAMES) as $jsonGame) {
+            $games[] = $this->serializer->deserialize(
+                $jsonGame,
+                GameDTO::class,
+                'json');
+        }
+        return $games;
     }
 
     public function clearCart(): void
