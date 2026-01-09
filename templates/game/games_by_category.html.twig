@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Jeux de la catégorie {{ category.name }}</h1>
+
+        {% include 'partials/_game_loop.html.twig' with {
+            'games': category.games
+        } %}
+
+    </div>
+
+{% endblock %}
+
+{% block title %}
+    {{ category.name }}
+{% endblock %}
+

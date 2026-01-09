@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Game;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,28 +17,55 @@ class GameRepository extends ServiceEntityRepository
         parent::__construct($registry, Game::class);
     }
 
-    //    /**
-    //     * @return Game[] Returns an array of Game objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('g.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findByBestSeller(int $limit = null): array
+    {
+        // SELECT * FROM game g
+        $qb = $this->createQueryBuilder('g')
+            // JOIN user_own_game oBu ON obu.game_id = g.id
+            ->join('g.ownedByUser', 'oBu')
+            // GROUP BY g.id
+            ->groupBy('g.name')
+            // ORDER BY COUNT(g.id) DESC
+            ->orderBy('COUNT(g.id)', 'DESC')
+            // On ne peut avoir QU'UN SEUL orderBy mais plusieurs addOrderBy
+            ->addOrderBy('g.name', 'ASC');
 
-    //    public function findOneBySomeField($value): ?Game
-    //    {
-    //        return $this->createQueryBuilder('g')
-    //            ->andWhere('g.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if ($limit !== null) {
+            // LIMIT $limit
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getMostPlayedGames(int $limit = null): array
+    {
+        $qb = $this->createQueryBuilder('g')
+            ->join('g.ownedByUser', 'oBu')
+            ->groupBy('g.name')
+            ->orderBy('SUM(oBu.gameTime)', 'DESC');
+
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByCategory(Category $category, int $limit = null): array
+    {
+        $qb = $this->createQueryBuilder('g')
+            ->join('g.categories', 'c')
+            ->where('c = :categ')
+            ->setParameter('categ', $category);
+
+        if ($limit !== null) {
+            $qb->setMaxResults($limit);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+
 }

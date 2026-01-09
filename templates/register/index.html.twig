@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        {{ form_start(formRegister) }} {# <form> #}
+            {{ form_row(formRegister.nickname) }}
+            {{ form_row(formRegister.name) }}
+            {{ form_row(formRegister.email) }}
+{#            {{ form_label(formRegister.email) }} => <label> #}
+{#            {{ form_widget(formRegister.email) }} => <input> #}
+{#            {{ form_errors(formRegister.email) }} => <div> affichage erreur #}
+        {{ form_end(formRegister) }} {# </form> #}
+    </div>
+
+{% endblock %}

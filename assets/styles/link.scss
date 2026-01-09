@@ -1,0 +1,21 @@
+
+@mixin defaultLink($baseColor, $hoverColor) {
+    color: $baseColor;
+    text-decoration: none;
+
+    &:hover {
+        color: $hoverColor;
+    }
+}
+
+.default-link {
+    @include defaultLink($default-gray, $default-color);
+
+    &.red {
+        @include defaultLink(#830000, #d90000);
+    }
+
+    &.green {
+        @include defaultLink(#1f7200, #00ff17);
+    }
+}

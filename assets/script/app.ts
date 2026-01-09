@@ -1,1 +1,3 @@
 
+import './alert';
+import './wishlist';

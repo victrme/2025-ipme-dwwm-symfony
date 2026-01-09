@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminCategoryController!{% endblock %}
+
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

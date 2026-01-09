@@ -1,19 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}SteamIsh V3{% endblock %}
 
 {% block body %}
 
     <div class="container">
-        <h1>Hello {{ controller_name }} !</h1>
-        <a href="{{ path('app_home') }}">
-            Home
-        </a>
-        <p>
-            {% if message is defined %}
-                {{ message }}
-            {% endif %}
-        </p>
+        <h1 class="text-center">SteamIsh V3</h1>
+
+{#        <div class="row">#}
+{#            {% for review in lastReviews %}#}
+{#                <div class="col-lg-3">#}
+{#                    {{ review.createdAt|date('d/m/Y') }}#}
+{#                    {{ review.rating }}/5#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        </div>#}
+
+        {% include 'partials/_game_loop.html.twig' with {
+            'title': 'Les dernières sorties',
+            'games': lastGames
+        } %}
+
+        {% include 'partials/_game_loop.html.twig' with {
+            'title': 'Les meilleures offres',
+            'games': expensiveGames
+        } %}
+
+        {% include 'partials/_game_loop.html.twig' with {
+            'title': 'Les tendances actuelles',
+            'games': bestSellers
+        } %}
+
+        <div class="row mt-2">
+            {% for category in categories %}
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-2">
+                    <h3 class="text-center">
+                        <a class="default-link"
+                           href="{{ path('app_game_category', {'slug': category.slug}) }}"
+                        >
+                            {{ category.name }}
+                        </a>
+                    </h3>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% include 'partials/_game_loop.html.twig' with {
+            'title': 'Les plus joués',
+            'games': mostPlayedGames
+        } %}
     </div>
 
 {% endblock %}

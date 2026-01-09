@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GameController!{% endblock %}
+
+{% block body %}
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="container-img big">
+                    <img class="img-fluid" src="{{ game.thumbnailCover }}" alt="{{ game.name }}">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h1 class="text-center">{{ game.name }}</h1>
+                <p>{{ game.price }}€</p>
+
+                <button class="btn btn-outline-primary"
+                        title="Ajouter ce jeu à votre liste de souhait !"
+                        data-wishlist="{{ path('app_handle_wishlist', {'id': game.id}) }}"
+                >
+                    {% if app.user and app.user.wantedGames.contains(game) %}
+                        <i class="fa-solid fa-heart text-danger"></i>
+                    {% else %}
+                        <i class="fa-regular fa-heart"></i>
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for review in reviews %}
+                <div class="col-lg-3">
+                    <p>
+                        Ecrit par
+                        <a  class="text-decoration-none"
+                            href="{{ path('app_user_index', {'name': review.user.name}) }}"
+                        >
+                            {{ review.user.name }}
+                        </a>
+                    </p>
+                    <p>{{ review.content }}</p>
+                    <p>{{ review.rating }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="col-lg-6 col-md-12 mx-auto mb-5">
+            {{ form_start(form) }}
+                <div class="text-danger">{{ form_errors(form) }}</div>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+
+{% endblock %}
